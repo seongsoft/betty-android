@@ -6,6 +6,7 @@ buildscript {
         coroutineVersion = "1.5.2"
         composeVersion = "1.0.5"
         navVersion = "2.3.5"
+        navComposeVersion = "2.4.0-rc01"
         pagingVersion = "3.1.0"
         hiltVersion = "2.40.1"
         okHttpVersion = "4.9.3"
