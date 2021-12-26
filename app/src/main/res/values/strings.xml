@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Macao</string>
+
+    <!-- OutCome -->
+    <string name="win">승</string>
+    <string name="draw">무</string>
+    <string name="lose">패</string>
 </resources>

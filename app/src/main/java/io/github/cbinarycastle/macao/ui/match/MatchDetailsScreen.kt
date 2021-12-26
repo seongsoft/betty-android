@@ -1,4 +1,4 @@
-package io.github.cbinarycastle.macao.ui
+package io.github.cbinarycastle.macao.ui.match
 
 import androidx.compose.runtime.Composable
 

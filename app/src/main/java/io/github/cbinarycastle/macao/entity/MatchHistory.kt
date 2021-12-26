@@ -1,6 +1,6 @@
-package io.github.cbinarycastle.macao.domain
+package io.github.cbinarycastle.macao.entity
 
-import java.time.LocalDateTime
+import org.threeten.bp.LocalDateTime
 
 data class MatchHistory(
     val leagueName: String,

@@ -10,7 +10,7 @@ private val LightColors = lightColors(
     secondary = amber500
 )
 
-private val darkColors = darkColors(
+private val DarkColors = darkColors(
     primary = blue300
 )
 
@@ -20,6 +20,7 @@ fun MacaoTheme(
     content: @Composable () -> Unit
 ) = MaterialTheme(
     colors = LightColors,
+    typography = typography,
     content = content
 )
 

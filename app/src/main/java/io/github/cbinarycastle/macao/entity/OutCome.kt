@@ -1,4 +1,4 @@
-package io.github.cbinarycastle.macao.domain
+package io.github.cbinarycastle.macao.entity
 
 enum class OutCome {
     WIN,
