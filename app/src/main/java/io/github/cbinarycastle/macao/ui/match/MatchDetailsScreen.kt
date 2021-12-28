@@ -3,5 +3,5 @@ package io.github.cbinarycastle.macao.ui.match
 import androidx.compose.runtime.Composable
 
 @Composable
-fun MatchDetails() {
+fun MatchDetailsScreen(matchId: String) {
 }

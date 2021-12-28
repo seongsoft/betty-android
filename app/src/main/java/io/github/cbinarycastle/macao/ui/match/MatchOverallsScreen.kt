@@ -31,32 +31,47 @@ import org.threeten.bp.format.DateTimeFormatter
 private val matchDateFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
 @Composable
-fun MatchOverallsScreen(viewModel: MatchOverallsViewModel) {
+fun MatchOverallsScreen(
+    viewModel: MatchOverallsViewModel,
+    selectMatch: (matchId: String) -> Unit,
+) {
     val items = viewModel.matchOveralls.collectAsLazyPagingItems()
-    MatchOverallList(items)
+    MatchOverallList(
+        items = items,
+        selectMatch = selectMatch,
+    )
 }
 
 @Composable
-private fun MatchOverallList(items: LazyPagingItems<MatchOverall>) {
+private fun MatchOverallList(
+    items: LazyPagingItems<MatchOverall>,
+    selectMatch: (matchId: String) -> Unit,
+) {
     LazyColumn {
         items(items) { item ->
             if (item != null) {
-                MatchOverallItem(item)
+                MatchOverallItem(
+                    matchOverall = item,
+                    selectMatch = selectMatch,
+                )
             }
         }
     }
 }
 
 @Composable
-private fun MatchOverallItem(matchOverall: MatchOverall) {
+private fun MatchOverallItem(
+    matchOverall: MatchOverall,
+    selectMatch: (matchId: String) -> Unit,
+) {
     Card(
-        Modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(
                 horizontal = 16.dp,
                 vertical = 8.dp
             )
-            .clickable { }
+            .clickable { selectMatch(matchOverall.id) }
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(
@@ -140,5 +155,8 @@ fun OutCome.backgroundColor() = when (this) {
 @Preview
 @Composable
 fun MatchOverallItemPreview() {
-    MatchOverallItem(matchOveralls[0])
+    MatchOverallItem(
+        matchOverall = matchOveralls[0],
+        selectMatch = {}
+    )
 }
