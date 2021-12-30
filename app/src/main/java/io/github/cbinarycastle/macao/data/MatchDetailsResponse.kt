@@ -24,7 +24,6 @@ data class MatchDetailsResponse(
         val homeTeamScore: Int,
         val rightTeamName: String,
         val awayTeamScore: Int,
-        val outcome: OutCome,
         val handi: String,
         val handiOutcome: String,
         val isOdd: Boolean,

@@ -7,9 +7,8 @@ data class MatchHistory(
     val matchedAt: LocalDateTime,
     val homeTeamName: String,
     val homeTeamScore: Int,
-    val rightTeamName: String,
+    val awayTeamName: String,
     val awayTeamScore: Int,
-    val outcome: OutCome,
     val handi: String,              //핸디캡 (아직 Fix아님)
     val handiOutcome: String,       //햔디캡 결과 (아직 Fix아님)
     val isOdd: Boolean,            //홀짝 (홀수 true)

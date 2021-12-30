@@ -33,26 +33,26 @@ private val matchDateFormatter = DateTimeFormatter.ofPattern("HH:mm")
 @Composable
 fun MatchOverallsScreen(
     viewModel: MatchOverallsViewModel,
-    selectMatch: (matchId: String) -> Unit,
+    onSelectMatch: (matchId: String) -> Unit,
 ) {
     val items = viewModel.matchOveralls.collectAsLazyPagingItems()
     MatchOverallList(
         items = items,
-        selectMatch = selectMatch,
+        onSelectMatch = onSelectMatch,
     )
 }
 
 @Composable
 private fun MatchOverallList(
     items: LazyPagingItems<MatchOverall>,
-    selectMatch: (matchId: String) -> Unit,
+    onSelectMatch: (matchId: String) -> Unit,
 ) {
     LazyColumn {
         items(items) { item ->
             if (item != null) {
                 MatchOverallItem(
                     matchOverall = item,
-                    selectMatch = selectMatch,
+                    onSelectMatch = onSelectMatch,
                 )
             }
         }
@@ -62,7 +62,7 @@ private fun MatchOverallList(
 @Composable
 private fun MatchOverallItem(
     matchOverall: MatchOverall,
-    selectMatch: (matchId: String) -> Unit,
+    onSelectMatch: (matchId: String) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -71,7 +71,7 @@ private fun MatchOverallItem(
                 horizontal = 16.dp,
                 vertical = 8.dp
             )
-            .clickable { selectMatch(matchOverall.id) }
+            .clickable { onSelectMatch(matchOverall.id) }
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(
@@ -157,6 +157,6 @@ fun OutCome.backgroundColor() = when (this) {
 fun MatchOverallItemPreview() {
     MatchOverallItem(
         matchOverall = matchOveralls[0],
-        selectMatch = {}
+        onSelectMatch = {}
     )
 }

@@ -1,6 +1,6 @@
 package io.github.cbinarycastle.macao.entity
 
-data class MatchDetail(
+data class MatchDetails(
     val id: String,
     val homeTeamInfo: TeamInfo,
     val awayTeamInfo: TeamInfo,

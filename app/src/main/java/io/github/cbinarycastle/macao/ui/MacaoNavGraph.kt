@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import io.github.cbinarycastle.macao.ui.match.MatchDetailsScreen
+import io.github.cbinarycastle.macao.ui.match.MatchDetailsViewModel
 import io.github.cbinarycastle.macao.ui.match.MatchOverallsScreen
 import io.github.cbinarycastle.macao.ui.match.MatchOverallsViewModel
 
@@ -18,6 +19,7 @@ private const val MATCH_DETAILS_ID_KEY = "matchId"
 object MainDestinations {
     const val MATCH_OVERALLS = "matches"
     const val MATCH_DETAILS = "match"
+    const val START_DESTINATION = MATCH_OVERALLS
 }
 
 @Composable
@@ -28,13 +30,13 @@ fun MacaoNavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = MainDestinations.MATCH_OVERALLS,
+        startDestination = MainDestinations.START_DESTINATION,
     ) {
         composable(MainDestinations.MATCH_OVERALLS) {
             val viewModel = hiltViewModel<MatchOverallsViewModel>()
             MatchOverallsScreen(
                 viewModel = viewModel,
-                selectMatch = actions.openMatch,
+                onSelectMatch = actions.openMatch,
             )
         }
         composable(
@@ -43,8 +45,11 @@ fun MacaoNavGraph(
                 navArgument(MATCH_DETAILS_ID_KEY) { type = NavType.StringType }
             )
         ) {
+            val viewModel = hiltViewModel<MatchDetailsViewModel>()
             val matchId = requireNotNull(it.arguments?.getString(MATCH_DETAILS_ID_KEY))
-            MatchDetailsScreen(matchId)
+            viewModel.setMatchId(matchId)
+
+            MatchDetailsScreen(viewModel)
         }
     }
 }

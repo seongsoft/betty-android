@@ -17,13 +17,13 @@ import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 fun MacaoApp() {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val topLevel = backStackEntry?.destination?.hierarchy?.any {
-        it.route == MainDestinations.MATCH_OVERALLS
-    } == true
+    val topLevel = backStackEntry?.destination?.route == MainDestinations.START_DESTINATION
 
     MacaoTheme {
         Scaffold(
-            topBar = { TopBar(topLevel = topLevel) { navController.popBackStack() } }
+            topBar = {
+                TopBar(topLevel = topLevel) { navController.popBackStack() }
+            }
         ) {
             MacaoNavGraph(navController)
         }
@@ -38,27 +38,19 @@ private fun TopBar(
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
         backgroundColor = MacaoTheme.colors.surface,
-        navigationIcon = navigationIcon(topLevel = topLevel, onBack = onBack)
-    )
-}
-
-@Composable
-private fun navigationIcon(
-    topLevel: Boolean,
-    onBack: () -> Unit,
-): @Composable (() -> Unit)? {
-    return if (topLevel) {
-        null
-    } else {
-        {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Up button"
-                )
+        navigationIcon = if (topLevel) {
+            null
+        } else {
+            {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Up button"
+                    )
+                }
             }
         }
-    }
+    )
 }
 
 @Preview

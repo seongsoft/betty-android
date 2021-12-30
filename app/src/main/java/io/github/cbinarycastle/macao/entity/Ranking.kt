@@ -1,7 +1,5 @@
 package io.github.cbinarycastle.macao.entity
 
-import io.github.cbinarycastle.macao.data.MatchDetailsResponse
-
 data class Ranking(
     val type: RankingType,
     val group: List<RankingGroup>,
@@ -12,7 +10,7 @@ data class Ranking(
 
     data class RankingGroup(
         val name: String?,
-        val items: List<MatchDetailsResponse.RankingInfo>,
+        val items: List<RankingInfo>,
     )
 
     data class RankingInfo(
