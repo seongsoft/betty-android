@@ -27,7 +27,7 @@ data class MatchDetailsResponse(
         val handi: String,
         val handiOutcome: String,
         val isOdd: Boolean,
-        val firstHarfScore: String,
+        val firstHalfScore: String,
     )
 
     enum class RankingType {

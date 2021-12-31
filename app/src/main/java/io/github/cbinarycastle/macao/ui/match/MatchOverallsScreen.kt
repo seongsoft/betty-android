@@ -95,63 +95,6 @@ private fun MatchOverallItem(
     }
 }
 
-@Composable
-private fun Team(teamInfo: TeamInfo) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        // TODO: Image로 교체
-        Surface(
-            modifier = Modifier.size(60.dp),
-            color = Color.LightGray,
-            shape = CircleShape
-        ) {}
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = teamInfo.teamName,
-            style = MacaoTheme.typography.subtitle2
-        )
-        Spacer(Modifier.height(4.dp))
-        Row {
-            teamInfo.recentRecords.forEach {
-                Spacer(Modifier.width(2.dp))
-                OutComeChip(it)
-                Spacer(Modifier.width(2.dp))
-            }
-        }
-    }
-}
-
-@Composable
-private fun OutComeChip(outCome: OutCome) {
-    Surface(
-        modifier = Modifier.size(18.dp),
-        shape = CircleShape,
-        color = outCome.backgroundColor(),
-        contentColor = Color.White,
-    ) {
-        Text(
-            modifier = Modifier.wrapContentSize(),
-            text = outCome.stringResource(),
-            style = MacaoTheme.typography.overline,
-        )
-    }
-}
-
-@Composable
-fun OutCome.stringResource() = stringResource(
-    when (this) {
-        OutCome.WIN -> R.string.win
-        OutCome.DRAW -> R.string.draw
-        OutCome.LOSE -> R.string.lose
-    }
-)
-
-@Composable
-fun OutCome.backgroundColor() = when (this) {
-    OutCome.WIN -> green800
-    OutCome.DRAW -> blueGray600
-    OutCome.LOSE -> red700
-}
-
 @Preview
 @Composable
 fun MatchOverallItemPreview() {

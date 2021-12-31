@@ -12,5 +12,5 @@ data class MatchHistory(
     val handi: String,              //핸디캡 (아직 Fix아님)
     val handiOutcome: String,       //햔디캡 결과 (아직 Fix아님)
     val isOdd: Boolean,            //홀짝 (홀수 true)
-    val firstHarfScore: String,     //전반 스코어
+    val firstHalfScore: String,     //전반 스코어
 )

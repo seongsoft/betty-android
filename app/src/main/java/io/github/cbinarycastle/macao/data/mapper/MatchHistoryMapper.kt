@@ -13,5 +13,5 @@ fun MatchDetailsResponse.MatchHistory.toEntity() = MatchHistory(
     handi = handi,
     handiOutcome = handiOutcome,
     isOdd = isOdd,
-    firstHarfScore = firstHarfScore,
+    firstHalfScore = firstHalfScore,
 )

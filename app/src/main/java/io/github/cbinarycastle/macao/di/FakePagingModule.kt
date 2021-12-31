@@ -9,7 +9,7 @@ import io.github.cbinarycastle.macao.data.MatchOverallPagingSourceFactory
 
 @InstallIn(SingletonComponent::class)
 @Module
-interface PagingModule {
+interface FakePagingModule {
 
     @Binds
     fun bindMatchOverallPagingSourceFactory(
