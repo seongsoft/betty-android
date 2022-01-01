@@ -30,7 +30,7 @@ val matchDetails = MatchDetails(
             OutCome.LOSE,
         )
     ),
-    recommendation = listOf(
+    recommendations = listOf(
         MatchRecommendation(
             description = "단지 추측입니다.",
             recommendType = RecommendType.HOME_WIN
@@ -56,6 +56,18 @@ val matchDetails = MatchDetails(
             handiOutcome = "",
             isOdd = false,
             firstHalfScore = "1:1"
+        ),
+        MatchHistory(
+            leagueName = "Premier League",
+            matchedAt = LocalDateTime.of(2021, 12, 15, 21, 30, 0),
+            homeTeamName = "Manchester City",
+            homeTeamScore = 4,
+            awayTeamName = "Manchester United",
+            awayTeamScore = 2,
+            handi = "",
+            handiOutcome = "",
+            isOdd = false,
+            firstHalfScore = "2:2"
         )
     ),
     homeTeamMatchHistories = listOf(
