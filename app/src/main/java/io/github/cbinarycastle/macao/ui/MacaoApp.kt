@@ -56,5 +56,7 @@ private fun TopBar(
 @Preview
 @Composable
 fun TopBarPreview() {
-    TopBar(true) {}
+    MacaoTheme {
+        TopBar(true) {}
+    }
 }

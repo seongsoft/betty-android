@@ -54,6 +54,7 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             backgroundColor = MacaoTheme.colors.surface,
+            edgePadding = 0.dp,
         ) {
             tabs.forEachIndexed { index, tab ->
                 Tab(

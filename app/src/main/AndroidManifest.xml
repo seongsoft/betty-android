@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.cbinarycastle.macao">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MacaoApplication"
         android:allowBackup="true"

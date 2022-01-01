@@ -8,28 +8,8 @@ import org.threeten.bp.LocalDateTime
 
 val matchDetails = MatchDetails(
     id = "1",
-    homeTeamInfo = TeamInfo(
-        teamName = "Manchester United",
-        logoUrl = "url",
-        recentRecords = listOf(
-            OutCome.WIN,
-            OutCome.WIN,
-            OutCome.LOSE,
-            OutCome.WIN,
-            OutCome.DRAW,
-        )
-    ),
-    awayTeamInfo = TeamInfo(
-        teamName = "Manchester City",
-        logoUrl = "url",
-        recentRecords = listOf(
-            OutCome.LOSE,
-            OutCome.WIN,
-            OutCome.DRAW,
-            OutCome.WIN,
-            OutCome.LOSE,
-        )
-    ),
+    homeTeamInfo = manchesterUnited,
+    awayTeamInfo = manchesterCity,
     recommendations = listOf(
         MatchRecommendation(
             description = "단지 추측입니다.",

@@ -11,8 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.CircularReveal
+import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.entity.OutCome
 import io.github.cbinarycastle.macao.entity.TeamInfo
@@ -24,12 +27,10 @@ import io.github.cbinarycastle.macao.ui.theme.red700
 @Composable
 fun Team(teamInfo: TeamInfo) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        // TODO: Image로 교체
-        Surface(
+        GlideImage(
+            imageModel = teamInfo.logoUrl,
             modifier = Modifier.size(60.dp),
-            color = Color.LightGray,
-            shape = CircleShape
-        ) {}
+        )
         Spacer(Modifier.height(4.dp))
         Text(
             text = teamInfo.teamName,

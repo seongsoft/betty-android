@@ -5,8 +5,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 
 private val LightColors = lightColors(
-    primary = blue700,
-    primaryVariant = blue800,
+    primary = blue600,
+    primaryVariant = blue700,
     secondary = amber500
 )
 

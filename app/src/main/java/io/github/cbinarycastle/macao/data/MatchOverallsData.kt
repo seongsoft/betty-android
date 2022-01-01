@@ -6,34 +6,38 @@ import io.github.cbinarycastle.macao.entity.RecommendType
 import io.github.cbinarycastle.macao.entity.TeamInfo
 import org.threeten.bp.LocalDateTime
 
+internal val manchesterUnited = TeamInfo(
+    teamName = "Manchester United",
+    logoUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
+    recentRecords = listOf(
+        OutCome.WIN,
+        OutCome.WIN,
+        OutCome.LOSE,
+        OutCome.WIN,
+        OutCome.DRAW,
+    )
+)
+
+internal val manchesterCity = TeamInfo(
+    teamName = "Manchester City",
+    logoUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/z44l-a0W1v5FmgPnemV6Xw_96x96.png",
+    recentRecords = listOf(
+        OutCome.LOSE,
+        OutCome.WIN,
+        OutCome.DRAW,
+        OutCome.WIN,
+        OutCome.LOSE,
+    )
+)
+
 val matchOveralls = listOf(
     MatchOverall(
         id = "1",
         leagueName = "Premier League",
         matchAt = LocalDateTime.of(2021, 12, 25, 6, 0, 0),
         recommend = RecommendType.HOME_WIN,
-        homeTeamInfo = TeamInfo(
-            teamName = "Manchester United",
-            logoUrl = "url",
-            recentRecords = listOf(
-                OutCome.WIN,
-                OutCome.WIN,
-                OutCome.LOSE,
-                OutCome.WIN,
-                OutCome.DRAW,
-            )
-        ),
-        awayTeamInfo = TeamInfo(
-            teamName = "Manchester City",
-            logoUrl = "url",
-            recentRecords = listOf(
-                OutCome.LOSE,
-                OutCome.WIN,
-                OutCome.DRAW,
-                OutCome.WIN,
-                OutCome.LOSE,
-            )
-        )
+        homeTeamInfo = manchesterUnited,
+        awayTeamInfo = manchesterCity,
     ),
     MatchOverall(
         id = "2",
@@ -41,8 +45,8 @@ val matchOveralls = listOf(
         matchAt = LocalDateTime.of(2021, 12, 25, 9, 0, 0),
         recommend = RecommendType.AWAY_WIN,
         homeTeamInfo = TeamInfo(
-            teamName = "Wolverhampton",
-            logoUrl = "url",
+            teamName = "Tottenham",
+            logoUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/k3Q_mKE98Dnohrcea0JFgQ_96x96.png",
             recentRecords = listOf(
                 OutCome.LOSE,
                 OutCome.LOSE,
@@ -52,8 +56,8 @@ val matchOveralls = listOf(
             )
         ),
         awayTeamInfo = TeamInfo(
-            teamName = "Sheffield United",
-            logoUrl = "url",
+            teamName = "Arsenal",
+            logoUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/4us2nCgl6kgZc0t3hpW75Q_96x96.png",
             recentRecords = listOf(
                 OutCome.WIN,
                 OutCome.WIN,
