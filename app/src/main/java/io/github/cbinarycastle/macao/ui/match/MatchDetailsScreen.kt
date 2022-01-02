@@ -12,13 +12,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.data.matchDetails
+import io.github.cbinarycastle.macao.data.matchOveralls
 import io.github.cbinarycastle.macao.domain.Result
-import io.github.cbinarycastle.macao.entity.MatchDetails
-import io.github.cbinarycastle.macao.entity.MatchHistory
-import io.github.cbinarycastle.macao.entity.MatchRecommendation
-import io.github.cbinarycastle.macao.entity.Ranking
+import io.github.cbinarycastle.macao.entity.*
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -76,6 +75,29 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
             HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.homeTeamMatchHistories)
             AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.awayTeamMatchHistories)
             RANKING_TAB -> RankingList(matchDetails.ranking)
+        }
+    }
+}
+
+@Composable
+private fun Team(teamInfo: TeamInfo) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        GlideImage(
+            imageModel = teamInfo.logoUrl,
+            modifier = Modifier.size(60.dp),
+        )
+        Spacer(Modifier.height(4.dp))
+        Text(
+            text = teamInfo.teamName,
+            style = MacaoTheme.typography.subtitle2
+        )
+        Spacer(Modifier.height(4.dp))
+        Row {
+            teamInfo.recentRecords.forEach {
+                Spacer(Modifier.width(2.dp))
+                RecentRecordStatus(it)
+                Spacer(Modifier.width(2.dp))
+            }
         }
     }
 }
@@ -283,6 +305,14 @@ private fun RankingCell(
             text = text,
             style = textStyle,
         )
+    }
+}
+
+@Preview
+@Composable
+fun TeamPreview() {
+    MacaoTheme {
+        Team(teamInfo = matchOveralls[0].homeTeamInfo)
     }
 }
 

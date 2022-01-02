@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Macao</string>
 
-    <!-- OutCome -->
+    <!-- Outcome -->
     <string name="win">승</string>
     <string name="draw">무</string>
     <string name="lose">패</string>
 
+    <!-- Ranking -->
     <string name="ranking_num">순위</string>
     <string name="ranking_team">팀</string>
     <string name="ranking_matches">경기수</string>
@@ -15,4 +16,9 @@
     <string name="ranking_lose">패</string>
     <string name="ranking_score">득점</string>
     <string name="ranking_lose_point">실점</string>
+
+    <!-- Recommendation -->
+    <string name="recommendation_home_win">HOME WIN</string>
+    <string name="recommendation_draw">DRAW</string>
+    <string name="recommendation_away_win">AWAY WIN</string>
 </resources>
