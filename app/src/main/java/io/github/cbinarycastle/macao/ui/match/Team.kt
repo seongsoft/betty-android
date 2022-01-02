@@ -8,14 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.glide.GlideImage
+import io.github.cbinarycastle.macao.data.matchOveralls
 import io.github.cbinarycastle.macao.entity.OutCome
 import io.github.cbinarycastle.macao.entity.TeamInfo
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
-import io.github.cbinarycastle.macao.ui.theme.blueGray600
-import io.github.cbinarycastle.macao.ui.theme.green800
-import io.github.cbinarycastle.macao.ui.theme.red700
+import io.github.cbinarycastle.macao.ui.theme.neutral
+import io.github.cbinarycastle.macao.ui.theme.success
+import io.github.cbinarycastle.macao.ui.theme.error
 
 @Composable
 fun Team(teamInfo: TeamInfo) {
@@ -51,8 +53,16 @@ private fun RecentRecordStatus(outCome: OutCome) {
 }
 
 @Composable
-fun OutCome.backgroundColor() = when (this) {
-    OutCome.WIN -> green800
-    OutCome.DRAW -> blueGray600
-    OutCome.LOSE -> red700
+private fun OutCome.backgroundColor() = when (this) {
+    OutCome.WIN -> success
+    OutCome.DRAW -> neutral
+    OutCome.LOSE -> error
+}
+
+@Preview
+@Composable
+fun TeamPreview() {
+    MacaoTheme {
+        Team(teamInfo = matchOveralls[0].homeTeamInfo)
+    }
 }
