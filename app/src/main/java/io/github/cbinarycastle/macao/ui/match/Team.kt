@@ -2,21 +2,14 @@ package io.github.cbinarycastle.macao.ui.match
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
-import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.entity.OutCome
 import io.github.cbinarycastle.macao.entity.TeamInfo
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
@@ -40,7 +33,7 @@ fun Team(teamInfo: TeamInfo) {
         Row {
             teamInfo.recentRecords.forEach {
                 Spacer(Modifier.width(2.dp))
-                OutComeChip(it)
+                RecentRecordStatus(it)
                 Spacer(Modifier.width(2.dp))
             }
         }
@@ -48,31 +41,13 @@ fun Team(teamInfo: TeamInfo) {
 }
 
 @Composable
-private fun OutComeChip(outCome: OutCome) {
+private fun RecentRecordStatus(outCome: OutCome) {
     Surface(
-        modifier = Modifier.size(18.dp),
+        modifier = Modifier.size(12.dp),
         shape = CircleShape,
         color = outCome.backgroundColor(),
         contentColor = Color.White,
-    ) {
-        OutComeIcon(outCome)
-    }
-}
-
-@Composable
-private fun OutComeIcon(outCome: OutCome) = when (outCome) {
-    OutCome.WIN -> Icon(
-        imageVector = Icons.Default.Check,
-        contentDescription = stringResource(R.string.win)
-    )
-    OutCome.DRAW -> Icon(
-        imageVector = Icons.Default.Remove,
-        contentDescription = stringResource(R.string.draw)
-    )
-    OutCome.LOSE -> Icon(
-        imageVector = Icons.Default.Clear,
-        contentDescription = stringResource(R.string.lose)
-    )
+    ) {}
 }
 
 @Composable
