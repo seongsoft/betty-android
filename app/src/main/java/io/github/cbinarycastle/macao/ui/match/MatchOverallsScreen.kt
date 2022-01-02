@@ -9,13 +9,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.macao.data.matchOveralls
 import io.github.cbinarycastle.macao.entity.MatchOverall
+import io.github.cbinarycastle.macao.entity.TeamInfo
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import io.github.cbinarycastle.macao.ui.theme.blueGray100
 import org.threeten.bp.LocalDateTime
@@ -71,7 +74,7 @@ private fun MatchOverallSeparator(matchAt: LocalDateTime) {
     ) {
         Text(
             text = matchAt.format(DateTimeFormatter.ISO_LOCAL_DATE),
-            style = MacaoTheme.typography.body2
+            style = MacaoTheme.typography.subtitle2
         )
     }
 }
@@ -93,15 +96,94 @@ private fun MatchOverallItem(
         Spacer(Modifier.height(16.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Team(matchOverall.homeTeamInfo)
+            HomeTeam(
+                teamInfo = matchOverall.homeTeamInfo,
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(Modifier.width(16.dp))
             Text(
                 text = matchOverall.matchAt.format(matchDateFormatter),
-                style = MacaoTheme.typography.subtitle1,
+                color = MacaoTheme.colors.primary,
             )
-            Team(matchOverall.awayTeamInfo)
+            Spacer(Modifier.width(16.dp))
+            AwayTeam(
+                teamInfo = matchOverall.awayTeamInfo,
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
+}
+
+@Composable
+fun HomeTeam(
+    teamInfo: TeamInfo,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(
+                text = teamInfo.teamName,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = MacaoTheme.typography.subtitle2,
+            )
+            Spacer(Modifier.height(4.dp))
+            Row {
+                teamInfo.recentRecords.forEach {
+                    Spacer(Modifier.width(4.dp))
+                    RecentRecordStatus(it)
+                }
+            }
+        }
+        Spacer(Modifier.width(4.dp))
+        GlideImage(
+            imageModel = teamInfo.logoUrl,
+            modifier = Modifier.size(36.dp),
+        )
+    }
+}
+
+@Composable
+fun AwayTeam(
+    teamInfo: TeamInfo,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        GlideImage(
+            imageModel = teamInfo.logoUrl,
+            modifier = Modifier.size(36.dp),
+        )
+        Spacer(Modifier.width(4.dp))
+        Column(
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = teamInfo.teamName,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = MacaoTheme.typography.subtitle2,
+            )
+            Spacer(Modifier.height(4.dp))
+            Row {
+                teamInfo.recentRecords.forEach {
+                    RecentRecordStatus(it)
+                    Spacer(Modifier.width(4.dp))
+                }
+            }
         }
     }
 }

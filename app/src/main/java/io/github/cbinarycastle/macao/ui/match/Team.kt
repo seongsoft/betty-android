@@ -43,7 +43,7 @@ fun Team(teamInfo: TeamInfo) {
 }
 
 @Composable
-private fun RecentRecordStatus(outCome: OutCome) {
+fun RecentRecordStatus(outCome: OutCome) {
     Surface(
         modifier = Modifier.size(12.dp),
         shape = CircleShape,
