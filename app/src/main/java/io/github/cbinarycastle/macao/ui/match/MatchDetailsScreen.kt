@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.glide.GlideImage
@@ -24,13 +25,18 @@ import org.threeten.bp.format.DateTimeFormatter
 @Composable
 fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
     val result by viewModel.matchDetails.collectAsState(Result.Loading)
-    when (result) {
-        Result.Loading -> CircularProgressIndicator()
-        is Result.Error -> {}
+    MatchDetailsScreen(matchDetailsResult = result)
+}
+
+@Composable
+private fun MatchDetailsScreen(matchDetailsResult: Result<MatchDetails>) {
+    when (matchDetailsResult) {
         is Result.Success -> {
-            val matchDetails = (result as Result.Success).data
+            val matchDetails = matchDetailsResult.data
             MatchDetailsScreen(matchDetails)
         }
+        is Result.Error -> {}
+        Result.Loading -> CircularProgressIndicator()
     }
 }
 
@@ -80,15 +86,24 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
 }
 
 @Composable
-private fun Team(teamInfo: TeamInfo) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+fun Team(
+    teamInfo: TeamInfo,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         GlideImage(
             imageModel = teamInfo.logoUrl,
             modifier = Modifier.size(60.dp),
+            previewPlaceholder = R.drawable.manchester_united,
         )
         Spacer(Modifier.height(4.dp))
         Text(
             text = teamInfo.teamName,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             style = MacaoTheme.typography.subtitle2
         )
         Spacer(Modifier.height(4.dp))
@@ -305,14 +320,6 @@ private fun RankingCell(
             text = text,
             style = textStyle,
         )
-    }
-}
-
-@Preview
-@Composable
-fun TeamPreview() {
-    MacaoTheme {
-        Team(teamInfo = matchOveralls[0].homeTeamInfo)
     }
 }
 
