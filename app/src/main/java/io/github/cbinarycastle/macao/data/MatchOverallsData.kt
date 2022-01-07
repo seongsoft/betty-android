@@ -73,7 +73,7 @@ val matchOveralls = listOf(
         matchAt = LocalDateTime.of(2021, 12, 24, 20, 30, 0),
         recommend = RecommendType.DRAW,
         homeTeamInfo = TeamInfo(
-            teamName = "Tottenham",
+            teamName = "Chelsea",
             logoUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/fhBITrIlbQxhVB6IjxUO6Q_96x96.png",
             recentRecords = listOf(
                 OutCome.WIN,

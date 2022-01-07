@@ -86,7 +86,7 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
 }
 
 @Composable
-fun Team(
+private fun Team(
     teamInfo: TeamInfo,
     modifier: Modifier = Modifier,
 ) {

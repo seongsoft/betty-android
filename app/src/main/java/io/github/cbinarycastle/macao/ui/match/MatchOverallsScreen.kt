@@ -78,17 +78,17 @@ private fun MatchOverallItem(
     onSelectMatch: (matchId: String) -> Unit,
 ) {
     Card(
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .clickable { onSelectMatch(matchOverall.id) },
         elevation = 4.dp,
     ) {
-        Column {
-            Column(
-                Modifier
-                    .clickable { onSelectMatch(matchOverall.id) }
-                    .padding(16.dp)
-            ) {
+        Column(
+            modifier = Modifier.padding(top = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 LeagueName(matchOverall.leagueName)
-                Spacer(Modifier.height(16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -100,8 +100,6 @@ private fun MatchOverallItem(
                     Spacer(Modifier.width(16.dp))
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         MatchTime(matchOverall.matchAt)
-                        Spacer(Modifier.height(8.dp))
-                        PredictionPercentageText()
                     }
                     Spacer(Modifier.width(16.dp))
                     Team(
@@ -109,54 +107,64 @@ private fun MatchOverallItem(
                         modifier = Modifier.weight(1f)
                     )
                 }
+                Spacer(Modifier.height(8.dp))
+                PredictionPercentageText()
             }
+            Spacer(Modifier.height(8.dp))
             PredictionPercentageBar()
         }
     }
 }
 
 @Composable
-private fun LeagueName(leagueName: String) {
+private fun LeagueName(
+    leagueName: String,
+    modifier: Modifier = Modifier
+) {
     Text(
         text = leagueName,
+        modifier = modifier,
         style = MacaoTheme.typography.caption,
     )
 }
 
 @Composable
-private fun HomeTeam(
+private fun Team(
     teamInfo: TeamInfo,
     modifier: Modifier = Modifier,
 ) {
-    Row(
+    Column(
         modifier = modifier,
-        horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.weight(1f),
-            horizontalAlignment = Alignment.End
-        ) {
-            Text(
-                text = teamInfo.teamName,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                style = MacaoTheme.typography.subtitle2,
-            )
-            Spacer(Modifier.height(4.dp))
-            Row {
-                teamInfo.recentRecords.forEach {
-                    Spacer(Modifier.width(4.dp))
-                    RecentRecordStatus(it)
-                }
-            }
-        }
-        Spacer(Modifier.width(8.dp))
         GlideImage(
             imageModel = teamInfo.logoUrl,
             modifier = Modifier.size(36.dp),
             previewPlaceholder = R.drawable.manchester_united,
         )
+        Row(
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = teamInfo.teamName,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    style = MacaoTheme.typography.subtitle2,
+                )
+                Spacer(Modifier.height(4.dp))
+                Row {
+                    teamInfo.recentRecords.forEach {
+                        Spacer(Modifier.width(4.dp))
+                        RecentRecordStatus(it)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -176,55 +184,18 @@ private fun PredictionPercentageText() {
             color = MacaoTheme.colors.error,
             style = MacaoTheme.typography.caption,
         )
-        Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(16.dp))
         Text(
             text = "20%",
             color = MacaoTheme.extendedColors.neutral,
             style = MacaoTheme.typography.caption,
         )
-        Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(16.dp))
         Text(
             text = "46%",
             color = MacaoTheme.extendedColors.success,
             style = MacaoTheme.typography.caption,
         )
-    }
-}
-
-@Composable
-private fun AwayTeam(
-    teamInfo: TeamInfo,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        GlideImage(
-            imageModel = teamInfo.logoUrl,
-            modifier = Modifier.size(36.dp),
-            previewPlaceholder = R.drawable.manchester_city,
-        )
-        Spacer(Modifier.width(8.dp))
-        Column(
-            modifier = Modifier.weight(1f),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = teamInfo.teamName,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                style = MacaoTheme.typography.subtitle2,
-            )
-            Spacer(Modifier.height(4.dp))
-            Row {
-                teamInfo.recentRecords.forEach {
-                    RecentRecordStatus(it)
-                    Spacer(Modifier.width(4.dp))
-                }
-            }
-        }
     }
 }
 
