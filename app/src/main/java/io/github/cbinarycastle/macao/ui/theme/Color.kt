@@ -6,7 +6,7 @@ val blue200 = Color(0xff90caf9)
 val blue600 = Color(0xff1e88e5)
 val blue700 = Color(0xff1976d2)
 val amber500 = Color(0xff0288d1)
-val blueGray100 = Color(0xffeceff1)
+val gray100 = Color(0xfffafafa)
 
 val green200 = Color(0xffa5d6a7)
 val green800 = Color(0xff2e7d32)

@@ -1,14 +1,18 @@
 package io.github.cbinarycastle.macao.ui.match
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,7 +48,7 @@ private fun MatchOverallList(
     items: LazyPagingItems<MatchOverallModel>,
     onSelectMatch: (matchId: String) -> Unit,
 ) {
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         items(items) { item ->
             if (item != null) {
                 when (item) {
@@ -67,8 +71,7 @@ private fun MatchOverallSeparator(matchAt: LocalDateTime) {
     Text(
         text = matchAt.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
         modifier = Modifier.padding(horizontal = 16.dp),
-        color = MacaoTheme.colors.primary,
-        style = MacaoTheme.typography.h6
+        style = MacaoTheme.typography.subtitle2
     )
 }
 
@@ -83,12 +86,12 @@ private fun MatchOverallItem(
             .clickable { onSelectMatch(matchOverall.id) },
         elevation = 4.dp,
     ) {
-        Column(
-            modifier = Modifier.padding(top = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                LeagueName(matchOverall.leagueName)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            LeagueName(matchOverall.leagueName)
+            Column(
+                modifier = Modifier.padding(top = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -121,11 +124,18 @@ private fun LeagueName(
     leagueName: String,
     modifier: Modifier = Modifier
 ) {
-    Text(
-        text = leagueName,
-        modifier = modifier,
-        style = MacaoTheme.typography.caption,
-    )
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = MacaoTheme.colors.background,
+    ) {
+        Text(
+            text = leagueName,
+            modifier = Modifier.padding(8.dp),
+            textAlign = TextAlign.Center,
+            style = MacaoTheme.typography.caption,
+        )
+    }
+    Divider()
 }
 
 @Composable
@@ -170,10 +180,22 @@ private fun Team(
 
 @Composable
 private fun MatchTime(matchAt: LocalDateTime) {
-    Text(
-        text = matchAt.format(matchDateFormatter),
-        style = MacaoTheme.typography.h6
-    )
+    Surface(
+        shape = RoundedCornerShape(4.dp),
+        border = BorderStroke(
+            width = 1.dp,
+            color = MacaoTheme.colors.onSurface.copy(alpha = 0.12f),
+        )
+    ) {
+        Text(
+            text = matchAt.format(matchDateFormatter),
+            modifier = Modifier.padding(
+                horizontal = 8.dp,
+                vertical = 4.dp
+            ),
+            style = MacaoTheme.typography.subtitle2
+        )
+    }
 }
 
 @Composable

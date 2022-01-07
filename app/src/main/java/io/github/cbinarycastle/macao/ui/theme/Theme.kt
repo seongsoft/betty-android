@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class ExtendedColors(
-    val surfaceVariant: Color,
     val success: Color,
     val neutral: Color,
 )
@@ -19,6 +18,7 @@ private val LightColors = lightColors(
     primary = blue600,
     primaryVariant = blue700,
     secondary = amber500,
+    background = gray100,
 )
 
 private val DarkColors = darkColors(
@@ -26,13 +26,11 @@ private val DarkColors = darkColors(
 )
 
 private val LightExtendedColors = ExtendedColors(
-    surfaceVariant = gray200,
     success = green800,
     neutral = gray600,
 )
 
 private val DarkExtendedColors = ExtendedColors(
-    surfaceVariant = gray800,
     success = green200,
     neutral = gray300,
 )
