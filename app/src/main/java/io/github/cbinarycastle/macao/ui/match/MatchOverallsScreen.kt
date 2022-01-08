@@ -37,10 +37,24 @@ fun MatchOverallsScreen(
     onSelectMatch: (matchId: String) -> Unit,
 ) {
     val items = viewModel.matchOveralls.collectAsLazyPagingItems()
-    MatchOverallList(
-        items = items,
-        onSelectMatch = onSelectMatch,
-    )
+
+    Column {
+        LeagueFilter(
+            leagues = listOf(
+                "Premier League",
+                "Bundesliga",
+                "LaLiga",
+                "Serie A",
+            ),
+            onClick = {},
+            modifier = Modifier.padding(16.dp),
+        )
+        Divider()
+        MatchOverallList(
+            items = items,
+            onSelectMatch = onSelectMatch,
+        )
+    }
 }
 
 @Composable

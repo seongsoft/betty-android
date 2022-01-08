@@ -1,14 +1,12 @@
 package io.github.cbinarycastle.macao.ui.match
 
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,9 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.data.matchDetails
-import io.github.cbinarycastle.macao.data.matchOveralls
 import io.github.cbinarycastle.macao.domain.Result
-import io.github.cbinarycastle.macao.entity.*
+import io.github.cbinarycastle.macao.entity.MatchDetails
+import io.github.cbinarycastle.macao.entity.MatchHistory
+import io.github.cbinarycastle.macao.entity.TeamInfo
+import io.github.cbinarycastle.macao.ui.components.widthRatioFromParent
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -43,7 +43,7 @@ private fun MatchDetailsScreen(matchDetailsResult: Result<MatchDetails>) {
 @Composable
 private fun MatchDetailsScreen(matchDetails: MatchDetails) {
     var selectedTabIndex by remember { mutableStateOf(0) }
-    var selectedTab by remember { mutableStateOf(MATCH_RECOMMENDATION_TAB) }
+    var selectedTab by remember { mutableStateOf(SUMMARY_TAB) }
 
     Column {
         Row(
@@ -76,7 +76,7 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
         }
 
         when (selectedTab) {
-            MATCH_RECOMMENDATION_TAB -> MatchRecommendationList(matchDetails.recommendations)
+            SUMMARY_TAB -> RankingSummaryList()
             RELATIVE_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.relativeMatchHistories)
             HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.homeTeamMatchHistories)
             AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.awayTeamMatchHistories)
@@ -118,9 +118,7 @@ private fun Team(
 }
 
 @Composable
-private fun MatchRecommendationList(
-    recommendations: List<MatchRecommendation>,
-) {
+private fun RankingSummaryList() {
 }
 
 @Composable
@@ -191,141 +189,9 @@ private fun MatchHistoryItem(history: MatchHistory) {
     }
 }
 
-@Composable
-private fun RankingList(ranking: Ranking) {
-    ranking.group.forEach { group ->
-        Row {
-            Column {
-                FixedRankingHeader()
-                group.items.forEach { item -> FixedRankingItem(item) }
-            }
-            Column(Modifier.horizontalScroll(state = rememberScrollState())) {
-                ScrollableRankingHeader()
-                group.items.forEach { item -> ScrollableRankingItem(item) }
-            }
-        }
-    }
-}
-
-@Composable
-private fun FixedRankingHeader() {
-    Row {
-        RankingCell(
-            text = stringResource(R.string.ranking_num),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_team),
-            horizontalArrangement = Arrangement.Start,
-        )
-    }
-}
-
-@Composable
-private fun FixedRankingItem(item: Ranking.RankingInfo) {
-    Row {
-        RankingCell(
-            text = item.rankingNum.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = item.teamName,
-            modifier = Modifier.padding(end = 8.dp),
-            horizontalArrangement = Arrangement.Start,
-            textStyle = MacaoTheme.typography.subtitle2,
-        )
-    }
-}
-
-@Composable
-private fun ScrollableRankingHeader() {
-    Row {
-        RankingCell(
-            text = stringResource(R.string.ranking_matches),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_game_point),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_win),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_draw),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_lose),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_score),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_lose_point),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-    }
-}
-
-@Composable
-private fun ScrollableRankingItem(item: Ranking.RankingInfo) {
-    Row {
-        RankingCell(
-            text = item.matches.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = item.gamePoint.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = item.win.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = item.draw.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = item.lose.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = item.score.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-        RankingCell(
-            text = item.losePoint.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
-    }
-}
-
-@Composable
-private fun RankingCell(
-    text: String,
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
-    textStyle: TextStyle = MacaoTheme.typography.body2,
-) {
-    Row(
-        modifier = modifier.padding(vertical = 8.dp),
-        horizontalArrangement = horizontalArrangement,
-    ) {
-        Text(
-            text = text,
-            style = textStyle,
-        )
-    }
-}
-
 @Preview
 @Composable
-fun MatchDetailsScreenPreview() {
+private fun MatchDetailsScreenPreview() {
     MacaoTheme {
         MatchDetailsScreen(matchDetails = matchDetails)
     }
@@ -333,7 +199,7 @@ fun MatchDetailsScreenPreview() {
 
 @Preview
 @Composable
-fun RelativeMatchHistoryListPreview() {
+private fun RelativeMatchHistoryListPreview() {
     MacaoTheme {
         MatchHistoryList(histories = matchDetails.relativeMatchHistories)
     }
@@ -341,24 +207,20 @@ fun RelativeMatchHistoryListPreview() {
 
 @Preview
 @Composable
-fun RankingListPreview() {
+private fun RankingListPreview() {
     MacaoTheme {
         RankingList(ranking = matchDetails.ranking)
     }
 }
 
-private object RankingCellDefaults {
-    val Width = 50.dp
-}
-
-private const val MATCH_RECOMMENDATION_TAB = "추천"
+private const val SUMMARY_TAB = "요약"
 private const val RELATIVE_MATCH_HISTORY_TAB = "상대 전적"
 private const val HOME_TEAM_MATCH_HISTORY_TAB = "홈팀 전적"
 private const val AWAY_TEAM_MATCH_HISTORY_TAB = "원정팀 전적"
 private const val RANKING_TAB = "순위"
 
 private val tabs = listOf(
-    MATCH_RECOMMENDATION_TAB,
+    SUMMARY_TAB,
     RELATIVE_MATCH_HISTORY_TAB,
     HOME_TEAM_MATCH_HISTORY_TAB,
     AWAY_TEAM_MATCH_HISTORY_TAB,
