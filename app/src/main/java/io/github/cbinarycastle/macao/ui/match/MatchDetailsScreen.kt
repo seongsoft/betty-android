@@ -1,12 +1,12 @@
 package io.github.cbinarycastle.macao.ui.match
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +18,6 @@ import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import io.github.cbinarycastle.macao.entity.MatchHistory
 import io.github.cbinarycastle.macao.entity.TeamInfo
-import io.github.cbinarycastle.macao.ui.components.widthRatioFromParent
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -76,7 +75,7 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
         }
 
         when (selectedTab) {
-            SUMMARY_TAB -> RankingSummaryList()
+            SUMMARY_TAB -> SummaryList()
             RELATIVE_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.relativeMatchHistories)
             HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.homeTeamMatchHistories)
             AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.awayTeamMatchHistories)
@@ -118,7 +117,128 @@ private fun Team(
 }
 
 @Composable
-private fun RankingSummaryList() {
+private fun SummaryList(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .padding(vertical = 8.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        SummaryCard(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+        SummaryCard(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+        SummaryCard(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+    }
+}
+
+@Composable
+private fun SummaryCard(modifier: Modifier = Modifier) {
+    Card(modifier) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Home Matches",
+                style = MacaoTheme.typography.h6
+            )
+            Spacer(Modifier.height(16.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                SummaryItem(
+                    label = "경기",
+                    homeTeamValue = 19,
+                    awayTeamValue = 21
+                )
+                SummaryItem(
+                    label = "승",
+                    homeTeamValue = 9,
+                    awayTeamValue = 17,
+                    comparator = Comparator.naturalOrder()
+                )
+                SummaryItem(
+                    label = "무",
+                    homeTeamValue = 4,
+                    awayTeamValue = 2
+                )
+                SummaryItem(
+                    label = "패",
+                    homeTeamValue = 6,
+                    awayTeamValue = 2,
+                    comparator = Comparator.reverseOrder()
+                )
+                SummaryItem(
+                    label = "득점",
+                    homeTeamValue = 30,
+                    awayTeamValue = 53,
+                    comparator = Comparator.naturalOrder()
+                )
+                SummaryItem(
+                    label = "실점",
+                    homeTeamValue = 27,
+                    awayTeamValue = 13,
+                    comparator = Comparator.reverseOrder()
+                )
+                SummaryItem(
+                    label = "승점",
+                    homeTeamValue = 31,
+                    awayTeamValue = 53,
+                    comparator = Comparator.naturalOrder()
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SummaryItem(
+    label: String,
+    homeTeamValue: Int,
+    awayTeamValue: Int,
+    modifier: Modifier = Modifier,
+    comparator: Comparator<Int> = Comparator { _, _ -> 0 },
+) {
+    Row(modifier = modifier) {
+        Text(
+            text = homeTeamValue.toString(),
+            modifier = Modifier.weight(1f),
+            color = if (comparator.compare(homeTeamValue, awayTeamValue) > 0) {
+                MacaoTheme.extendedColors.success
+            } else {
+                MacaoTheme.colors.onSurface
+            },
+            textAlign = TextAlign.End,
+            style = MacaoTheme.typography.subtitle2
+        )
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Text(
+                text = label,
+                modifier = Modifier.width(84.dp),
+                textAlign = TextAlign.Center,
+                style = MacaoTheme.typography.body2
+            )
+        }
+        Text(
+            text = awayTeamValue.toString(),
+            modifier = Modifier.weight(1f),
+            color = if (comparator.compare(awayTeamValue, homeTeamValue) > 0) {
+                MacaoTheme.extendedColors.success
+            } else {
+                MacaoTheme.colors.onSurface
+            },
+            style = MacaoTheme.typography.subtitle2
+        )
+    }
 }
 
 @Composable

@@ -1,5 +1,11 @@
 package io.github.cbinarycastle.macao.ui.match
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.animateSizeAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,8 +16,10 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,7 +70,10 @@ private fun MatchOverallList(
     items: LazyPagingItems<MatchOverallModel>,
     onSelectMatch: (matchId: String) -> Unit,
 ) {
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    LazyColumn(
+        modifier = Modifier.fillMaxHeight(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         items(items) { item ->
             if (item != null) {
                 when (item) {
@@ -102,8 +113,9 @@ private fun MatchOverallItem(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             LeagueName(matchOverall.leagueName)
+            MatchPrediction()
             Column(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(bottom = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -124,11 +136,7 @@ private fun MatchOverallItem(
                         modifier = Modifier.weight(1f)
                     )
                 }
-                Spacer(Modifier.height(8.dp))
-                PredictionPercentageText()
             }
-            Spacer(Modifier.height(8.dp))
-            PredictionPercentageBar()
         }
     }
 }
@@ -149,7 +157,6 @@ private fun LeagueName(
             style = MacaoTheme.typography.caption,
         )
     }
-    Divider()
 }
 
 @Composable
@@ -213,52 +220,62 @@ private fun MatchTime(matchAt: LocalDateTime) {
 }
 
 @Composable
-private fun PredictionPercentageText() {
-    Row {
-        Text(
-            text = "34%",
-            color = MacaoTheme.colors.error,
-            style = MacaoTheme.typography.caption,
-        )
-        Spacer(Modifier.width(16.dp))
-        Text(
-            text = "20%",
-            color = MacaoTheme.extendedColors.neutral,
-            style = MacaoTheme.typography.caption,
-        )
-        Spacer(Modifier.width(16.dp))
-        Text(
-            text = "46%",
-            color = MacaoTheme.extendedColors.success,
-            style = MacaoTheme.typography.caption,
-        )
+private fun MatchPrediction() {
+    val state = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
     }
-}
 
-@Composable
-private fun PredictionPercentageBar() {
-    Row {
-        Surface(
-            modifier = Modifier
-                .weight(34f)
-                .height(4.dp),
-            color = MacaoTheme.colors.error,
-            content = {}
-        )
-        Surface(
-            modifier = Modifier
-                .weight(20f)
-                .height(4.dp),
-            color = MacaoTheme.extendedColors.neutral,
-            content = {}
-        )
-        Surface(
-            modifier = Modifier
-                .weight(46f)
-                .height(4.dp),
-            color = MacaoTheme.extendedColors.success,
-            content = {}
-        )
+    AnimatedVisibility(
+        visibleState = state,
+        enter = fadeIn() + slideInHorizontally(),
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Row {
+                Surface(
+                    modifier = Modifier
+                        .weight(34f)
+                        .height(4.dp),
+                    color = MacaoTheme.colors.error,
+                    content = {}
+                )
+                Surface(
+                    modifier = Modifier
+                        .weight(20f)
+                        .height(4.dp),
+                    color = MacaoTheme.extendedColors.neutral,
+                    content = {}
+                )
+                Surface(
+                    modifier = Modifier
+                        .weight(46f)
+                        .height(4.dp),
+                    color = MacaoTheme.extendedColors.success,
+                    content = {}
+                )
+            }
+            Spacer(Modifier.height(4.dp))
+            Row {
+                Text(
+                    text = "34%",
+                    color = MacaoTheme.colors.error,
+                    style = MacaoTheme.typography.caption,
+                )
+                Spacer(Modifier.width(16.dp))
+                Text(
+                    text = "20%",
+                    color = MacaoTheme.extendedColors.neutral,
+                    style = MacaoTheme.typography.caption,
+                )
+                Spacer(Modifier.width(16.dp))
+                Text(
+                    text = "46%",
+                    color = MacaoTheme.extendedColors.success,
+                    style = MacaoTheme.typography.caption,
+                )
+            }
+        }
     }
 }
 
