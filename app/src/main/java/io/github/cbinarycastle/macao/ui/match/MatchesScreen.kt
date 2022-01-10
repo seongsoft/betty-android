@@ -6,8 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
@@ -208,14 +206,14 @@ private fun MatchPredictionBar(
         }
     }
     val homeColor = when {
-        homePercentage > awayPercentage -> MacaoTheme.extendedColors.success
-        homePercentage < awayPercentage -> MacaoTheme.colors.error
-        else -> MacaoTheme.extendedColors.neutral
+        homePercentage > awayPercentage -> MacaoTheme.extendedColors.win
+        homePercentage < awayPercentage -> MacaoTheme.extendedColors.lose
+        else -> MacaoTheme.extendedColors.draw
     }
     val awayColor = when {
-        awayPercentage > homePercentage -> MacaoTheme.extendedColors.success
-        awayPercentage < homePercentage -> MacaoTheme.colors.error
-        else -> MacaoTheme.extendedColors.neutral
+        awayPercentage > homePercentage -> MacaoTheme.extendedColors.win
+        awayPercentage < homePercentage -> MacaoTheme.extendedColors.lose
+        else -> MacaoTheme.extendedColors.draw
     }
 
     AnimatedVisibility(
@@ -234,7 +232,7 @@ private fun MatchPredictionBar(
                 modifier = Modifier
                     .weight(drawPercentage.toFloat())
                     .height(4.dp),
-                color = MacaoTheme.extendedColors.neutral,
+                color = MacaoTheme.extendedColors.draw,
                 content = {}
             )
             Surface(
@@ -256,14 +254,14 @@ private fun MatchPredictionText(
     modifier: Modifier = Modifier,
 ) {
     val homeColor = when {
-        homePercentage > awayPercentage -> MacaoTheme.extendedColors.success
-        homePercentage < awayPercentage -> MacaoTheme.colors.error
-        else -> MacaoTheme.extendedColors.neutral
+        homePercentage > awayPercentage -> MacaoTheme.extendedColors.win
+        homePercentage < awayPercentage -> MacaoTheme.extendedColors.lose
+        else -> MacaoTheme.extendedColors.draw
     }
     val awayColor = when {
-        awayPercentage > homePercentage -> MacaoTheme.extendedColors.success
-        awayPercentage < homePercentage -> MacaoTheme.colors.error
-        else -> MacaoTheme.extendedColors.neutral
+        awayPercentage > homePercentage -> MacaoTheme.extendedColors.win
+        awayPercentage < homePercentage -> MacaoTheme.extendedColors.lose
+        else -> MacaoTheme.extendedColors.draw
     }
 
     Row(modifier) {
@@ -275,7 +273,7 @@ private fun MatchPredictionText(
         Spacer(Modifier.width(16.dp))
         Text(
             text = "$drawPercentage%",
-            color = MacaoTheme.extendedColors.neutral,
+            color = MacaoTheme.extendedColors.draw,
             style = MacaoTheme.typography.caption,
         )
         Spacer(Modifier.width(16.dp))
@@ -332,7 +330,7 @@ private fun ScorePrediction(
         Text(
             text = homeScore.toString(),
             color = if (homeScore > awayScore) {
-                MacaoTheme.extendedColors.success
+                MacaoTheme.extendedColors.win
             } else {
                 MacaoTheme.colors.onSurface
             },
@@ -344,7 +342,7 @@ private fun ScorePrediction(
         Text(
             text = awayScore.toString(),
             color = if (awayScore > homeScore) {
-                MacaoTheme.extendedColors.success
+                MacaoTheme.extendedColors.win
             } else {
                 MacaoTheme.colors.onSurface
             },

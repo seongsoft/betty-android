@@ -10,8 +10,9 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class ExtendedColors(
-    val success: Color,
-    val neutral: Color,
+    val win: Color,
+    val draw: Color,
+    val lose: Color,
 )
 
 private val LightColors = lightColors(
@@ -26,13 +27,15 @@ private val DarkColors = darkColors(
 )
 
 private val LightExtendedColors = ExtendedColors(
-    success = green800,
-    neutral = gray600,
+    win = greenA700,
+    draw = gray600,
+    lose = redA700,
 )
 
 private val DarkExtendedColors = ExtendedColors(
-    success = green200,
-    neutral = gray300,
+    win = green200,
+    draw = gray300,
+    lose = redA700,
 )
 
 val LocalExtendedColors = compositionLocalOf { LightExtendedColors }

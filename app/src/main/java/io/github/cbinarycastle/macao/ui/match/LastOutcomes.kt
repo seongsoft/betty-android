@@ -22,7 +22,7 @@ fun LastOutcomes(outcome: Outcome) {
 
 @Composable
 private fun Outcome.backgroundColor() = when (this) {
-    Outcome.WIN -> MacaoTheme.extendedColors.success
-    Outcome.DRAW -> MacaoTheme.extendedColors.neutral
-    Outcome.LOSE -> MacaoTheme.colors.error
+    Outcome.WIN -> MacaoTheme.extendedColors.win
+    Outcome.DRAW -> MacaoTheme.extendedColors.draw
+    Outcome.LOSE -> MacaoTheme.extendedColors.lose
 }

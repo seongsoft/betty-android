@@ -213,7 +213,7 @@ private fun SummaryItem(
             text = homeTeamValue.toString(),
             modifier = Modifier.weight(1f),
             color = if (comparator.compare(homeTeamValue, awayTeamValue) > 0) {
-                MacaoTheme.extendedColors.success
+                MacaoTheme.extendedColors.win
             } else {
                 MacaoTheme.colors.onSurface
             },
@@ -232,7 +232,7 @@ private fun SummaryItem(
             text = awayTeamValue.toString(),
             modifier = Modifier.weight(1f),
             color = if (comparator.compare(awayTeamValue, homeTeamValue) > 0) {
-                MacaoTheme.extendedColors.success
+                MacaoTheme.extendedColors.win
             } else {
                 MacaoTheme.colors.onSurface
             },
