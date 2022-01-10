@@ -11,7 +11,7 @@ import io.github.cbinarycastle.macao.entity.Outcome
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
 @Composable
-fun RecentRecordStatus(outcome: Outcome) {
+fun LastOutcomes(outcome: Outcome) {
     Surface(
         modifier = Modifier.size(12.dp),
         shape = CircleShape,

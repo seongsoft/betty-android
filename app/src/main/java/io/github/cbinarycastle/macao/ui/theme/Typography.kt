@@ -14,8 +14,15 @@ val robotoFamily = FontFamily(
     Font(R.font.roboto_medium, FontWeight.Medium),
 )
 
+val poppinsFamily = FontFamily(
+    Font(R.font.poppins_regular),
+    Font(R.font.poppins_light, FontWeight.Light),
+    Font(R.font.poppins_medium, FontWeight.Medium),
+    Font(R.font.poppins_bold, FontWeight.Bold),
+)
+
 val typography = Typography(
-    defaultFontFamily = robotoFamily,
+    defaultFontFamily = poppinsFamily,
     h6 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 18.sp,

@@ -109,7 +109,7 @@ private fun Team(
         Row {
             team.lastOutcomes.forEach {
                 Spacer(Modifier.width(2.dp))
-                RecentRecordStatus(it)
+                LastOutcomes(it)
                 Spacer(Modifier.width(2.dp))
             }
         }
