@@ -1,29 +1,13 @@
 package io.github.cbinarycastle.macao.data
 
 import io.github.cbinarycastle.macao.entity.*
-import io.github.cbinarycastle.macao.entity.OutCome
-import io.github.cbinarycastle.macao.entity.RecommendType
-import io.github.cbinarycastle.macao.entity.TeamInfo
+import io.github.cbinarycastle.macao.entity.SuggestionInfo
 import org.threeten.bp.LocalDateTime
 
 val matchDetails = MatchDetails(
     id = "1",
-    homeTeamInfo = manchesterUnited,
-    awayTeamInfo = manchesterCity,
-    recommendations = listOf(
-        MatchRecommendation(
-            description = "단지 추측입니다.",
-            recommendType = RecommendType.HOME_WIN
-        ),
-        MatchRecommendation(
-            description = "맨유가 좋습니다.",
-            recommendType = RecommendType.HOME_WIN
-        ),
-        MatchRecommendation(
-            description = "잘 모르겠습니다.",
-            recommendType = RecommendType.DRAW
-        ),
-    ),
+    homeTeam = manchesterUnited,
+    awayTeam = manchesterCity,
     relativeMatchHistories = listOf(
         MatchHistory(
             leagueName = "Premier League",

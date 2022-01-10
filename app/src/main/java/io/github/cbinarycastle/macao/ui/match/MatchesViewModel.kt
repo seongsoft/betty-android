@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
-class MatchOverallsViewModel @Inject constructor(
+class MatchesViewModel @Inject constructor(
     getMatchOverallsUseCase: GetMatchOverallsUseCase,
 ) : ViewModel() {
 

@@ -13,13 +13,13 @@ class MatchDetailsViewModel @Inject constructor(
     getMatchDetailsUseCase: GetMatchDetailsUseCase,
 ) : ViewModel() {
 
-    private val matchId = MutableStateFlow<String?>(null)
+    private val matchId = MutableStateFlow<Long?>(null)
 
     val matchDetails = matchId
         .filterNotNull()
         .mapLatest { getMatchDetailsUseCase(it) }
 
-    fun setMatchId(matchId: String) {
+    fun setMatchId(matchId: Long) {
         this.matchId.value = matchId
     }
 }

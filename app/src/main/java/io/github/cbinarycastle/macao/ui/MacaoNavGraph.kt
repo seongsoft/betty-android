@@ -11,15 +11,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import io.github.cbinarycastle.macao.ui.match.MatchDetailsScreen
 import io.github.cbinarycastle.macao.ui.match.MatchDetailsViewModel
-import io.github.cbinarycastle.macao.ui.match.MatchOverallsScreen
-import io.github.cbinarycastle.macao.ui.match.MatchOverallsViewModel
+import io.github.cbinarycastle.macao.ui.match.MatchesScreen
+import io.github.cbinarycastle.macao.ui.match.MatchesViewModel
 
 private const val MATCH_DETAILS_ID_KEY = "matchId"
 
 object MainDestinations {
-    const val MATCH_OVERALLS = "matches"
+    const val MATCHES = "matches"
     const val MATCH_DETAILS = "match"
-    const val START_DESTINATION = MATCH_OVERALLS
+    const val START_DESTINATION = MATCHES
 }
 
 @Composable
@@ -32,9 +32,9 @@ fun MacaoNavGraph(
         navController = navController,
         startDestination = MainDestinations.START_DESTINATION,
     ) {
-        composable(MainDestinations.MATCH_OVERALLS) {
-            val viewModel = hiltViewModel<MatchOverallsViewModel>()
-            MatchOverallsScreen(
+        composable(MainDestinations.MATCHES) {
+            val viewModel = hiltViewModel<MatchesViewModel>()
+            MatchesScreen(
                 viewModel = viewModel,
                 onSelectMatch = actions.openMatch,
             )
@@ -42,11 +42,11 @@ fun MacaoNavGraph(
         composable(
             "${MainDestinations.MATCH_DETAILS}/{$MATCH_DETAILS_ID_KEY}",
             arguments = listOf(
-                navArgument(MATCH_DETAILS_ID_KEY) { type = NavType.StringType }
+                navArgument(MATCH_DETAILS_ID_KEY) { type = NavType.LongType }
             )
         ) {
             val viewModel = hiltViewModel<MatchDetailsViewModel>()
-            val matchId = requireNotNull(it.arguments?.getString(MATCH_DETAILS_ID_KEY))
+            val matchId = requireNotNull(it.arguments?.getLong(MATCH_DETAILS_ID_KEY))
             viewModel.setMatchId(matchId)
 
             MatchDetailsScreen(viewModel)
@@ -55,7 +55,7 @@ fun MacaoNavGraph(
 }
 
 class MainActions(navController: NavHostController) {
-    val openMatch = { matchId: String ->
+    val openMatch = { matchId: Long ->
         navController.navigate("${MainDestinations.MATCH_DETAILS}/$matchId")
     }
 }

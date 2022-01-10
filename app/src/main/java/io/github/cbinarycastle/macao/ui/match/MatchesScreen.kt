@@ -1,12 +1,9 @@
 package io.github.cbinarycastle.macao.ui.match
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.*
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.animateSizeAsState
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,8 +26,9 @@ import androidx.paging.compose.items
 import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.data.matchOveralls
+import io.github.cbinarycastle.macao.entity.League
 import io.github.cbinarycastle.macao.entity.MatchOverall
-import io.github.cbinarycastle.macao.entity.TeamInfo
+import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -40,15 +37,16 @@ import org.threeten.bp.format.FormatStyle
 private val matchDateFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
 @Composable
-fun MatchOverallsScreen(
-    viewModel: MatchOverallsViewModel,
-    onSelectMatch: (matchId: String) -> Unit,
+fun MatchesScreen(
+    viewModel: MatchesViewModel,
+    onSelectMatch: (matchId: Long) -> Unit,
 ) {
     val items = viewModel.matchOveralls.collectAsLazyPagingItems()
 
     Column {
         LeagueFilter(
             leagues = listOf(
+                "All",
                 "Premier League",
                 "Bundesliga",
                 "LaLiga",
@@ -68,7 +66,7 @@ fun MatchOverallsScreen(
 @Composable
 private fun MatchOverallList(
     items: LazyPagingItems<MatchOverallModel>,
-    onSelectMatch: (matchId: String) -> Unit,
+    onSelectMatch: (matchId: Long) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxHeight(),
@@ -103,7 +101,7 @@ private fun MatchOverallSeparator(matchAt: LocalDateTime) {
 @Composable
 private fun MatchOverallItem(
     matchOverall: MatchOverall,
-    onSelectMatch: (matchId: String) -> Unit,
+    onSelectMatch: (matchId: Long) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -112,47 +110,64 @@ private fun MatchOverallItem(
         elevation = 4.dp,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            LeagueName(matchOverall.leagueName)
-            MatchPrediction()
-            Column(
-                modifier = Modifier.padding(bottom = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+            League(matchOverall.league)
+            MatchPrediction(
+                homePercentage = matchOverall.suggestionInfo.homeExpectedPercentage,
+                drawPercentage = matchOverall.suggestionInfo.drawExpectedPercentage,
+                awayPercentage = matchOverall.suggestionInfo.awayExpectedPercentage
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Team(
-                        teamInfo = matchOverall.homeTeamInfo,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Spacer(Modifier.width(16.dp))
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        MatchTime(matchOverall.matchAt)
+                Team(
+                    team = matchOverall.homeTeam,
+                    modifier = Modifier.weight(1f)
+                )
+                Spacer(Modifier.width(16.dp))
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    MatchTime(matchOverall.matchAt)
+                    Spacer(Modifier.height(8.dp))
+                    Row {
+                        Text(matchOverall.suggestionInfo.homeExpectedScore.toString())
+                        Spacer(Modifier.width(4.dp))
+                        Text(":")
+                        Spacer(Modifier.width(4.dp))
+                        Text(matchOverall.suggestionInfo.awayExpectedScore.toString())
                     }
-                    Spacer(Modifier.width(16.dp))
-                    Team(
-                        teamInfo = matchOverall.awayTeamInfo,
-                        modifier = Modifier.weight(1f)
-                    )
                 }
+                Spacer(Modifier.width(16.dp))
+                Team(
+                    team = matchOverall.awayTeam,
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
     }
 }
 
 @Composable
-private fun LeagueName(
-    leagueName: String,
+private fun League(
+    league: League,
     modifier: Modifier = Modifier
 ) {
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        color = MacaoTheme.colors.background,
+    Row(
+        modifier
+            .fillMaxWidth()
+            .background(MacaoTheme.colors.background)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
+        GlideImage(
+            imageModel = league.imageUrl,
+            modifier = Modifier.size(24.dp),
+            previewPlaceholder = R.drawable.premier_league,
+        )
+        Spacer(Modifier.width(4.dp))
         Text(
-            text = leagueName,
-            modifier = Modifier.padding(8.dp),
+            text = league.name,
             textAlign = TextAlign.Center,
             style = MacaoTheme.typography.caption,
         )
@@ -161,7 +176,7 @@ private fun LeagueName(
 
 @Composable
 private fun Team(
-    teamInfo: TeamInfo,
+    team: Team,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -169,7 +184,7 @@ private fun Team(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GlideImage(
-            imageModel = teamInfo.logoUrl,
+            imageModel = team.imageUrl,
             modifier = Modifier.size(36.dp),
             previewPlaceholder = R.drawable.manchester_united,
         )
@@ -182,14 +197,14 @@ private fun Team(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = teamInfo.teamName,
+                    text = team.name,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = MacaoTheme.typography.subtitle2,
                 )
                 Spacer(Modifier.height(4.dp))
                 Row {
-                    teamInfo.recentRecords.forEach {
+                    team.lastOutcomes.forEach {
                         Spacer(Modifier.width(4.dp))
                         RecentRecordStatus(it)
                     }
@@ -219,59 +234,74 @@ private fun MatchTime(matchAt: LocalDateTime) {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun MatchPrediction() {
+private fun MatchPrediction(
+    homePercentage: Int,
+    drawPercentage: Int,
+    awayPercentage: Int,
+) {
     val state = remember {
         MutableTransitionState(false).apply {
             targetState = true
         }
     }
+    val homeColor = when {
+        homePercentage > awayPercentage -> MacaoTheme.extendedColors.success
+        homePercentage < awayPercentage -> MacaoTheme.colors.error
+        else -> MacaoTheme.extendedColors.neutral
+    }
+    val awayColor = when {
+        awayPercentage > homePercentage -> MacaoTheme.extendedColors.success
+        awayPercentage < homePercentage -> MacaoTheme.colors.error
+        else -> MacaoTheme.extendedColors.neutral
+    }
 
     AnimatedVisibility(
         visibleState = state,
-        enter = fadeIn() + slideInHorizontally(),
+        enter = fadeIn(),
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Row {
+            Row(Modifier.animateEnterExit(enter = slideInHorizontally())) {
                 Surface(
                     modifier = Modifier
-                        .weight(34f)
+                        .weight(homePercentage.toFloat())
                         .height(4.dp),
-                    color = MacaoTheme.colors.error,
+                    color = homeColor,
                     content = {}
                 )
                 Surface(
                     modifier = Modifier
-                        .weight(20f)
+                        .weight(drawPercentage.toFloat())
                         .height(4.dp),
                     color = MacaoTheme.extendedColors.neutral,
                     content = {}
                 )
                 Surface(
                     modifier = Modifier
-                        .weight(46f)
+                        .weight(awayPercentage.toFloat())
                         .height(4.dp),
-                    color = MacaoTheme.extendedColors.success,
+                    color = awayColor,
                     content = {}
                 )
             }
             Spacer(Modifier.height(4.dp))
             Row {
                 Text(
-                    text = "34%",
-                    color = MacaoTheme.colors.error,
+                    text = "$homePercentage%",
+                    color = homeColor,
                     style = MacaoTheme.typography.caption,
                 )
                 Spacer(Modifier.width(16.dp))
                 Text(
-                    text = "20%",
+                    text = "$drawPercentage%",
                     color = MacaoTheme.extendedColors.neutral,
                     style = MacaoTheme.typography.caption,
                 )
                 Spacer(Modifier.width(16.dp))
                 Text(
-                    text = "46%",
-                    color = MacaoTheme.extendedColors.success,
+                    text = "$awayPercentage%",
+                    color = awayColor,
                     style = MacaoTheme.typography.caption,
                 )
             }

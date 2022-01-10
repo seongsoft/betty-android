@@ -8,9 +8,9 @@ import javax.inject.Inject
 class GetMatchDetailsUseCase @Inject constructor(
     @IoDispatcher dispatcher: CoroutineDispatcher,
     private val repository: MatchDetailsRepository,
-) : UseCase<String, MatchDetails>(dispatcher) {
+) : UseCase<Long, MatchDetails>(dispatcher) {
 
-    override suspend fun execute(params: String): MatchDetails {
+    override suspend fun execute(params: Long): MatchDetails {
         return repository.getMatchDetails()
     }
 }

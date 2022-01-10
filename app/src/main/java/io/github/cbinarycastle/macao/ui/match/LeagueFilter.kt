@@ -65,6 +65,7 @@ private fun LeagueFilterPreview() {
     MacaoTheme {
         LeagueFilter(
             leagues = listOf(
+                "All",
                 "Premier League",
                 "Bundesliga",
                 "LaLiga",

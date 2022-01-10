@@ -17,7 +17,7 @@ import io.github.cbinarycastle.macao.data.matchDetails
 import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import io.github.cbinarycastle.macao.entity.MatchHistory
-import io.github.cbinarycastle.macao.entity.TeamInfo
+import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -51,8 +51,8 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
                 .padding(vertical = 32.dp),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Team(teamInfo = matchDetails.homeTeamInfo)
-            Team(teamInfo = matchDetails.awayTeamInfo)
+            Team(team = matchDetails.homeTeam)
+            Team(team = matchDetails.awayTeam)
         }
 
         ScrollableTabRow(
@@ -86,7 +86,7 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
 
 @Composable
 private fun Team(
-    teamInfo: TeamInfo,
+    team: Team,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -94,20 +94,20 @@ private fun Team(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GlideImage(
-            imageModel = teamInfo.logoUrl,
+            imageModel = team.imageUrl,
             modifier = Modifier.size(60.dp),
             previewPlaceholder = R.drawable.manchester_united,
         )
         Spacer(Modifier.height(4.dp))
         Text(
-            text = teamInfo.teamName,
+            text = team.name,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MacaoTheme.typography.subtitle2
         )
         Spacer(Modifier.height(4.dp))
         Row {
-            teamInfo.recentRecords.forEach {
+            team.lastOutcomes.forEach {
                 Spacer(Modifier.width(2.dp))
                 RecentRecordStatus(it)
                 Spacer(Modifier.width(2.dp))
