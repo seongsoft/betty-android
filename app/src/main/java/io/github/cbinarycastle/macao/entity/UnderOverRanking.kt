@@ -1,6 +1,6 @@
 package io.github.cbinarycastle.macao.entity
 
-data class Ranking(val rows: List<Row>) {
+data class UnderOverRanking(val rows: List<Row>) {
     data class Row(
         val number: Int,
         val teamName: String,
@@ -10,6 +10,6 @@ data class Ranking(val rows: List<Row>) {
         val loseCount: Int,
         val goalFor: Int,
         val goalAgainst: Int,
-        val points: Int,
+        val points: Int
     )
 }

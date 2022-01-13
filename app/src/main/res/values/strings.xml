@@ -21,4 +21,9 @@
     <string name="recommendation_home_win">HOME WIN</string>
     <string name="recommendation_draw">DRAW</string>
     <string name="recommendation_away_win">AWAY WIN</string>
+
+    <!-- Place -->
+    <string name="place_total_title">Total Matches</string>
+    <string name="place_home_title">Home Matches</string>
+    <string name="place_away_title">Away Matches</string>
 </resources>

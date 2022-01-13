@@ -2,7 +2,7 @@ package io.github.cbinarycastle.macao.data
 
 interface BackendService {
 
-    suspend fun fetchMatchOveralls(): MatchOverallsResponse
+    suspend fun fetchMatches(): GetMatchesResponse
 
-    suspend fun fetchMatchDetails(): MatchDetailsResponse
+    suspend fun fetchMatchDetails(): GetMatchDetailsResponse
 }

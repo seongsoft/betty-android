@@ -1,108 +1,206 @@
 package io.github.cbinarycastle.macao.data
 
 import io.github.cbinarycastle.macao.entity.*
-import io.github.cbinarycastle.macao.entity.SuggestionInfo
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 
 val matchDetails = MatchDetails(
-    id = "1",
+    matchAt = LocalDateTime.of(2021, 12, 25, 6, 0, 0),
+    league = premierLeague,
     homeTeam = manchesterUnited,
     awayTeam = manchesterCity,
-    relativeMatchHistories = listOf(
+    homeMatchHistories = listOf(
         MatchHistory(
-            leagueName = "Premier League",
-            matchedAt = LocalDateTime.of(2021, 12, 25, 6, 0, 0),
             homeTeamName = "Manchester United",
-            homeTeamScore = 2,
             awayTeamName = "Manchester City",
-            awayTeamScore = 1,
-            handi = "",
-            handiOutcome = "",
-            isOdd = false,
-            firstHalfScore = "1:1"
+            date = LocalDate.of(2021, 12, 25),
+            outcome = Outcome.WIN,
+            homeScore = 2,
+            awayScore = 1,
         ),
         MatchHistory(
-            leagueName = "Premier League",
-            matchedAt = LocalDateTime.of(2021, 12, 15, 21, 30, 0),
-            homeTeamName = "Manchester City",
-            homeTeamScore = 4,
-            awayTeamName = "Manchester United",
-            awayTeamScore = 2,
-            handi = "",
-            handiOutcome = "",
-            isOdd = false,
-            firstHalfScore = "2:2"
-        )
-    ),
-    homeTeamMatchHistories = listOf(
-        MatchHistory(
-            leagueName = "Premier League",
-            matchedAt = LocalDateTime.of(2021, 12, 24, 20, 0, 0),
+            date = LocalDate.of(2021, 12, 24),
             homeTeamName = "Manchester United",
-            homeTeamScore = 1,
             awayTeamName = "Chelsea",
-            awayTeamScore = 3,
-            handi = "",
-            handiOutcome = "",
-            isOdd = false,
-            firstHalfScore = "0:2"
-        )
-    ),
-    awayTeamMatchHistories = listOf(
+            outcome = Outcome.LOSE,
+            homeScore = 1,
+            awayScore = 3,
+        ),
         MatchHistory(
-            leagueName = "Premier League",
-            matchedAt = LocalDateTime.of(2021, 12, 24, 15, 0, 0),
+            date = LocalDate.of(2021, 12, 15),
             homeTeamName = "Manchester City",
-            homeTeamScore = 2,
+            awayTeamName = "Manchester United",
+            outcome = Outcome.LOSE,
+            homeScore = 4,
+            awayScore = 2,
+        ),
+    ),
+    awayMatchHistories = listOf(
+        MatchHistory(
+            date = LocalDate.of(2021, 12, 24),
+            homeTeamName = "Manchester City",
             awayTeamName = "Liverpool",
-            awayTeamScore = 2,
-            handi = "",
-            handiOutcome = "",
-            isOdd = false,
-            firstHalfScore = "1:1"
-        )
+            outcome = Outcome.DRAW,
+            homeScore = 2,
+            awayScore = 2,
+        ),
     ),
     ranking = Ranking(
-        type = Ranking.RankingType.LEAGUE,
-        group = listOf(
-            Ranking.RankingGroup(
-                name = null,
-                items = listOf(
-                    Ranking.RankingInfo(
-                        rankingNum = 1,
-                        teamName = "Manchester City",
-                        matches = 20,
-                        win = 16,
-                        draw = 2,
-                        lose = 2,
-                        score = 51,
-                        losePoint = 12,
-                        gamePoint = 50
-                    ),
-                    Ranking.RankingInfo(
-                        rankingNum = 2,
-                        teamName = "Chelsea",
-                        matches = 20,
-                        win = 12,
-                        draw = 6,
-                        lose = 2,
-                        score = 43,
-                        losePoint = 14,
-                        gamePoint = 42
-                    ),
-                    Ranking.RankingInfo(
-                        rankingNum = 3,
-                        teamName = "Liverpool",
-                        matches = 19,
-                        win = 12,
-                        draw = 5,
-                        lose = 2,
-                        score = 50,
-                        losePoint = 16,
-                        gamePoint = 41
-                    )
-                )
-            )
+        rows = listOf(
+            Ranking.Row(
+                number = 1,
+                teamName = "Manchester City",
+                matchCount = 21,
+                winCount = 17,
+                drawCount = 2,
+                loseCount = 2,
+                goalFor = 53,
+                goalAgainst = 13,
+                points = 53
+            ),
+            Ranking.Row(
+                number = 2,
+                teamName = "Chelsea",
+                matchCount = 21,
+                winCount = 12,
+                drawCount = 7,
+                loseCount = 2,
+                goalFor = 45,
+                goalAgainst = 16,
+                points = 43
+            ),
+            Ranking.Row(
+                number = 3,
+                teamName = "Liverpool",
+                matchCount = 20,
+                winCount = 12,
+                drawCount = 6,
+                loseCount = 2,
+                goalFor = 52,
+                goalAgainst = 18,
+                points = 42
+            ),
+        )
+    ),
+    suggestionInfo = SuggestionInfo(
+        homeExpectedScore = 1,
+        awayExpectedScore = 3,
+        homeExpectedPercentage = 21,
+        drawExpectedPercentage = 24,
+        awayExpectedPercentage = 55,
+        suggestions = listOf(SuggestionType.AWAY_WIN)
+    ),
+    totalPlace = Place(
+        home = Place.Value(
+            totalMatchCount = 14,
+            winMatchCount = 10,
+            drawMatchCount = 1,
+            loseMatchCount = 3,
+            goalFor = 17,
+            goalAgainst = 5,
+            points = 21
+        ),
+        away = Place.Value(
+            totalMatchCount = 15,
+            winMatchCount = 6,
+            drawMatchCount = 4,
+            loseMatchCount = 5,
+            goalFor = 9,
+            goalAgainst = 12,
+            points = 13
+        )
+    ),
+    homePlace = Place(
+        home = Place.Value(
+            totalMatchCount = 14,
+            winMatchCount = 10,
+            drawMatchCount = 1,
+            loseMatchCount = 3,
+            goalFor = 17,
+            goalAgainst = 5,
+            points = 21
+        ),
+        away = Place.Value(
+            totalMatchCount = 15,
+            winMatchCount = 6,
+            drawMatchCount = 4,
+            loseMatchCount = 5,
+            goalFor = 9,
+            goalAgainst = 12,
+            points = 13
+        )
+    ),
+    awayPlace = Place(
+        home = Place.Value(
+            totalMatchCount = 14,
+            winMatchCount = 10,
+            drawMatchCount = 1,
+            loseMatchCount = 3,
+            goalFor = 17,
+            goalAgainst = 5,
+            points = 21
+        ),
+        away = Place.Value(
+            totalMatchCount = 15,
+            winMatchCount = 6,
+            drawMatchCount = 4,
+            loseMatchCount = 5,
+            goalFor = 9,
+            goalAgainst = 12,
+            points = 13
+        )
+    ),
+    underOverRanking = UnderOverRanking(
+        rows = listOf(
+            UnderOverRanking.Row(
+                number = 1,
+                teamName = "Manchester City",
+                matchCount = 21,
+                winCount = 17,
+                drawCount = 2,
+                loseCount = 2,
+                goalFor = 53,
+                goalAgainst = 13,
+                points = 53
+            ),
+            UnderOverRanking.Row(
+                number = 2,
+                teamName = "Chelsea",
+                matchCount = 21,
+                winCount = 12,
+                drawCount = 7,
+                loseCount = 2,
+                goalFor = 45,
+                goalAgainst = 16,
+                points = 43
+            ),
+            UnderOverRanking.Row(
+                number = 3,
+                teamName = "Liverpool",
+                matchCount = 20,
+                winCount = 12,
+                drawCount = 6,
+                loseCount = 2,
+                goalFor = 52,
+                goalAgainst = 18,
+                points = 42
+            ),
+        )
+    ),
+    goalPerMatches = listOf(
+        GoalPerMatch(
+            number = 1,
+            teamName = "Manchester City",
+            matchCount = 21,
+            gameCount0 = 2,
+            gameCount1 = 3,
+            gameCount2 = 4,
+            gameCount3 = 5,
+            gameCount4 = 6,
+            gameCount5 = 7,
+            gameCount6 = 8,
+            gameCountEtc = 0,
+            goalPerMatchAvg = 3.5
         )
     )
 )

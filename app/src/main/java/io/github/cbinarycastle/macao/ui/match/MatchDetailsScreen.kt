@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,6 +18,7 @@ import io.github.cbinarycastle.macao.data.matchDetails
 import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import io.github.cbinarycastle.macao.entity.MatchHistory
+import io.github.cbinarycastle.macao.entity.Place
 import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.format.DateTimeFormatter
@@ -42,7 +44,7 @@ private fun MatchDetailsScreen(matchDetailsResult: Result<MatchDetails>) {
 @Composable
 private fun MatchDetailsScreen(matchDetails: MatchDetails) {
     var selectedTabIndex by remember { mutableStateOf(0) }
-    var selectedTab by remember { mutableStateOf(SUMMARY_TAB) }
+    var selectedTab by remember { mutableStateOf(PLACE_TAB) }
 
     Column {
         Row(
@@ -75,10 +77,13 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
         }
 
         when (selectedTab) {
-            SUMMARY_TAB -> SummaryList()
-            RELATIVE_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.relativeMatchHistories)
-            HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.homeTeamMatchHistories)
-            AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.awayTeamMatchHistories)
+            PLACE_TAB -> PlaceList(
+                totalPlace = matchDetails.totalPlace,
+                homePlace = matchDetails.homePlace,
+                awayPlace = matchDetails.awayPlace
+            )
+            HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.homeMatchHistories)
+            AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(matchDetails.awayMatchHistories)
             RANKING_TAB -> RankingList(matchDetails.ranking)
         }
     }
@@ -117,25 +122,36 @@ private fun Team(
 }
 
 @Composable
-private fun SummaryList(modifier: Modifier = Modifier) {
+private fun PlaceList(
+    totalPlace: Place,
+    homePlace: Place,
+    awayPlace: Place,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .padding(vertical = 8.dp)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        SummaryCard(
-            Modifier
+        PlaceCard(
+            place = totalPlace,
+            title = stringResource(R.string.place_total_title),
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
-        SummaryCard(
-            Modifier
+        PlaceCard(
+            place = homePlace,
+            title = stringResource(R.string.place_home_title),
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
-        SummaryCard(
-            Modifier
+        PlaceCard(
+            place = awayPlace,
+            title = stringResource(R.string.place_away_title),
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
@@ -143,56 +159,60 @@ private fun SummaryList(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SummaryCard(modifier: Modifier = Modifier) {
+private fun PlaceCard(
+    place: Place,
+    title: String,
+    modifier: Modifier = Modifier
+) {
     Card(modifier) {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Home Matches",
+                text = title,
                 style = MacaoTheme.typography.h6
             )
             Spacer(Modifier.height(16.dp))
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                SummaryItem(
+                PlaceRow(
                     label = "경기",
-                    homeTeamValue = 19,
-                    awayTeamValue = 21
+                    homeTeamValue = place.home.totalMatchCount,
+                    awayTeamValue = place.away.totalMatchCount
                 )
-                SummaryItem(
+                PlaceRow(
                     label = "승",
-                    homeTeamValue = 9,
-                    awayTeamValue = 17,
+                    homeTeamValue = place.home.winMatchCount,
+                    awayTeamValue = place.away.winMatchCount,
                     comparator = Comparator.naturalOrder()
                 )
-                SummaryItem(
+                PlaceRow(
                     label = "무",
-                    homeTeamValue = 4,
-                    awayTeamValue = 2
+                    homeTeamValue = place.home.drawMatchCount,
+                    awayTeamValue = place.away.drawMatchCount
                 )
-                SummaryItem(
+                PlaceRow(
                     label = "패",
-                    homeTeamValue = 6,
-                    awayTeamValue = 2,
+                    homeTeamValue = place.home.loseMatchCount,
+                    awayTeamValue = place.away.loseMatchCount,
                     comparator = Comparator.reverseOrder()
                 )
-                SummaryItem(
+                PlaceRow(
                     label = "득점",
-                    homeTeamValue = 30,
-                    awayTeamValue = 53,
+                    homeTeamValue = place.home.goalFor,
+                    awayTeamValue = place.away.goalFor,
                     comparator = Comparator.naturalOrder()
                 )
-                SummaryItem(
+                PlaceRow(
                     label = "실점",
-                    homeTeamValue = 27,
-                    awayTeamValue = 13,
+                    homeTeamValue = place.home.goalAgainst,
+                    awayTeamValue = place.away.goalAgainst,
                     comparator = Comparator.reverseOrder()
                 )
-                SummaryItem(
+                PlaceRow(
                     label = "승점",
-                    homeTeamValue = 31,
-                    awayTeamValue = 53,
+                    homeTeamValue = place.home.points,
+                    awayTeamValue = place.away.points,
                     comparator = Comparator.naturalOrder()
                 )
             }
@@ -201,7 +221,7 @@ private fun SummaryCard(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SummaryItem(
+private fun PlaceRow(
     label: String,
     homeTeamValue: Int,
     awayTeamValue: Int,
@@ -266,11 +286,7 @@ private fun MatchHistoryItem(history: MatchHistory) {
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = history.leagueName,
-                style = MacaoTheme.typography.caption,
-            )
-            Text(
-                text = history.matchedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                text = history.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                 style = MacaoTheme.typography.caption,
             )
         }
@@ -288,7 +304,7 @@ private fun MatchHistoryItem(history: MatchHistory) {
                     style = MacaoTheme.typography.subtitle2,
                 )
                 Text(
-                    text = history.homeTeamScore.toString(),
+                    text = history.homeScore.toString(),
                     style = MacaoTheme.typography.subtitle2,
                 )
             }
@@ -301,7 +317,7 @@ private fun MatchHistoryItem(history: MatchHistory) {
                     style = MacaoTheme.typography.subtitle2,
                 )
                 Text(
-                    text = history.awayTeamScore.toString(),
+                    text = history.awayScore.toString(),
                     style = MacaoTheme.typography.subtitle2,
                 )
             }
@@ -319,9 +335,9 @@ private fun MatchDetailsScreenPreview() {
 
 @Preview
 @Composable
-private fun RelativeMatchHistoryListPreview() {
+private fun MatchHistoryListPreview() {
     MacaoTheme {
-        MatchHistoryList(histories = matchDetails.relativeMatchHistories)
+        MatchHistoryList(histories = matchDetails.homeMatchHistories)
     }
 }
 
@@ -333,15 +349,13 @@ private fun RankingListPreview() {
     }
 }
 
-private const val SUMMARY_TAB = "요약"
-private const val RELATIVE_MATCH_HISTORY_TAB = "상대 전적"
+private const val PLACE_TAB = "요약"
 private const val HOME_TEAM_MATCH_HISTORY_TAB = "홈팀 전적"
 private const val AWAY_TEAM_MATCH_HISTORY_TAB = "원정팀 전적"
 private const val RANKING_TAB = "순위"
 
 private val tabs = listOf(
-    SUMMARY_TAB,
-    RELATIVE_MATCH_HISTORY_TAB,
+    PLACE_TAB,
     HOME_TEAM_MATCH_HISTORY_TAB,
     AWAY_TEAM_MATCH_HISTORY_TAB,
     RANKING_TAB,

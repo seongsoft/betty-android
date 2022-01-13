@@ -1,16 +1,12 @@
 package io.github.cbinarycastle.macao.entity
 
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalDate
 
 data class MatchHistory(
-    val leagueName: String,
-    val matchedAt: LocalDateTime,
+    val date: LocalDate,
     val homeTeamName: String,
-    val homeTeamScore: Int,
     val awayTeamName: String,
-    val awayTeamScore: Int,
-    val handi: String,              //핸디캡 (아직 Fix아님)
-    val handiOutcome: String,       //햔디캡 결과 (아직 Fix아님)
-    val isOdd: Boolean,            //홀짝 (홀수 true)
-    val firstHalfScore: String,     //전반 스코어
+    val outcome: Outcome,
+    val homeScore: Int,
+    val awayScore: Int,
 )

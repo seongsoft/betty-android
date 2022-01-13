@@ -1,11 +1,19 @@
 package io.github.cbinarycastle.macao.entity
 
+import org.threeten.bp.LocalDateTime
+
 data class MatchDetails(
-    val id: String,
+    val matchAt: LocalDateTime,
+    val league: League,
     val homeTeam: Team,
     val awayTeam: Team,
-    val relativeMatchHistories: List<MatchHistory>,             //상대 전적
-    val homeTeamMatchHistories: List<MatchHistory>,             //홈팀 전적
-    val awayTeamMatchHistories: List<MatchHistory>,             //원정팀 전적
-    val ranking: Ranking,                                       //순위 정보 (형태 달라지 질 수 있어 아직 Fix 아님)
+    val suggestionInfo: SuggestionInfo,
+    val totalPlace: Place,
+    val homePlace: Place,
+    val awayPlace: Place,
+    val homeMatchHistories: List<MatchHistory>,
+    val awayMatchHistories: List<MatchHistory>,
+    val ranking: Ranking,
+    val underOverRanking: UnderOverRanking,
+    val goalPerMatches: List<GoalPerMatch>
 )
