@@ -1,7 +1,6 @@
 package io.github.cbinarycastle.macao.data.mapper
 
-import io.github.cbinarycastle.macao.data.MatchDetailsResponse
-import io.github.cbinarycastle.macao.data.RankingDto
+import io.github.cbinarycastle.macao.data.match.details.RankingDto
 import io.github.cbinarycastle.macao.entity.Ranking
 
 fun RankingDto.toEntity() = Ranking.Row(

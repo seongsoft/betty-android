@@ -1,6 +1,6 @@
 package io.github.cbinarycastle.macao.data.mapper
 
-import io.github.cbinarycastle.macao.data.SuggestionDto
+import io.github.cbinarycastle.macao.data.match.SuggestionDto
 import io.github.cbinarycastle.macao.entity.SuggestionInfo
 import io.github.cbinarycastle.macao.entity.SuggestionType
 

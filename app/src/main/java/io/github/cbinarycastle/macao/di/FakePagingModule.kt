@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.github.cbinarycastle.macao.data.FakeMatchOverallPagingSourceFactory
-import io.github.cbinarycastle.macao.data.MatchOverallPagingSourceFactory
+import io.github.cbinarycastle.macao.data.match.list.FakeMatchOverallPagingSourceFactory
+import io.github.cbinarycastle.macao.data.match.list.MatchOverallPagingSourceFactory
 
 @InstallIn(SingletonComponent::class)
 @Module

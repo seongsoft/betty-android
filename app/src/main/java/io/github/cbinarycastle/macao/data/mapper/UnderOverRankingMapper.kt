@@ -1,7 +1,6 @@
 package io.github.cbinarycastle.macao.data.mapper
 
-import io.github.cbinarycastle.macao.data.UnderOverDto
-import io.github.cbinarycastle.macao.entity.Ranking
+import io.github.cbinarycastle.macao.data.match.details.UnderOverDto
 import io.github.cbinarycastle.macao.entity.UnderOverRanking
 
 fun UnderOverDto.toEntity() = UnderOverRanking.Row(

@@ -15,5 +15,5 @@ data class MatchDetails(
     val awayMatchHistories: List<MatchHistory>,
     val ranking: Ranking,
     val underOverRanking: UnderOverRanking,
-    val goalPerMatches: List<GoalPerMatch>
+    val goalsPerMatches: List<GoalsPerMatch>
 )

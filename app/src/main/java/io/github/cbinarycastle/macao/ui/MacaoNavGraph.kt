@@ -9,10 +9,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import io.github.cbinarycastle.macao.ui.match.MatchDetailsScreen
-import io.github.cbinarycastle.macao.ui.match.MatchDetailsViewModel
-import io.github.cbinarycastle.macao.ui.match.MatchesScreen
-import io.github.cbinarycastle.macao.ui.match.MatchesViewModel
+import io.github.cbinarycastle.macao.ui.match.details.MatchDetailsScreen
+import io.github.cbinarycastle.macao.ui.match.details.MatchDetailsViewModel
+import io.github.cbinarycastle.macao.ui.match.list.MatchesScreen
+import io.github.cbinarycastle.macao.ui.match.list.MatchesViewModel
 
 private const val MATCH_DETAILS_ID_KEY = "matchId"
 
