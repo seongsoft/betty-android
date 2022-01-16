@@ -28,6 +28,7 @@ import io.github.cbinarycastle.macao.entity.League
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.match.LastOutcomes
+import io.github.cbinarycastle.macao.ui.match.ScorePrediction
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -315,40 +316,6 @@ private fun Team(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ScorePrediction(
-    homeScore: Int,
-    awayScore: Int,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = homeScore.toString(),
-            color = if (homeScore > awayScore) {
-                MacaoTheme.extendedColors.win
-            } else {
-                MacaoTheme.colors.onSurface
-            },
-            style = MacaoTheme.typography.h6
-        )
-        Spacer(Modifier.width(4.dp))
-        Text(":")
-        Spacer(Modifier.width(4.dp))
-        Text(
-            text = awayScore.toString(),
-            color = if (awayScore > homeScore) {
-                MacaoTheme.extendedColors.win
-            } else {
-                MacaoTheme.colors.onSurface
-            },
-            style = MacaoTheme.typography.h6
-        )
     }
 }
 

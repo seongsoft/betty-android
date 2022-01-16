@@ -15,7 +15,12 @@ import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.match.LastOutcomes
+import io.github.cbinarycastle.macao.ui.match.ScorePrediction
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
+
+private val matchDateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
 
 @Composable
 fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
@@ -40,17 +45,35 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
     var selectedTabIndex by remember { mutableStateOf(0) }
     var selectedTab by remember { mutableStateOf(PLACE_TAB) }
 
-    Column {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Spacer(Modifier.height(16.dp))
+        Text(
+            text = matchDetails.league.name,
+            style = MacaoTheme.typography.h6
+        )
+        Text(
+            text = matchDetails.matchAt.format(matchDateTimeFormatter),
+            style = MacaoTheme.typography.subtitle1
+        )
+        Spacer(Modifier.height(8.dp))
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 32.dp),
-            horizontalArrangement = Arrangement.SpaceAround
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Team(team = matchDetails.homeTeam)
-            Team(team = matchDetails.awayTeam)
+            Team(
+                team = matchDetails.homeTeam,
+                modifier = Modifier.weight(1f),
+            )
+            ScorePrediction(
+                homeScore = matchDetails.suggestionInfo.homeExpectedScore,
+                awayScore = matchDetails.suggestionInfo.awayExpectedScore,
+            )
+            Team(
+                team = matchDetails.awayTeam,
+                modifier = Modifier.weight(1f),
+            )
         }
-
+        Spacer(Modifier.height(24.dp))
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             backgroundColor = MacaoTheme.colors.surface,
