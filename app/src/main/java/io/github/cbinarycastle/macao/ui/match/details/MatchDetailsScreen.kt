@@ -84,7 +84,11 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
                 teamName = matchDetails.awayTeam.name,
                 histories = matchDetails.awayMatchHistories
             )
-            RANKING_TAB -> RankingList(matchDetails.ranking)
+            RANKING_TAB -> Ranking(
+                ranking = matchDetails.ranking,
+                homeTeamName = matchDetails.homeTeam.name,
+                awayTeamName = matchDetails.awayTeam.name,
+            )
             UNDER_OVER_RANKING_TAB -> {}
             GOALS_PER_MATCH_TAB -> {}
         }

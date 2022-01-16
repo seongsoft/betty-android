@@ -153,42 +153,34 @@ val matchDetails = MatchDetails(
             points = 13
         )
     ),
-    underOverRanking = UnderOverRanking(
-        rows = listOf(
-            UnderOverRanking.Row(
-                number = 1,
-                teamName = "Manchester City",
-                matchCount = 21,
-                winCount = 17,
-                drawCount = 2,
-                loseCount = 2,
-                goalFor = 53,
-                goalAgainst = 13,
-                points = 53
-            ),
-            UnderOverRanking.Row(
-                number = 2,
-                teamName = "Chelsea",
-                matchCount = 21,
-                winCount = 12,
-                drawCount = 7,
-                loseCount = 2,
-                goalFor = 45,
-                goalAgainst = 16,
-                points = 43
-            ),
-            UnderOverRanking.Row(
-                number = 3,
-                teamName = "Liverpool",
-                matchCount = 20,
-                winCount = 12,
-                drawCount = 6,
-                loseCount = 2,
-                goalFor = 52,
-                goalAgainst = 18,
-                points = 42
-            ),
-        )
+    underOvers = listOf(
+        UnderOver(
+            number = 1,
+            teamName = "Manchester City",
+            matchCount = 20,
+            underCount = 5,
+            underPercent = 25,
+            overCount = 15,
+            overPercent = 75,
+        ),
+        UnderOver(
+            number = 2,
+            teamName = "Chelsea",
+            matchCount = 18,
+            underCount = 5,
+            underPercent = 28,
+            overCount = 13,
+            overPercent = 72,
+        ),
+        UnderOver(
+            number = 3,
+            teamName = "Liverpool",
+            matchCount = 19,
+            underCount = 7,
+            underPercent = 37,
+            overCount = 12,
+            overPercent = 63,
+        ),
     ),
     goalsPerMatches = listOf(
         GoalsPerMatch(

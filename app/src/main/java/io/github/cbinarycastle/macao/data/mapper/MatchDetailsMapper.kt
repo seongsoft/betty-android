@@ -3,7 +3,6 @@ package io.github.cbinarycastle.macao.data.mapper
 import io.github.cbinarycastle.macao.data.match.details.GetMatchDetailsResponse
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import io.github.cbinarycastle.macao.entity.Ranking
-import io.github.cbinarycastle.macao.entity.UnderOverRanking
 
 fun GetMatchDetailsResponse.toEntity() = MatchDetails(
     matchAt = matchDateTime,
@@ -17,6 +16,6 @@ fun GetMatchDetailsResponse.toEntity() = MatchDetails(
     homeMatchHistories = homeMatchHistories.map { it.toEntity() },
     awayMatchHistories = awayMatchHistories.map { it.toEntity() },
     ranking = Ranking(rankings.map { it.toEntity() }),
-    underOverRanking = UnderOverRanking(underOverRankings.map { it.toEntity() }),
+    underOvers = underOverRankings.map { it.toEntity() },
     goalsPerMatches = goalPerMatches.map { it.toEntity() }
 )

@@ -1,5 +1,6 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,15 +17,44 @@ import io.github.cbinarycastle.macao.entity.Ranking
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
 @Composable
-fun RankingList(ranking: Ranking) {
-    Row {
-        Column {
+fun Ranking(
+    ranking: Ranking,
+    homeTeamName: String,
+    awayTeamName: String,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier) {
+        Column(Modifier.width(IntrinsicSize.Max)) {
             FixedRankingHeader()
-            ranking.rows.forEach { FixedRankingItem(it) }
+            ranking.rows.forEach {
+                FixedRankingItem(
+                    row = it,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                                MacaoTheme.colors.primary.copy(alpha = 0.25f)
+                            } else {
+                                MacaoTheme.colors.background
+                            }
+                        )
+                )
+            }
         }
         Column(Modifier.horizontalScroll(state = rememberScrollState())) {
             ScrollableRankingHeader()
-            ranking.rows.forEach { ScrollableRankingItem(it) }
+            ranking.rows.forEach {
+                ScrollableRankingItem(
+                    row = it,
+                    modifier = Modifier.background(
+                        color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                            MacaoTheme.colors.primary.copy(alpha = 0.25f)
+                        } else {
+                            MacaoTheme.colors.background
+                        }
+                    )
+                )
+            }
         }
     }
 }
@@ -32,10 +62,7 @@ fun RankingList(ranking: Ranking) {
 @Composable
 private fun FixedRankingHeader() {
     Row {
-        RankingCell(
-            text = stringResource(R.string.ranking_num),
-            modifier = Modifier.width(RankingCellDefaults.Width)
-        )
+        Spacer(Modifier.width(RankingCellDefaults.RankingNumberWidth))
         RankingCell(
             text = stringResource(R.string.ranking_team),
             horizontalArrangement = Arrangement.Start,
@@ -44,11 +71,14 @@ private fun FixedRankingHeader() {
 }
 
 @Composable
-private fun FixedRankingItem(row: Ranking.Row) {
-    Row {
+private fun FixedRankingItem(
+    row: Ranking.Row,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier) {
         RankingCell(
             text = row.number.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(RankingCellDefaults.RankingNumberWidth)
         )
         RankingCell(
             text = row.teamName,
@@ -94,8 +124,11 @@ private fun ScrollableRankingHeader() {
 }
 
 @Composable
-private fun ScrollableRankingItem(row: Ranking.Row) {
-    Row {
+private fun ScrollableRankingItem(
+    row: Ranking.Row,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier) {
         RankingCell(
             text = row.matchCount.toString(),
             modifier = Modifier.width(RankingCellDefaults.Width)
@@ -149,10 +182,15 @@ private fun RankingCell(
 @Composable
 private fun RankingListPreview() {
     MacaoTheme {
-        RankingList(ranking = matchDetails.ranking)
+        Ranking(
+            ranking = matchDetails.ranking,
+            homeTeamName = "Manchester City",
+            awayTeamName = "Liverpool",
+        )
     }
 }
 
 private object RankingCellDefaults {
     val Width = 50.dp
+    val RankingNumberWidth = 36.dp
 }

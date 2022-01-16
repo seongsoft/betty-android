@@ -1,16 +1,14 @@
 package io.github.cbinarycastle.macao.data.mapper
 
 import io.github.cbinarycastle.macao.data.match.details.UnderOverDto
-import io.github.cbinarycastle.macao.entity.UnderOverRanking
+import io.github.cbinarycastle.macao.entity.UnderOver
 
-fun UnderOverDto.toEntity() = UnderOverRanking.Row(
+fun UnderOverDto.toEntity() = UnderOver(
     number = number,
     teamName = teamName,
     matchCount = matchCount,
-    winCount = winCount,
-    drawCount = drawCount,
-    loseCount = loseCount,
-    goalFor = goalFor,
-    goalAgainst = goalAgainst,
-    points = points,
+    underCount = underCount,
+    underPercent = underPercent,
+    overCount = overCount,
+    overPercent = overPercent,
 )

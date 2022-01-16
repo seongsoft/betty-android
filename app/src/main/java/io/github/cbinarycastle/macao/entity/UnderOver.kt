@@ -1,6 +1,6 @@
-package io.github.cbinarycastle.macao.data.match.details
+package io.github.cbinarycastle.macao.entity
 
-data class UnderOverDto(
+data class UnderOver(
     val number: Int,
     val teamName: String,
     val matchCount: Int,
