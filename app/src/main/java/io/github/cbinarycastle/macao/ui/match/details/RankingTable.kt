@@ -4,9 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,44 +20,29 @@ import io.github.cbinarycastle.macao.entity.Ranking
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
 @Composable
-fun Ranking(
+fun RankingTable(
     ranking: Ranking,
     homeTeamName: String,
     awayTeamName: String,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier) {
+    Row(modifier.verticalScroll(rememberScrollState())) {
         Column(Modifier.width(IntrinsicSize.Max)) {
             FixedRankingHeader()
-            ranking.rows.forEach {
-                FixedRankingItem(
-                    row = it,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                                MacaoTheme.colors.primary.copy(alpha = 0.25f)
-                            } else {
-                                MacaoTheme.colors.background
-                            }
-                        )
-                )
-            }
+            FixedRankingItems(
+                rows = ranking.rows,
+                homeTeamName = homeTeamName,
+                awayTeamName = awayTeamName,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
         Column(Modifier.horizontalScroll(state = rememberScrollState())) {
             ScrollableRankingHeader()
-            ranking.rows.forEach {
-                ScrollableRankingItem(
-                    row = it,
-                    modifier = Modifier.background(
-                        color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                            MacaoTheme.colors.primary.copy(alpha = 0.25f)
-                        } else {
-                            MacaoTheme.colors.background
-                        }
-                    )
-                )
-            }
+            ScrollableRankingItems(
+                rows = ranking.rows,
+                homeTeamName = homeTeamName,
+                awayTeamName = awayTeamName,
+            )
         }
     }
 }
@@ -66,6 +54,27 @@ private fun FixedRankingHeader() {
         RankingCell(
             text = stringResource(R.string.ranking_team),
             horizontalArrangement = Arrangement.Start,
+        )
+    }
+}
+
+@Composable
+private fun FixedRankingItems(
+    rows: List<Ranking.Row>,
+    homeTeamName: String,
+    awayTeamName: String,
+    modifier: Modifier = Modifier,
+) {
+    rows.forEach {
+        FixedRankingItem(
+            row = it,
+            modifier = modifier.background(
+                color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                    MacaoTheme.colors.primary.copy(alpha = RankingCellDefaults.HighlightAlpha)
+                } else {
+                    Color.Unspecified
+                }
+            )
         )
     }
 }
@@ -119,6 +128,26 @@ private fun ScrollableRankingHeader() {
         RankingCell(
             text = stringResource(R.string.ranking_lose_point),
             modifier = Modifier.width(RankingCellDefaults.Width)
+        )
+    }
+}
+
+@Composable
+private fun ScrollableRankingItems(
+    rows: List<Ranking.Row>,
+    homeTeamName: String,
+    awayTeamName: String,
+) {
+    rows.forEach {
+        ScrollableRankingItem(
+            row = it,
+            modifier = Modifier.background(
+                color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                    MacaoTheme.colors.primary.copy(alpha = RankingCellDefaults.HighlightAlpha)
+                } else {
+                    Color.Unspecified
+                }
+            )
         )
     }
 }
@@ -180,9 +209,9 @@ private fun RankingCell(
 
 @Preview
 @Composable
-private fun RankingListPreview() {
+private fun RankingTablePreview() {
     MacaoTheme {
-        Ranking(
+        RankingTable(
             ranking = matchDetails.ranking,
             homeTeamName = "Manchester City",
             awayTeamName = "Liverpool",
@@ -191,6 +220,7 @@ private fun RankingListPreview() {
 }
 
 private object RankingCellDefaults {
+    const val HighlightAlpha = 0.15f
     val Width = 50.dp
     val RankingNumberWidth = 36.dp
 }

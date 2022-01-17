@@ -6,10 +6,15 @@
     <string name="draw">무</string>
     <string name="lose">패</string>
 
+    <!-- Place -->
+    <string name="place_total_title">Total Matches</string>
+    <string name="place_home_title">Home Matches</string>
+    <string name="place_away_title">Away Matches</string>
+
     <!-- Ranking -->
     <string name="ranking_num">순위</string>
     <string name="ranking_team">팀</string>
-    <string name="ranking_matches">경기수</string>
+    <string name="ranking_matches">경기</string>
     <string name="ranking_game_point">승점</string>
     <string name="ranking_win">승</string>
     <string name="ranking_draw">무</string>
@@ -17,13 +22,8 @@
     <string name="ranking_score">득점</string>
     <string name="ranking_lose_point">실점</string>
 
-    <!-- Recommendation -->
-    <string name="recommendation_home_win">HOME WIN</string>
-    <string name="recommendation_draw">DRAW</string>
-    <string name="recommendation_away_win">AWAY WIN</string>
-
-    <!-- Place -->
-    <string name="place_total_title">Total Matches</string>
-    <string name="place_home_title">Home Matches</string>
-    <string name="place_away_title">Away Matches</string>
+    <!-- Under Over -->
+    <string name="under_over_team">팀</string>
+    <string name="under_over_under">언더</string>
+    <string name="under_over_over">오버</string>
 </resources>

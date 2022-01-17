@@ -27,13 +27,13 @@ private val DarkColors = darkColors(
 )
 
 private val LightExtendedColors = ExtendedColors(
-    win = greenA700,
+    win = lightGreen,
     draw = gray600,
     lose = redA700,
 )
 
 private val DarkExtendedColors = ExtendedColors(
-    win = green200,
+    win = darkGreen,
     draw = gray300,
     lose = redA700,
 )

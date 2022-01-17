@@ -1,7 +1,10 @@
 package io.github.cbinarycastle.macao.ui.match.list
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -114,7 +117,6 @@ private fun MatchOverallItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MacaoTheme.colors.background)
                     .padding(
                         horizontal = 16.dp,
                         vertical = 8.dp

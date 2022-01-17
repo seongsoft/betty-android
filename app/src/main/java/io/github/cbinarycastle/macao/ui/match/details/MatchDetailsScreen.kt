@@ -20,7 +20,9 @@ import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
-private val matchDateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+private val matchDateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(
+    FormatStyle.MEDIUM, FormatStyle.SHORT
+)
 
 @Composable
 fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
@@ -107,12 +109,16 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
                 teamName = matchDetails.awayTeam.name,
                 histories = matchDetails.awayMatchHistories
             )
-            RANKING_TAB -> Ranking(
+            RANKING_TAB -> RankingTable(
                 ranking = matchDetails.ranking,
                 homeTeamName = matchDetails.homeTeam.name,
                 awayTeamName = matchDetails.awayTeam.name,
             )
-            UNDER_OVER_RANKING_TAB -> {}
+            UNDER_OVER_TAB -> UnderOverTable(
+                underOvers = matchDetails.underOvers,
+                homeTeamName = matchDetails.homeTeam.name,
+                awayTeamName = matchDetails.awayTeam.name,
+            )
             GOALS_PER_MATCH_TAB -> {}
         }
     }
@@ -154,7 +160,7 @@ private fun Team(
 @Composable
 private fun MatchDetailsScreenPreview() {
     MacaoTheme {
-        MatchDetailsScreen(matchDetails = matchDetails)
+        MatchDetailsScreen(matchDetails)
     }
 }
 
@@ -162,7 +168,7 @@ private const val PLACE_TAB = "요약"
 private const val HOME_TEAM_MATCH_HISTORY_TAB = "홈팀 전적"
 private const val AWAY_TEAM_MATCH_HISTORY_TAB = "원정팀 전적"
 private const val RANKING_TAB = "순위"
-private const val UNDER_OVER_RANKING_TAB = "언더/오버"
+private const val UNDER_OVER_TAB = "언더/오버"
 private const val GOALS_PER_MATCH_TAB = "경기당 골"
 
 private val tabs = listOf(
@@ -170,6 +176,6 @@ private val tabs = listOf(
     HOME_TEAM_MATCH_HISTORY_TAB,
     AWAY_TEAM_MATCH_HISTORY_TAB,
     RANKING_TAB,
-    UNDER_OVER_RANKING_TAB,
+    UNDER_OVER_TAB,
     GOALS_PER_MATCH_TAB,
 )

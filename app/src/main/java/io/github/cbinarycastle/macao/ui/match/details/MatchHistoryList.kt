@@ -1,6 +1,8 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Surface
@@ -18,8 +20,12 @@ import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.format.DateTimeFormatter
 
 @Composable
-fun MatchHistoryList(teamName: String, histories: List<MatchHistory>) {
-    Column {
+fun MatchHistoryList(
+    teamName: String,
+    histories: List<MatchHistory>,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.verticalScroll(rememberScrollState())) {
         histories.forEach { MatchHistoryItem(teamName, it) }
     }
 }
@@ -38,42 +44,43 @@ private fun MatchHistoryItem(teamName: String, history: MatchHistory) {
             color = history.outcome.color(),
             content = {}
         )
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Text(
-                text = history.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                style = MacaoTheme.typography.caption,
-            )
-        }
-        Column(
-            Modifier
-                .weight(1f)
-                .padding(horizontal = 16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+        Box {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
             ) {
-                MatchHistoryTeam(
-                    teamName = history.homeTeamName,
-                    score = history.homeScore,
-                    shouldHighlight = teamName == history.homeTeamName
+                Text(
+                    text = history.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    style = MacaoTheme.typography.caption,
                 )
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+            Column(
+                Modifier
+                    .padding(start = 112.dp, end = 16.dp)
             ) {
-                MatchHistoryTeam(
-                    teamName = history.awayTeamName,
-                    score = history.awayScore,
-                    shouldHighlight = teamName == history.awayTeamName
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    MatchHistoryTeam(
+                        teamName = history.homeTeamName,
+                        score = history.homeScore,
+                        shouldHighlight = teamName == history.homeTeamName
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    MatchHistoryTeam(
+                        teamName = history.awayTeamName,
+                        score = history.awayScore,
+                        shouldHighlight = teamName == history.awayTeamName
+                    )
+                }
             }
         }
     }
