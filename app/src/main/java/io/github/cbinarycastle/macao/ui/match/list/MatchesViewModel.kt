@@ -36,28 +36,7 @@ class MatchesViewModel @Inject constructor(
             getMatchOverallsUseCase(Unit)
                 .filter { it is Result.Success }
                 .map { (it as Result.Success).data }
-                .mapLatest { pagingData ->
-                    pagingData
-                        .map { matchOverall ->
-                            MatchOverallModel.Item(matchOverall)
-                        }
-                        .insertSeparators { before, after ->
-                            when {
-                                after == null -> null
-                                before == null -> MatchOverallModel.Separator(after.matchOverall.matchAt)
-                                else -> {
-                                    if (
-                                        before.matchOverall.matchAt.toLocalDate() ==
-                                        after.matchOverall.matchAt.toLocalDate()
-                                    ) {
-                                        null
-                                    } else {
-                                        MatchOverallModel.Separator(after.matchOverall.matchAt)
-                                    }
-                                }
-                            }
-                        }
-                }
+                .mapLatest { it.insertSeparators() }
         }
         .cachedIn(viewModelScope)
 
