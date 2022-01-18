@@ -5,12 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
@@ -18,17 +19,20 @@ import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 @Composable
 fun LeagueFilter(
     leagues: List<String>,
-    onClick: () -> Unit,
+    selectedIndex: Int,
+    onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(leagues) {
+        itemsIndexed(leagues) { index, item ->
             LeagueFilterChip(
-                league = it,
-                onClick = onClick,
+                index = index,
+                league = item,
+                onClick = onSelect,
+                selected = index == selectedIndex
             )
         }
     }
@@ -36,24 +40,35 @@ fun LeagueFilter(
 
 @Composable
 private fun LeagueFilterChip(
+    index: Int,
     league: String,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
+    selected: Boolean = false,
 ) {
     Surface(
         shape = CircleShape,
         border = BorderStroke(
             width = 1.dp,
-            color = MacaoTheme.colors.onSurface.copy(alpha = 0.12f)
+            color = if (selected) {
+                MacaoTheme.colors.primary
+            } else {
+                MacaoTheme.colors.onSurface.copy(alpha = BorderAlpha)
+            }
         ),
     ) {
         Text(
             text = league,
             modifier = Modifier
-                .clickable { onClick() }
+                .clickable { onClick(index) }
                 .padding(
                     horizontal = 16.dp,
                     vertical = 8.dp
                 ),
+            color = if (selected) {
+                MacaoTheme.colors.primary
+            } else {
+                Color.Unspecified
+            },
             style = MacaoTheme.typography.caption
         )
     }
@@ -71,7 +86,10 @@ private fun LeagueFilterPreview() {
                 "LaLiga",
                 "Serie A",
             ),
-            onClick = {}
+            selectedIndex = 0,
+            onSelect = {}
         )
     }
 }
+
+private const val BorderAlpha = 0.12f

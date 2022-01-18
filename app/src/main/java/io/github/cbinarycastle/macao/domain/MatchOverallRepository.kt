@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import kotlinx.coroutines.flow.Flow
 
-interface MatchOverallsRepository {
+interface MatchOverallRepository {
 
     fun getMatchOveralls(): Flow<PagingData<MatchOverall>>
 }

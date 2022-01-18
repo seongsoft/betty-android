@@ -5,22 +5,18 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -45,25 +41,35 @@ fun MatchesScreen(
     onSelectMatch: (matchId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val items = viewModel.matchOveralls.collectAsLazyPagingItems()
+    val leagues by viewModel.leagues.collectAsState()
+    val matchOveralls = viewModel.matchOveralls.collectAsLazyPagingItems()
+    val selectedLeagueIndex by viewModel.selectedLeagueIndex.collectAsState()
 
-    Column(modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         LeagueFilter(
-            leagues = listOf(
-                "All",
-                "Premier League",
-                "Bundesliga",
-                "LaLiga",
-                "Serie A",
-            ),
-            onClick = {},
+            leagues = leagues,
+            selectedIndex = selectedLeagueIndex,
+            onSelect = { viewModel.selectLeague(it) },
             modifier = Modifier.padding(16.dp),
         )
         Divider()
-        MatchOverallList(
-            items = items,
-            onSelectMatch = onSelectMatch,
-        )
+
+        if (matchOveralls.loadState.refresh is LoadState.Loading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            MatchOverallList(
+                items = matchOveralls,
+                onSelectMatch = onSelectMatch,
+            )
+        }
     }
 }
 

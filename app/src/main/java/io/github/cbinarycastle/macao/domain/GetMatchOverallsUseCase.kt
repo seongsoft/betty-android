@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetMatchOverallsUseCase @Inject constructor(
     @IoDispatcher dispatcher: CoroutineDispatcher,
-    private val repository: MatchOverallsRepository,
+    private val repository: MatchOverallRepository,
 ) : FlowUseCase<Unit, PagingData<MatchOverall>>(dispatcher) {
 
     override fun execute(params: Unit): Flow<Result<PagingData<MatchOverall>>> {

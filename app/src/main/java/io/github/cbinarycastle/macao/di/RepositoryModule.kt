@@ -5,9 +5,9 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.cbinarycastle.macao.data.match.details.DefaultMatchDetailsRepository
-import io.github.cbinarycastle.macao.data.match.list.DefaultMatchOverallsRepository
+import io.github.cbinarycastle.macao.data.match.list.DefaultMatchOverallRepository
 import io.github.cbinarycastle.macao.domain.MatchDetailsRepository
-import io.github.cbinarycastle.macao.domain.MatchOverallsRepository
+import io.github.cbinarycastle.macao.domain.MatchOverallRepository
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -15,8 +15,8 @@ interface RepositoryModule {
 
     @Binds
     fun bindMatchOverallsRepository(
-        repository: DefaultMatchOverallsRepository
-    ): MatchOverallsRepository
+        repository: DefaultMatchOverallRepository
+    ): MatchOverallRepository
 
     @Binds
     fun bindMatchDetailsRepository(
