@@ -3,7 +3,9 @@ package io.github.cbinarycastle.macao.ui.match.list
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -27,6 +29,7 @@ fun LeagueFilter(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        item { Spacer(Modifier.width(HorizontalSpace)) }
         itemsIndexed(leagues) { index, item ->
             LeagueFilterChip(
                 index = index,
@@ -35,6 +38,7 @@ fun LeagueFilter(
                 selected = index == selectedIndex
             )
         }
+        item { Spacer(Modifier.width(HorizontalSpace)) }
     }
 }
 
@@ -93,3 +97,4 @@ private fun LeagueFilterPreview() {
 }
 
 private const val BorderAlpha = 0.12f
+private val HorizontalSpace = 8.dp

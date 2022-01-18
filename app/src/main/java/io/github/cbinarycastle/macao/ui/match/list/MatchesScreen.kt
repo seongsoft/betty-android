@@ -42,7 +42,7 @@ fun MatchesScreen(
     modifier: Modifier = Modifier,
 ) {
     val leagues by viewModel.leagues.collectAsState()
-    val matchOveralls = viewModel.matchOveralls.collectAsLazyPagingItems()
+    val matchOverallItems = viewModel.matchOveralls.collectAsLazyPagingItems()
     val selectedLeagueIndex by viewModel.selectedLeagueIndex.collectAsState()
 
     Column(
@@ -53,11 +53,11 @@ fun MatchesScreen(
             leagues = leagues,
             selectedIndex = selectedLeagueIndex,
             onSelect = { viewModel.selectLeague(it) },
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(vertical = 16.dp),
         )
         Divider()
 
-        if (matchOveralls.loadState.refresh is LoadState.Loading) {
+        if (matchOverallItems.loadState.refresh is LoadState.Loading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
@@ -66,7 +66,7 @@ fun MatchesScreen(
             }
         } else {
             MatchOverallList(
-                items = matchOveralls,
+                items = matchOverallItems,
                 onSelectMatch = onSelectMatch,
             )
         }
