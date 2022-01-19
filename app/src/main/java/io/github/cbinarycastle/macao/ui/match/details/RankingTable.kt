@@ -2,8 +2,10 @@ package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -13,7 +15,6 @@ import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.data.match.details.matchDetails
 import io.github.cbinarycastle.macao.entity.Ranking
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
-import io.github.cbinarycastle.macao.util.border
 
 @Composable
 fun RankingTable(
@@ -22,60 +23,85 @@ fun RankingTable(
     awayTeamName: String,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier.verticalScroll(rememberScrollState())) {
-        Column(Modifier.width(IntrinsicSize.Max)) {
-            FixedRankingHeader(Modifier.fillMaxWidth())
-            FixedRankingItems(
-                rows = ranking.rows,
-                homeTeamName = homeTeamName,
-                awayTeamName = awayTeamName,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-        Column(Modifier.horizontalScroll(state = rememberScrollState())) {
-            ScrollableRankingHeader()
-            ScrollableRankingItems(
-                rows = ranking.rows,
-                homeTeamName = homeTeamName,
-                awayTeamName = awayTeamName,
-            )
-        }
-    }
-}
+    val horizontalScrollState = rememberScrollState()
 
-@Composable
-private fun FixedRankingHeader(modifier: Modifier = Modifier) {
-    Row(modifier) {
-        Spacer(Modifier.width(RankingNumberCellWidth))
-        RankingCell(
-            text = stringResource(R.string.ranking_team),
-            horizontalArrangement = Arrangement.Start,
+    Column(modifier.verticalScroll(rememberScrollState())) {
+        RankingHeader(horizontalScrollState = horizontalScrollState)
+        Divider()
+        RankingItems(
+            rows = ranking.rows,
+            homeTeamName = homeTeamName,
+            awayTeamName = awayTeamName,
+            horizontalScrollState = horizontalScrollState,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
 
 @Composable
-private fun FixedRankingItems(
+private fun RankingHeader(
+    horizontalScrollState: ScrollState,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier) {
+        Spacer(Modifier.width(NumberCellWidth))
+        RankingCell(
+            text = stringResource(R.string.ranking_team),
+            modifier = Modifier.width(TeamCellWidth),
+            horizontalArrangement = Arrangement.Start,
+        )
+        Row(Modifier.horizontalScroll(horizontalScrollState)) {
+            RankingCell(
+                text = stringResource(R.string.ranking_matches),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = stringResource(R.string.ranking_game_point),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = stringResource(R.string.ranking_win),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = stringResource(R.string.ranking_draw),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = stringResource(R.string.ranking_lose),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = stringResource(R.string.ranking_score),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = stringResource(R.string.ranking_lose_point),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+        }
+    }
+}
+
+@Composable
+private fun RankingItems(
     rows: List<Ranking.Row>,
     homeTeamName: String,
     awayTeamName: String,
+    horizontalScrollState: ScrollState,
     modifier: Modifier = Modifier,
 ) {
     rows.forEach {
-        FixedRankingItem(
+        RankingItem(
             row = it,
+            scrollState = horizontalScrollState,
             modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
                 modifier
                     .border(
-                        start = 1.dp,
-                        top = 1.dp,
-                        end = 0.dp,
-                        bottom = 1.dp,
+                        width = 1.dp,
                         color = MacaoTheme.colors.primary
                     )
-                    .background(
-                        color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha)
-                    )
+                    .background(color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha))
             } else {
                 modifier
             }
@@ -84,121 +110,55 @@ private fun FixedRankingItems(
 }
 
 @Composable
-private fun FixedRankingItem(
+private fun RankingItem(
     row: Ranking.Row,
+    scrollState: ScrollState,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         RankingCell(
             text = row.number.toString(),
-            modifier = Modifier.width(RankingNumberCellWidth)
+            modifier = Modifier.width(NumberCellWidth)
         )
         RankingCell(
             text = row.teamName,
-            modifier = Modifier.padding(end = 8.dp),
+            modifier = Modifier.width(TeamCellWidth),
             horizontalArrangement = Arrangement.Start,
             textStyle = MacaoTheme.typography.subtitle2,
         )
-    }
-}
-
-@Composable
-private fun ScrollableRankingHeader() {
-    Row {
-        RankingCell(
-            text = stringResource(R.string.ranking_matches),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_game_point),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_win),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_draw),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_lose),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_score),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = stringResource(R.string.ranking_lose_point),
-            modifier = Modifier.width(CellWidth)
-        )
-    }
-}
-
-@Composable
-private fun ScrollableRankingItems(
-    rows: List<Ranking.Row>,
-    homeTeamName: String,
-    awayTeamName: String,
-    modifier: Modifier = Modifier,
-) {
-    rows.forEach {
-        ScrollableRankingItem(
-            row = it,
-            modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                modifier
-                    .border(
-                        start = 0.dp,
-                        top = 1.dp,
-                        end = 1.dp,
-                        bottom = 1.dp,
-                        color = MacaoTheme.colors.primary
-                    )
-                    .background(
-                        color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha)
-                    )
-            } else {
-                modifier
-            }
-        )
-    }
-}
-
-@Composable
-private fun ScrollableRankingItem(
-    row: Ranking.Row,
-    modifier: Modifier = Modifier,
-) {
-    Row(modifier) {
-        RankingCell(
-            text = row.matchCount.toString(),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = row.points.toString(),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = row.winCount.toString(),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = row.drawCount.toString(),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = row.loseCount.toString(),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = row.goalFor.toString(),
-            modifier = Modifier.width(CellWidth)
-        )
-        RankingCell(
-            text = row.goalAgainst.toString(),
-            modifier = Modifier.width(CellWidth)
-        )
+        Row(Modifier.horizontalScroll(scrollState)) {
+            RankingCell(
+                text = row.matchCount.toString(),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = row.points.toString(),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = row.winCount.toString(),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = row.drawCount.toString(),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = row.loseCount.toString(),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = row.goalFor.toString(),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+            RankingCell(
+                text = row.goalAgainst.toString(),
+                modifier = Modifier.width(DefaultCellWidth)
+            )
+        }
     }
 }
 
@@ -233,5 +193,6 @@ private fun RankingTablePreview() {
 }
 
 private const val HighlightAlpha = 0.15f
-private val CellWidth = 50.dp
-private val RankingNumberCellWidth = 36.dp
+private val DefaultCellWidth = 50.dp
+private val NumberCellWidth = 36.dp
+private val TeamCellWidth = 136.dp
