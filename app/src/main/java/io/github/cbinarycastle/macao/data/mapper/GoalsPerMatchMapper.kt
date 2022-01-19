@@ -15,5 +15,5 @@ fun GoalPerMatchDto.toEntity() = GoalsPerMatch(
     gameCount5 = gameCount5,
     gameCount6 = gameCount6,
     gameCountEtc = gameCountEtc,
-    goalPerMatchAvg = goalPerMatchAvg,
+    average = goalPerMatchAvg,
 )

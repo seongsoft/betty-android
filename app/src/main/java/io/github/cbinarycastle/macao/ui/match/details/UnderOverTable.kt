@@ -1,18 +1,14 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.cbinarycastle.macao.R
@@ -52,7 +48,7 @@ fun UnderOverTable(
 @Composable
 private fun FlexibleUnderOverHeader() {
     Row {
-        Spacer(Modifier.width(UnderOverCellDefaults.UnderOverNumberWidth))
+        Spacer(Modifier.width(UnderOverNumberCellWidth))
         UnderOverCell(
             text = stringResource(R.string.under_over_team),
             horizontalArrangement = Arrangement.Start,
@@ -80,7 +76,7 @@ private fun FlexibleUnderOverItems(
                         color = MacaoTheme.colors.primary
                     )
                     .background(
-                        color = MacaoTheme.colors.primary.copy(alpha = UnderOverCellDefaults.HighlightAlpha)
+                        color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha)
                     )
             } else {
                 modifier
@@ -97,7 +93,7 @@ private fun FlexibleUnderOverItem(
     Row(modifier) {
         UnderOverCell(
             text = underOver.number.toString(),
-            modifier = Modifier.width(UnderOverCellDefaults.UnderOverNumberWidth)
+            modifier = Modifier.width(UnderOverNumberCellWidth)
         )
         UnderOverCell(
             text = underOver.teamName,
@@ -142,7 +138,7 @@ private fun UnderOverItems(
                         color = MacaoTheme.colors.primary
                     )
                     .background(
-                        color = MacaoTheme.colors.primary.copy(alpha = UnderOverCellDefaults.HighlightAlpha)
+                        color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha)
                     )
             } else {
                 modifier
@@ -198,7 +194,5 @@ private fun UnderOverTablePreview() {
     }
 }
 
-private object UnderOverCellDefaults {
-    const val HighlightAlpha = 0.15f
-    val UnderOverNumberWidth = 36.dp
-}
+private const val HighlightAlpha = 0.15f
+private val UnderOverNumberCellWidth = 36.dp

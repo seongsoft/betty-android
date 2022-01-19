@@ -12,7 +12,6 @@
     <string name="place_away_title">Away Matches</string>
 
     <!-- Ranking -->
-    <string name="ranking_num">순위</string>
     <string name="ranking_team">팀</string>
     <string name="ranking_matches">경기</string>
     <string name="ranking_game_point">승점</string>
@@ -26,4 +25,17 @@
     <string name="under_over_team">팀</string>
     <string name="under_over_under">언더</string>
     <string name="under_over_over">오버</string>
+
+    <!-- Goals per match -->
+    <string name="goals_per_match_team">팀</string>
+    <string name="goals_per_match_matches">경기</string>
+    <string name="goals_per_match_zero_goal">0</string>
+    <string name="goals_per_match_one_goal">1</string>
+    <string name="goals_per_match_two_goals">2</string>
+    <string name="goals_per_match_three_goals">3</string>
+    <string name="goals_per_match_four_goals">4</string>
+    <string name="goals_per_match_five_goals">5</string>
+    <string name="goals_per_match_six_goals">6</string>
+    <string name="goals_per_match_etc_goals">7+</string>
+    <string name="goals_per_match_average">평균</string>
 </resources>

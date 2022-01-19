@@ -411,7 +411,7 @@ val matchDetails = MatchDetails(
             gameCount5 = 7,
             gameCount6 = 8,
             gameCountEtc = 0,
-            goalPerMatchAvg = 3.5
+            average = 3.5
         )
     )
 )

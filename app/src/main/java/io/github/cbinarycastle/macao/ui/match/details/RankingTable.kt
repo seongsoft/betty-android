@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,7 +46,7 @@ fun RankingTable(
 @Composable
 private fun FixedRankingHeader(modifier: Modifier = Modifier) {
     Row(modifier) {
-        Spacer(Modifier.width(RankingCellDefaults.RankingNumberWidth))
+        Spacer(Modifier.width(RankingNumberCellWidth))
         RankingCell(
             text = stringResource(R.string.ranking_team),
             horizontalArrangement = Arrangement.Start,
@@ -77,7 +74,7 @@ private fun FixedRankingItems(
                         color = MacaoTheme.colors.primary
                     )
                     .background(
-                        color = MacaoTheme.colors.primary.copy(alpha = RankingCellDefaults.HighlightAlpha)
+                        color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha)
                     )
             } else {
                 modifier
@@ -94,7 +91,7 @@ private fun FixedRankingItem(
     Row(modifier) {
         RankingCell(
             text = row.number.toString(),
-            modifier = Modifier.width(RankingCellDefaults.RankingNumberWidth)
+            modifier = Modifier.width(RankingNumberCellWidth)
         )
         RankingCell(
             text = row.teamName,
@@ -110,31 +107,31 @@ private fun ScrollableRankingHeader() {
     Row {
         RankingCell(
             text = stringResource(R.string.ranking_matches),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = stringResource(R.string.ranking_game_point),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = stringResource(R.string.ranking_win),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = stringResource(R.string.ranking_draw),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = stringResource(R.string.ranking_lose),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = stringResource(R.string.ranking_score),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = stringResource(R.string.ranking_lose_point),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
     }
 }
@@ -159,7 +156,7 @@ private fun ScrollableRankingItems(
                         color = MacaoTheme.colors.primary
                     )
                     .background(
-                        color = MacaoTheme.colors.primary.copy(alpha = RankingCellDefaults.HighlightAlpha)
+                        color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha)
                     )
             } else {
                 modifier
@@ -176,31 +173,31 @@ private fun ScrollableRankingItem(
     Row(modifier) {
         RankingCell(
             text = row.matchCount.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = row.points.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = row.winCount.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = row.drawCount.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = row.loseCount.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = row.goalFor.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
         RankingCell(
             text = row.goalAgainst.toString(),
-            modifier = Modifier.width(RankingCellDefaults.Width)
+            modifier = Modifier.width(CellWidth)
         )
     }
 }
@@ -235,8 +232,6 @@ private fun RankingTablePreview() {
     }
 }
 
-private object RankingCellDefaults {
-    const val HighlightAlpha = 0.15f
-    val Width = 50.dp
-    val RankingNumberWidth = 36.dp
-}
+private const val HighlightAlpha = 0.15f
+private val CellWidth = 50.dp
+private val RankingNumberCellWidth = 36.dp

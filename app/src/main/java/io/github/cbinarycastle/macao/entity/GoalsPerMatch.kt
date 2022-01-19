@@ -12,5 +12,5 @@ data class GoalsPerMatch(
     val gameCount5: Int,
     val gameCount6: Int,
     val gameCountEtc: Int,
-    val goalPerMatchAvg: Double,
+    val average: Double,
 )
