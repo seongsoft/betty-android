@@ -1,6 +1,7 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -18,6 +19,7 @@ import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.data.match.details.matchDetails
 import io.github.cbinarycastle.macao.entity.UnderOver
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
+import io.github.cbinarycastle.macao.util.border
 
 @Composable
 fun UnderOverTable(
@@ -68,13 +70,21 @@ private fun FlexibleUnderOverItems(
     underOvers.forEach {
         FlexibleUnderOverItem(
             underOver = it,
-            modifier = modifier.background(
-                color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                    MacaoTheme.colors.primary.copy(alpha = UnderOverCellDefaults.HighlightAlpha)
-                } else {
-                    Color.Unspecified
-                }
-            )
+            modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                modifier
+                    .border(
+                        start = 1.dp,
+                        top = 1.dp,
+                        end = 0.dp,
+                        bottom = 1.dp,
+                        color = MacaoTheme.colors.primary
+                    )
+                    .background(
+                        color = MacaoTheme.colors.primary.copy(alpha = UnderOverCellDefaults.HighlightAlpha)
+                    )
+            } else {
+                modifier
+            }
         )
     }
 }
@@ -117,17 +127,26 @@ private fun UnderOverItems(
     underOvers: List<UnderOver>,
     homeTeamName: String,
     awayTeamName: String,
+    modifier: Modifier = Modifier,
 ) {
     underOvers.forEach {
         UnderOverItem(
             underOver = it,
-            modifier = Modifier.background(
-                color = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                    MacaoTheme.colors.primary.copy(alpha = UnderOverCellDefaults.HighlightAlpha)
-                } else {
-                    Color.Unspecified
-                }
-            )
+            modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                modifier
+                    .border(
+                        start = 0.dp,
+                        top = 1.dp,
+                        end = 1.dp,
+                        bottom = 1.dp,
+                        color = MacaoTheme.colors.primary
+                    )
+                    .background(
+                        color = MacaoTheme.colors.primary.copy(alpha = UnderOverCellDefaults.HighlightAlpha)
+                    )
+            } else {
+                modifier
+            }
         )
     }
 }
