@@ -39,7 +39,7 @@ private fun MatchHistoryItem(teamName: String, history: MatchHistory) {
     ) {
         Surface(
             modifier = Modifier
-                .width(4.dp)
+                .width(8.dp)
                 .fillMaxHeight(),
             color = history.outcome.color(),
             content = {}
