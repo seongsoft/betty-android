@@ -45,7 +45,6 @@ private fun MatchDetailsScreen(matchDetailsResult: Result<MatchDetails>) {
 @Composable
 private fun MatchDetailsScreen(matchDetails: MatchDetails) {
     var selectedTabIndex by remember { mutableStateOf(0) }
-    var selectedTab by remember { mutableStateOf(PLACE_TAB) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.height(16.dp))
@@ -86,7 +85,6 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
                     selected = selectedTabIndex == index,
                     onClick = {
                         selectedTabIndex = index
-                        selectedTab = tab
                     },
                     modifier = Modifier.size(56.dp)
                 ) {
@@ -95,7 +93,7 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
             }
         }
 
-        when (selectedTab) {
+        when (tabs[selectedTabIndex]) {
             PLACE_TAB -> PlaceList(
                 totalPlace = matchDetails.totalPlace,
                 homePlace = matchDetails.homePlace,
@@ -119,7 +117,11 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
                 homeTeamName = matchDetails.homeTeam.name,
                 awayTeamName = matchDetails.awayTeam.name,
             )
-            GOALS_PER_MATCH_TAB -> {}
+            GOALS_PER_MATCH_TAB -> GoalsPerMatchTable(
+                goalsPerMatches = matchDetails.goalsPerMatches,
+                homeTeamName = matchDetails.homeTeam.name,
+                awayTeamName = matchDetails.awayTeam.name,
+            )
         }
     }
 }

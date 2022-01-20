@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ fun UnderOverTable(
 ) {
     Column(modifier.verticalScroll(rememberScrollState())) {
         UnderOverHeader()
+        Divider()
         UnderOverItems(
             underOvers = underOvers,
             homeTeamName = homeTeamName,
