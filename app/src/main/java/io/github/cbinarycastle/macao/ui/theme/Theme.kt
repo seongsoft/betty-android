@@ -18,7 +18,7 @@ data class ExtendedColors(
 private val LightColors = lightColors(
     primary = blue600,
     primaryVariant = blue700,
-    secondary = amber500,
+    secondary = yellow,
     background = gray100,
 )
 

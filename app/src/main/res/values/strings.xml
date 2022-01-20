@@ -7,9 +7,9 @@
     <string name="lose">패</string>
 
     <!-- Place -->
-    <string name="place_total_title">Total Matches</string>
-    <string name="place_home_title">Home Matches</string>
-    <string name="place_away_title">Away Matches</string>
+    <string name="place_total_title">Total</string>
+    <string name="place_home_title">Home</string>
+    <string name="place_away_title">Away</string>
 
     <!-- Ranking -->
     <string name="ranking_team">팀</string>
