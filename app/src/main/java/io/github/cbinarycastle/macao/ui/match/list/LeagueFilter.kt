@@ -2,25 +2,27 @@ package io.github.cbinarycastle.macao.ui.match.list
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.placeholder
+import com.google.accompanist.placeholder.shimmer
+import io.github.cbinarycastle.macao.data.league.leagues
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
 @Composable
 fun LeagueFilter(
-    leagues: List<String>,
+    leagueFilters: List<LeagueFilterModel>,
     selectedIndex: Int,
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -30,10 +32,10 @@ fun LeagueFilter(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         item { Spacer(Modifier.width(HorizontalSpace)) }
-        itemsIndexed(leagues) { index, item ->
+        itemsIndexed(leagueFilters) { index, item ->
             LeagueFilterChip(
                 index = index,
-                league = item,
+                leagueFilter = item,
                 onClick = onSelect,
                 selected = index == selectedIndex
             )
@@ -45,11 +47,13 @@ fun LeagueFilter(
 @Composable
 private fun LeagueFilterChip(
     index: Int,
-    league: String,
+    leagueFilter: LeagueFilterModel,
     onClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
     selected: Boolean = false,
 ) {
     Surface(
+        modifier = modifier,
         shape = CircleShape,
         border = BorderStroke(
             width = 1.dp,
@@ -61,7 +65,7 @@ private fun LeagueFilterChip(
         ),
     ) {
         Text(
-            text = league,
+            text = leagueFilter.name,
             modifier = Modifier
                 .clickable { onClick(index) }
                 .padding(
@@ -78,18 +82,53 @@ private fun LeagueFilterChip(
     }
 }
 
+@Composable
+fun LeagueFilterPlaceholder(modifier: Modifier = Modifier) {
+    val data = listOf(LeagueFilterModel.All) + leagues.map {
+        LeagueFilterModel.League(
+            id = it.id,
+            name = it.name,
+            imageUrl = it.imageUrl,
+        )
+    }
+
+    Row(
+        modifier = modifier.wrapContentWidth(
+            align = Alignment.Start,
+            unbounded = true
+        ),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Spacer(Modifier.width(HorizontalSpace))
+        data.forEachIndexed { index, leagueFilter ->
+            LeagueFilterChip(
+                index = index,
+                leagueFilter = leagueFilter,
+                onClick = {},
+                modifier = Modifier.placeholder(
+                    visible = true,
+                    color = Color.LightGray,
+                    shape = CircleShape,
+                    highlight = PlaceholderHighlight.shimmer(highlightColor = Color.White),
+                )
+            )
+        }
+        Spacer(Modifier.width(HorizontalSpace))
+    }
+}
+
 @Preview
 @Composable
 private fun LeagueFilterPreview() {
     MacaoTheme {
         LeagueFilter(
-            leagues = listOf(
-                "All",
-                "Premier League",
-                "Bundesliga",
-                "LaLiga",
-                "Serie A",
-            ),
+            leagueFilters = listOf(LeagueFilterModel.All) + leagues.map {
+                LeagueFilterModel.League(
+                    id = it.id,
+                    name = it.name,
+                    imageUrl = it.imageUrl,
+                )
+            },
             selectedIndex = 0,
             onSelect = {}
         )

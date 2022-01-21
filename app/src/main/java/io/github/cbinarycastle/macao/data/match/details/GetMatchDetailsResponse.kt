@@ -31,4 +31,9 @@ data class GetMatchDetailsResponse(
     val rankings : List<RankingDto>,
     val underOverRankings: List<UnderOverDto>,
     val goalPerMatches: List<GoalPerMatchDto>
-)
+) {
+    data class LeagueDto(
+        val leagueName: String,
+        val leagueImageUrl: String,
+    )
+}

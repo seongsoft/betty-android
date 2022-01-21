@@ -8,10 +8,16 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,10 +26,13 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.placeholder
+import com.google.accompanist.placeholder.shimmer
 import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.macao.R
-import io.github.cbinarycastle.macao.data.match.list.matchOveralls
-import io.github.cbinarycastle.macao.entity.League
+import io.github.cbinarycastle.macao.data.match.overall.matchOveralls
+import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.match.LastOutcomes
@@ -49,25 +58,56 @@ fun MatchesScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        LeagueFilter(
-            leagues = leagues,
-            selectedIndex = selectedLeagueIndex,
-            onSelect = { viewModel.selectLeague(it) },
-            modifier = Modifier.padding(vertical = 16.dp),
-        )
+        when (val result = leagues) {
+            is Result.Success -> LeagueFilter(
+                leagueFilters = result.data,
+                selectedIndex = selectedLeagueIndex,
+                onSelect = { viewModel.selectLeague(it) },
+                modifier = Modifier.padding(vertical = 16.dp),
+            )
+            is Result.Error -> Text(stringResource(R.string.league_filter_error))
+            Result.Loading -> LeagueFilterPlaceholder(Modifier.padding(vertical = 16.dp))
+        }
         Divider()
 
         if (matchOverallItems.loadState.refresh is LoadState.Loading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                CircularProgressIndicator()
-            }
+            MatchOverallListPlaceholder()
         } else {
             MatchOverallList(
                 items = matchOverallItems,
                 onSelectMatch = onSelectMatch,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
+    }
+}
+
+@Composable
+private fun MatchOverallListPlaceholder() {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        MatchOverallSeparator(
+            matchAt = LocalDateTime.now(),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .placeholder(
+                    visible = true,
+                    color = Color.LightGray,
+                    shape = RoundedCornerShape(4.dp),
+                    highlight = PlaceholderHighlight.shimmer(highlightColor = Color.White),
+                )
+        )
+        repeat(4) {
+            MatchOverallItem(
+                matchOverall = matchOveralls[0],
+                onSelectMatch = {},
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .placeholder(
+                        visible = true,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(4.dp),
+                        highlight = PlaceholderHighlight.shimmer(highlightColor = Color.White),
+                    )
             )
         }
     }
@@ -77,9 +117,10 @@ fun MatchesScreen(
 private fun MatchOverallList(
     items: LazyPagingItems<MatchOverallModel>,
     onSelectMatch: (matchId: Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxHeight(),
+        modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items) { item ->
@@ -99,11 +140,14 @@ private fun MatchOverallList(
 }
 
 @Composable
-private fun MatchOverallSeparator(matchAt: LocalDateTime) {
+private fun MatchOverallSeparator(
+    matchAt: LocalDateTime,
+    modifier: Modifier = Modifier,
+) {
     Spacer(Modifier.height(16.dp))
     Text(
         text = matchAt.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = modifier,
         style = MacaoTheme.typography.subtitle2
     )
 }
@@ -112,11 +156,10 @@ private fun MatchOverallSeparator(matchAt: LocalDateTime) {
 private fun MatchOverallItem(
     matchOverall: MatchOverall,
     onSelectMatch: (matchId: Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .clickable { onSelectMatch(matchOverall.id) },
+        modifier = modifier.clickable { onSelectMatch(matchOverall.id) },
         elevation = 4.dp,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -181,7 +224,7 @@ private fun MatchOverallItem(
 
 @Composable
 private fun League(
-    league: League,
+    league: MatchOverall.League,
     modifier: Modifier = Modifier
 ) {
     Row(

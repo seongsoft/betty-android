@@ -1,7 +1,6 @@
 package io.github.cbinarycastle.macao.domain
 
 import androidx.paging.PagingData
-import io.github.cbinarycastle.macao.data.match.list.GetMatchesRequest
 import io.github.cbinarycastle.macao.di.IoDispatcher
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,7 +22,7 @@ class GetMatchOverallsUseCase @Inject constructor(
     }
 
     data class Params(
+        val leagueId: Long?,
         val baseDateTime: LocalDateTime = LocalDateTime.now(),
-        val leagueId: Long? = null,
     )
 }

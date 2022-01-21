@@ -1,4 +1,4 @@
-package io.github.cbinarycastle.macao.data.match.list
+package io.github.cbinarycastle.macao.data.match.overall
 
 import androidx.paging.PagingSource
 import io.github.cbinarycastle.macao.entity.MatchOverall

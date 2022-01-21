@@ -16,4 +16,9 @@ data class MatchDetails(
     val ranking: Ranking,
     val underOvers: List<UnderOver>,
     val goalsPerMatches: List<GoalsPerMatch>
-)
+) {
+    data class League(
+        val name: String,
+        val imageUrl: String,
+    )
+}

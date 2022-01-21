@@ -9,4 +9,9 @@ data class MatchOverall(
     val homeTeam: Team,
     val awayTeam: Team,
     val suggestionInfo: SuggestionInfo,
-)
+) {
+    data class League(
+        val name: String,
+        val imageUrl: String,
+    )
+}

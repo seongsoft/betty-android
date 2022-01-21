@@ -6,6 +6,9 @@
     <string name="draw">무</string>
     <string name="lose">패</string>
 
+    <!-- League filter -->
+    <string name="league_filter_error">리그 필터를 불러오지 못했습니다.</string>
+
     <!-- Place -->
     <string name="place_total_title">Total</string>
     <string name="place_home_title">Home</string>

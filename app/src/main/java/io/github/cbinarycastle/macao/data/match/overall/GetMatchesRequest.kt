@@ -1,7 +1,6 @@
-package io.github.cbinarycastle.macao.data.match.list
+package io.github.cbinarycastle.macao.data.match.overall
 
 import org.threeten.bp.LocalDateTime
-import retrofit2.http.Query
 
 data class GetMatchesRequest(
     val baseDateTime: LocalDateTime,

@@ -1,6 +1,6 @@
 package io.github.cbinarycastle.macao.data.mapper
 
-import io.github.cbinarycastle.macao.data.match.list.GetMatchesResponse
+import io.github.cbinarycastle.macao.data.match.overall.GetMatchesResponse
 import io.github.cbinarycastle.macao.entity.MatchOverall
 
 fun GetMatchesResponse.MatchDto.toEntity() = MatchOverall(

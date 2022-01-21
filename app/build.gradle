@@ -98,14 +98,14 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    // Glide
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-placeholder:$accompanistVersion"
+
+    // Landscapist
     implementation "com.github.skydoves:landscapist-glide:$landscapistVersion"
 
     // Timber
     implementation "com.jakewharton.timber:timber:$timberVersion"
-
-    // Swipe refresh layout
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion"
 
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenVersion"

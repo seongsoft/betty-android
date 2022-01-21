@@ -1,7 +1,8 @@
 package io.github.cbinarycastle.macao.data
 
+import io.github.cbinarycastle.macao.data.league.LeagueDto
 import io.github.cbinarycastle.macao.data.match.details.GetMatchDetailsResponse
-import io.github.cbinarycastle.macao.data.match.list.GetMatchesResponse
+import io.github.cbinarycastle.macao.data.match.overall.GetMatchesResponse
 import org.threeten.bp.LocalDateTime
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,4 +20,7 @@ interface BackendService {
 
     @GET("/matches/{matchId}")
     suspend fun fetchMatchDetails(@Path("matchId") matchId: Long): GetMatchDetailsResponse
+
+    @GET("/leagues")
+    suspend fun fetchLeagues(): List<LeagueDto>
 }
