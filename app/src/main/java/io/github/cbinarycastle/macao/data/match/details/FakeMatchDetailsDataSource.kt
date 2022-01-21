@@ -7,7 +7,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeMatchDetailsDataSource @Inject constructor() : MatchDetailsDataSource {
 
-    override suspend fun getMatchDetails(): MatchDetails {
+    override suspend fun getMatchDetails(matchId: Long): MatchDetails {
         return matchDetails
     }
 }

@@ -12,7 +12,7 @@ class RemoteMatchDetailsSource @Inject constructor(
     private val backendService: BackendService
 ) : MatchDetailsDataSource {
 
-    override suspend fun getMatchDetails(): MatchDetails {
-        return backendService.fetchMatchDetails().toEntity()
+    override suspend fun getMatchDetails(matchId: Long): MatchDetails {
+        return backendService.fetchMatchDetails(matchId).toEntity()
     }
 }

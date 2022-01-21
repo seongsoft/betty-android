@@ -1,20 +1,29 @@
 package io.github.cbinarycastle.macao.domain
 
 import androidx.paging.PagingData
+import io.github.cbinarycastle.macao.data.match.list.GetMatchesRequest
 import io.github.cbinarycastle.macao.di.IoDispatcher
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
 class GetMatchOverallsUseCase @Inject constructor(
     @IoDispatcher dispatcher: CoroutineDispatcher,
     private val repository: MatchOverallRepository,
-) : FlowUseCase<Unit, PagingData<MatchOverall>>(dispatcher) {
+) : FlowUseCase<GetMatchOverallsUseCase.Params, PagingData<MatchOverall>>(dispatcher) {
 
-    override fun execute(params: Unit): Flow<Result<PagingData<MatchOverall>>> {
-        return repository.getMatchOveralls()
-            .map { Result.Success(it) }
+    override fun execute(params: Params): Flow<Result<PagingData<MatchOverall>>> {
+        return repository.getMatchOveralls(
+            baseDateTime = params.baseDateTime,
+            leagueId = params.leagueId,
+        ).map { Result.Success(it) }
     }
+
+    data class Params(
+        val baseDateTime: LocalDateTime = LocalDateTime.now(),
+        val leagueId: Long? = null,
+    )
 }

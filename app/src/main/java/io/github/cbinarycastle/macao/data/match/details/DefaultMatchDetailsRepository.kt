@@ -10,7 +10,7 @@ class DefaultMatchDetailsRepository @Inject constructor(
     private val dataSource: MatchDetailsDataSource
 ) : MatchDetailsRepository {
 
-    override suspend fun getMatchDetails(): MatchDetails {
-        return dataSource.getMatchDetails()
+    override suspend fun getMatchDetails(matchId: Long): MatchDetails {
+        return dataSource.getMatchDetails(matchId)
     }
 }

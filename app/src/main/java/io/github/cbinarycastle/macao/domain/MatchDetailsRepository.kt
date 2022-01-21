@@ -4,5 +4,5 @@ import io.github.cbinarycastle.macao.entity.MatchDetails
 
 interface MatchDetailsRepository {
 
-    suspend fun getMatchDetails(): MatchDetails
+    suspend fun getMatchDetails(matchId: Long): MatchDetails
 }

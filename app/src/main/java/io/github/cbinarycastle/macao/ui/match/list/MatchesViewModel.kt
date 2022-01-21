@@ -33,7 +33,7 @@ class MatchesViewModel @Inject constructor(
     val matchOveralls = selectedLeagueIndex
         .map { leagues.value[it] }
         .flatMapLatest {
-            getMatchOverallsUseCase(Unit)
+            getMatchOverallsUseCase(GetMatchOverallsUseCase.Params())
                 .filter { it is Result.Success }
                 .map { (it as Result.Success).data }
                 .mapLatest { it.insertSeparators() }

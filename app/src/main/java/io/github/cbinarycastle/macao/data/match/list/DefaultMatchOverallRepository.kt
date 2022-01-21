@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import io.github.cbinarycastle.macao.domain.MatchOverallRepository
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import kotlinx.coroutines.flow.Flow
+import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,10 +15,18 @@ class DefaultMatchOverallRepository @Inject constructor(
     private val pagingSourceFactory: MatchOverallPagingSourceFactory
 ) : MatchOverallRepository {
 
-    override fun getMatchOveralls(): Flow<PagingData<MatchOverall>> {
+    override fun getMatchOveralls(
+        baseDateTime: LocalDateTime,
+        leagueId: Long?,
+    ): Flow<PagingData<MatchOverall>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
-            pagingSourceFactory = { pagingSourceFactory.create() }
+            pagingSourceFactory = {
+                pagingSourceFactory.create(
+                    baseDateTime = baseDateTime,
+                    leagueId = leagueId,
+                )
+            }
         ).flow
     }
 }

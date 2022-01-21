@@ -17,7 +17,7 @@ class MatchDetailsViewModel @Inject constructor(
 
     val matchDetails = matchId
         .filterNotNull()
-        .mapLatest { getMatchDetailsUseCase(it) }
+        .mapLatest { getMatchDetailsUseCase(GetMatchDetailsUseCase.Params(it)) }
 
     fun setMatchId(matchId: Long) {
         this.matchId.value = matchId
