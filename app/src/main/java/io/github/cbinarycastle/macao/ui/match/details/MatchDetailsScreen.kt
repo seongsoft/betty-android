@@ -1,10 +1,19 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.Tab
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,6 +23,7 @@ import io.github.cbinarycastle.macao.data.match.details.matchDetails
 import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import io.github.cbinarycastle.macao.entity.Team
+import io.github.cbinarycastle.macao.ui.TopBarHeight
 import io.github.cbinarycastle.macao.ui.match.LastOutcomes
 import io.github.cbinarycastle.macao.ui.match.ScorePrediction
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
@@ -45,83 +55,111 @@ private fun MatchDetailsScreen(matchDetailsResult: Result<MatchDetails>) {
 @Composable
 private fun MatchDetailsScreen(matchDetails: MatchDetails) {
     var selectedTabIndex by remember { mutableStateOf(0) }
+    var tabPosition by remember { mutableStateOf(Offset.Zero) }
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(Modifier.height(16.dp))
-        Text(
-            text = matchDetails.league.name,
-            style = MacaoTheme.typography.h6
-        )
-        Text(
-            text = matchDetails.matchAt.format(matchDateTimeFormatter),
-            style = MacaoTheme.typography.subtitle1
-        )
-        Spacer(Modifier.height(8.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
+    Box {
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Team(
-                team = matchDetails.homeTeam,
-                modifier = Modifier.weight(1f),
+            Spacer(Modifier.height(16.dp))
+            Text(
+                text = matchDetails.league.name,
+                style = MacaoTheme.typography.h6
             )
-            ScorePrediction(
-                homeScore = matchDetails.suggestionInfo.homeExpectedScore,
-                awayScore = matchDetails.suggestionInfo.awayExpectedScore,
+            Text(
+                text = matchDetails.matchAt.format(matchDateTimeFormatter),
+                style = MacaoTheme.typography.subtitle1
             )
-            Team(
-                team = matchDetails.awayTeam,
-                modifier = Modifier.weight(1f),
-            )
-        }
-        Spacer(Modifier.height(24.dp))
-        ScrollableTabRow(
-            selectedTabIndex = selectedTabIndex,
-            backgroundColor = MacaoTheme.colors.surface,
-            edgePadding = 0.dp,
-        ) {
-            tabs.forEachIndexed { index, tab ->
-                Tab(
-                    selected = selectedTabIndex == index,
-                    onClick = {
-                        selectedTabIndex = index
-                    },
-                    modifier = Modifier.size(56.dp)
-                ) {
-                    Text(tab)
+            Spacer(Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Team(
+                    team = matchDetails.homeTeam,
+                    modifier = Modifier.weight(1f),
+                )
+                ScorePrediction(
+                    homeScore = matchDetails.suggestionInfo.homeExpectedScore,
+                    awayScore = matchDetails.suggestionInfo.awayExpectedScore,
+                )
+                Team(
+                    team = matchDetails.awayTeam,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+            Spacer(Modifier.height(24.dp))
+            MatchDetailsTabRow(
+                selectedTabIndex = selectedTabIndex,
+                modifier = Modifier.onGloballyPositioned {
+                    tabPosition = it.positionInRoot()
                 }
+            ) { selectedTabIndex = it }
+
+            when (tabs[selectedTabIndex]) {
+                PLACE_TAB -> PlaceList(
+                    totalPlace = matchDetails.totalPlace,
+                    homePlace = matchDetails.homePlace,
+                    awayPlace = matchDetails.awayPlace
+                )
+                HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(
+                    teamName = matchDetails.homeTeam.name,
+                    histories = matchDetails.homeMatchHistories
+                )
+                AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(
+                    teamName = matchDetails.awayTeam.name,
+                    histories = matchDetails.awayMatchHistories
+                )
+                RANKING_TAB -> RankingTable(
+                    ranking = matchDetails.ranking,
+                    homeTeamName = matchDetails.homeTeam.name,
+                    awayTeamName = matchDetails.awayTeam.name,
+                )
+                UNDER_OVER_TAB -> UnderOverTable(
+                    underOvers = matchDetails.underOvers,
+                    homeTeamName = matchDetails.homeTeam.name,
+                    awayTeamName = matchDetails.awayTeam.name,
+                )
+                GOALS_PER_MATCH_TAB -> GoalsPerMatchTable(
+                    goalsPerMatches = matchDetails.goalsPerMatches,
+                    homeTeamName = matchDetails.homeTeam.name,
+                    awayTeamName = matchDetails.awayTeam.name,
+                )
             }
         }
 
-        when (tabs[selectedTabIndex]) {
-            PLACE_TAB -> PlaceList(
-                totalPlace = matchDetails.totalPlace,
-                homePlace = matchDetails.homePlace,
-                awayPlace = matchDetails.awayPlace
-            )
-            HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(
-                teamName = matchDetails.homeTeam.name,
-                histories = matchDetails.homeMatchHistories
-            )
-            AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(
-                teamName = matchDetails.awayTeam.name,
-                histories = matchDetails.awayMatchHistories
-            )
-            RANKING_TAB -> RankingTable(
-                ranking = matchDetails.ranking,
-                homeTeamName = matchDetails.homeTeam.name,
-                awayTeamName = matchDetails.awayTeam.name,
-            )
-            UNDER_OVER_TAB -> UnderOverTable(
-                underOvers = matchDetails.underOvers,
-                homeTeamName = matchDetails.homeTeam.name,
-                awayTeamName = matchDetails.awayTeam.name,
-            )
-            GOALS_PER_MATCH_TAB -> GoalsPerMatchTable(
-                goalsPerMatches = matchDetails.goalsPerMatches,
-                homeTeamName = matchDetails.homeTeam.name,
-                awayTeamName = matchDetails.awayTeam.name,
-            )
+        val topBarHeight = with(LocalDensity.current) {
+            TopBarHeight.toPx()
+        }
+        if (tabPosition.y - topBarHeight <= 0f) {
+            MatchDetailsTabRow(selectedTabIndex = selectedTabIndex) {
+                selectedTabIndex = it
+            }
+        }
+    }
+}
+
+@Composable
+private fun MatchDetailsTabRow(
+    selectedTabIndex: Int,
+    modifier: Modifier = Modifier,
+    onTabSelected: (Int) -> Unit
+) {
+    ScrollableTabRow(
+        selectedTabIndex = selectedTabIndex,
+        modifier = modifier,
+        backgroundColor = MacaoTheme.colors.surface,
+        edgePadding = 0.dp,
+    ) {
+        tabs.forEachIndexed { index, tab ->
+            Tab(
+                selected = selectedTabIndex == index,
+                onClick = { onTabSelected(index) },
+                modifier = Modifier.size(56.dp)
+            ) {
+                Text(tab)
+            }
         }
     }
 }

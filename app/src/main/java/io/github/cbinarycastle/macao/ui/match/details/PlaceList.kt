@@ -1,6 +1,7 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -26,9 +27,7 @@ fun PlaceList(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .padding(vertical = 24.dp),
+        modifier = modifier.padding(vertical = 24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         PlaceItem(

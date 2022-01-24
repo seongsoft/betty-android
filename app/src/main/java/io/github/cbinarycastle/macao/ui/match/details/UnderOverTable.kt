@@ -26,7 +26,7 @@ fun UnderOverTable(
     awayTeamName: String,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier.verticalScroll(rememberScrollState())) {
+    Column(modifier) {
         UnderOverHeader()
         Divider()
         UnderOverItems(

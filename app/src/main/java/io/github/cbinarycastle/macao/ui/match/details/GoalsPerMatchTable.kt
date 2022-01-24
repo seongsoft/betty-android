@@ -25,7 +25,7 @@ fun GoalsPerMatchTable(
 ) {
     val sharedHorizontalScrollState = rememberScrollState()
 
-    Column(modifier.verticalScroll(rememberScrollState())) {
+    Column(modifier) {
         GoalsPerMatchHeader(horizontalScrollState = sharedHorizontalScrollState)
         Divider()
         GoalsPerMatchItems(

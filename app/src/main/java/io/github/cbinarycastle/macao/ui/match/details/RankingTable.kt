@@ -25,7 +25,7 @@ fun RankingTable(
 ) {
     val sharedHorizontalScrollState = rememberScrollState()
 
-    Column(modifier.verticalScroll(rememberScrollState())) {
+    Column(modifier) {
         RankingHeader(horizontalScrollState = sharedHorizontalScrollState)
         Divider()
         RankingItems(

@@ -25,7 +25,7 @@ fun MatchHistoryList(
     histories: List<MatchHistory>,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier.verticalScroll(rememberScrollState())) {
+    Column(modifier) {
         histories.forEach { MatchHistoryItem(teamName, it) }
     }
 }
