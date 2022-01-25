@@ -6,6 +6,7 @@ import io.github.cbinarycastle.macao.data.BackendService
 import io.github.cbinarycastle.macao.data.mapper.toEntity
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 
 class MatchOverallPagingSource(
     private val backendService: BackendService,
@@ -17,7 +18,7 @@ class MatchOverallPagingSource(
         try {
             val page = params.key ?: 1
             val response = backendService.fetchMatches(
-                baseDateTime = baseDateTime,
+                baseDateTime = baseDateTime.format(DateTimeFormatter.ISO_DATE_TIME),
                 leagueId = leagueId,
                 page = page,
                 size = params.loadSize,

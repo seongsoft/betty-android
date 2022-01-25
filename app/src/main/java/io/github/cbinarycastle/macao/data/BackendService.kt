@@ -10,17 +10,17 @@ import retrofit2.http.Query
 
 interface BackendService {
 
-    @GET("/matches")
+    @GET("matches")
     suspend fun fetchMatches(
-        @Query("baseDateTime") baseDateTime: LocalDateTime,
+        @Query("baseDateTime") baseDateTime: String,
         @Query("leagueId") leagueId: Long?,
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetMatchesResponse
 
-    @GET("/matches/{matchId}")
+    @GET("matches/{matchId}")
     suspend fun fetchMatchDetails(@Path("matchId") matchId: Long): GetMatchDetailsResponse
 
-    @GET("/leagues")
+    @GET("leagues")
     suspend fun fetchLeagues(): List<LeagueDto>
 }

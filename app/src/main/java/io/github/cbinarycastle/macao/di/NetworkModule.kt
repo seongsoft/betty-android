@@ -10,7 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BACKEND_URL = "url"
+private const val BACKEND_URL = "http://54.180.85.171:10001/api/v1/"
 
 @InstallIn(SingletonComponent::class)
 @Module
