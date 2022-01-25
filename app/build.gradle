@@ -113,6 +113,12 @@ dependencies {
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenVersion"
 
+    // Amplitude
+    implementation "com.amplitude:android-sdk:$amplitudeVersion"
+
+    // Hackle
+    implementation "io.hackle:hackle-android-sdk:$hackleVersion"
+
     // JUnit
     testImplementation "junit:junit:$jUnitVersion"
     testImplementation "androidx.test.ext:junit:$androidJUnitVersion"
