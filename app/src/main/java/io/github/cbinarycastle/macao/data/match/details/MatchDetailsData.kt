@@ -212,7 +212,7 @@ val matchDetails = MatchDetails(
         homeExpectedPercentage = 21,
         drawExpectedPercentage = 24,
         awayExpectedPercentage = 55,
-        suggestions = listOf(SuggestionType.AWAY_WIN)
+        suggestions = SuggestionType.AWAY_WIN
     ),
     totalPlace = Place(
         home = Place.Value(

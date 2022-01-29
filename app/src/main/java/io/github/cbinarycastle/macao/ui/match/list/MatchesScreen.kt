@@ -47,7 +47,7 @@ private val matchTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 @Composable
 fun MatchesScreen(
     viewModel: MatchesViewModel,
-    onSelectMatch: (matchId: Long) -> Unit,
+    onSelectMatch: (matchOverall: MatchOverall) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val leagues by viewModel.leagues.collectAsState()
@@ -116,7 +116,7 @@ private fun MatchOverallListPlaceholder() {
 @Composable
 private fun MatchOverallList(
     items: LazyPagingItems<MatchOverallModel>,
-    onSelectMatch: (matchId: Long) -> Unit,
+    onSelectMatch: (matchOverall: MatchOverall) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -155,11 +155,11 @@ private fun MatchOverallSeparator(
 @Composable
 private fun MatchOverallItem(
     matchOverall: MatchOverall,
-    onSelectMatch: (matchId: Long) -> Unit,
+    onSelectMatch: (matchOverall: MatchOverall) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.clickable { onSelectMatch(matchOverall.id) },
+        modifier = modifier.clickable { onSelectMatch(matchOverall) },
         elevation = 4.dp,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

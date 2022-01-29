@@ -8,6 +8,9 @@ import io.github.cbinarycastle.macao.domain.GetLeaguesUseCase
 import io.github.cbinarycastle.macao.domain.GetMatchOverallsUseCase
 import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.domain.data
+import io.github.cbinarycastle.macao.entity.MatchOverall
+import io.github.cbinarycastle.macao.event.Event
+import io.github.cbinarycastle.macao.event.EventLogger
 import io.github.cbinarycastle.macao.util.WhileViewSubscribed
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -16,6 +19,7 @@ import javax.inject.Inject
 class MatchesViewModel @Inject constructor(
     getMatchOverallsUseCase: GetMatchOverallsUseCase,
     getLeaguesUseCase: GetLeaguesUseCase,
+    private val eventLogger: EventLogger,
 ) : ViewModel() {
 
     val leagues = flow {
@@ -53,5 +57,21 @@ class MatchesViewModel @Inject constructor(
 
     fun selectLeague(index: Int) {
         _selectedLeagueIndex.value = index
+        leagues.value.data?.get(index)?.let {
+            eventLogger.logEvent(
+                Event.MatchesLeagueFilterClick(leagueName = it.name)
+            )
+        }
+    }
+
+    fun selectMatch(matchOverall: MatchOverall) {
+        eventLogger.logEvent(
+            Event.MatchesMatchItemClick(
+                matchId = matchOverall.id,
+                matchAt = matchOverall.matchAt,
+                homeTeamName = matchOverall.homeTeam.name,
+                awayTeamName = matchOverall.awayTeam.name,
+            )
+        )
     }
 }

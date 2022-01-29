@@ -36,7 +36,10 @@ fun MacaoNavGraph(
             val viewModel = hiltViewModel<MatchesViewModel>()
             MatchesScreen(
                 viewModel = viewModel,
-                onSelectMatch = actions.openMatch,
+                onSelectMatch = { matchOverall ->
+                    viewModel.selectMatch(matchOverall)
+                    actions.openMatch(matchOverall.id)
+                },
             )
         }
         composable(

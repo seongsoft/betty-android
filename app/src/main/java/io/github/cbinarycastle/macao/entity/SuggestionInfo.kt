@@ -6,5 +6,5 @@ data class SuggestionInfo(
     val homeExpectedPercentage: Int,
     val drawExpectedPercentage: Int,
     val awayExpectedPercentage: Int,
-    val suggestions: List<SuggestionType>,
+    val suggestions: SuggestionType,
 )

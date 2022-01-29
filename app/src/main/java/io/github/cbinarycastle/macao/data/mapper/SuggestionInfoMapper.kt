@@ -10,5 +10,5 @@ fun SuggestionDto.toEntity() = SuggestionInfo(
     homeExpectedPercentage = homeExpectedPercent,
     drawExpectedPercentage = drawExpectedPercent,
     awayExpectedPercentage = awayExpectedPercent,
-    suggestions = suggestions.map { SuggestionType.valueOf(it) }
+    suggestions = SuggestionType.valueOf(suggestions)
 )

@@ -37,15 +37,24 @@ private val matchDateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(
 @Composable
 fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
     val result by viewModel.matchDetails.collectAsState(Result.Loading)
-    MatchDetailsScreen(matchDetailsResult = result)
+    MatchDetailsScreen(
+        matchDetailsResult = result,
+        onTabSelected = { viewModel.onTabSelected(it) }
+    )
 }
 
 @Composable
-private fun MatchDetailsScreen(matchDetailsResult: Result<MatchDetails>) {
+private fun MatchDetailsScreen(
+    matchDetailsResult: Result<MatchDetails>,
+    onTabSelected: (String) -> Unit,
+) {
     when (matchDetailsResult) {
         is Result.Success -> {
             val matchDetails = matchDetailsResult.data
-            MatchDetailsScreen(matchDetails)
+            MatchDetailsScreen(
+                matchDetails = matchDetails,
+                onTabSelected = onTabSelected,
+            )
         }
         is Result.Error -> {}
         Result.Loading -> CircularProgressIndicator()
@@ -53,7 +62,10 @@ private fun MatchDetailsScreen(matchDetailsResult: Result<MatchDetails>) {
 }
 
 @Composable
-private fun MatchDetailsScreen(matchDetails: MatchDetails) {
+private fun MatchDetailsScreen(
+    matchDetails: MatchDetails,
+    onTabSelected: (String) -> Unit,
+) {
     var selectedTabIndex by remember { mutableStateOf(0) }
     var tabPosition by remember { mutableStateOf(Offset.Zero) }
 
@@ -92,10 +104,11 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
             Spacer(Modifier.height(24.dp))
             MatchDetailsTabRow(
                 selectedTabIndex = selectedTabIndex,
+                onTabSelected = { selectedTabIndex = it },
                 modifier = Modifier.onGloballyPositioned {
                     tabPosition = it.positionInRoot()
                 }
-            ) { selectedTabIndex = it }
+            )
 
             when (tabs[selectedTabIndex]) {
                 PLACE_TAB -> PlaceList(
@@ -133,9 +146,13 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
             TopBarHeight.toPx()
         }
         if (tabPosition.y - topBarHeight <= 0f) {
-            MatchDetailsTabRow(selectedTabIndex = selectedTabIndex) {
-                selectedTabIndex = it
-            }
+            MatchDetailsTabRow(
+                selectedTabIndex = selectedTabIndex,
+                onTabSelected = {
+                    selectedTabIndex = it
+                    onTabSelected(tabs[it])
+                },
+            )
         }
     }
 }
@@ -143,8 +160,8 @@ private fun MatchDetailsScreen(matchDetails: MatchDetails) {
 @Composable
 private fun MatchDetailsTabRow(
     selectedTabIndex: Int,
+    onTabSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    onTabSelected: (Int) -> Unit
 ) {
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
@@ -200,7 +217,10 @@ private fun Team(
 @Composable
 private fun MatchDetailsScreenPreview() {
     MacaoTheme {
-        MatchDetailsScreen(matchDetails)
+        MatchDetailsScreen(
+            matchDetails = matchDetails,
+            onTabSelected = {}
+        )
     }
 }
 

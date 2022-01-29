@@ -45,7 +45,7 @@ val matchOveralls = listOf(
             homeExpectedPercentage = 28,
             drawExpectedPercentage = 11,
             awayExpectedPercentage = 61,
-            suggestions = listOf(SuggestionType.AWAY_WIN),
+            suggestions = SuggestionType.AWAY_WIN,
         )
     ),
     MatchOverall(
@@ -80,7 +80,7 @@ val matchOveralls = listOf(
             homeExpectedPercentage = 50,
             drawExpectedPercentage = 18,
             awayExpectedPercentage = 32,
-            suggestions = listOf(SuggestionType.HOME_WIN),
+            suggestions = SuggestionType.HOME_WIN,
         )
     ),
     MatchOverall(
@@ -115,7 +115,7 @@ val matchOveralls = listOf(
             homeExpectedPercentage = 31,
             drawExpectedPercentage = 33,
             awayExpectedPercentage = 36,
-            suggestions = listOf(SuggestionType.AWAY_WIN, SuggestionType.DRAW),
+            suggestions = SuggestionType.AWAY_WIN,
         )
     ),
 )
