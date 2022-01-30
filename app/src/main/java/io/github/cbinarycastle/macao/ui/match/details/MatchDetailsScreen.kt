@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
@@ -73,12 +74,20 @@ private fun MatchDetailsScreen(
     matchDetails: MatchDetails,
     onTabSelected: (String) -> Unit,
 ) {
+    val scrollState = rememberScrollState()
     var selectedTabIndex by remember { mutableStateOf(0) }
     var tabPosition by remember { mutableStateOf(Offset.Zero) }
+    var tabAbsolutePosition by remember { mutableStateOf(Offset.Zero) }
+
+    LaunchedEffect(selectedTabIndex) {
+        if (scrollState.value > tabAbsolutePosition.y) {
+            scrollState.scrollTo(tabAbsolutePosition.y.toInt())
+        }
+    }
 
     Box {
         Column(
-            modifier = Modifier.verticalScroll(rememberScrollState()),
+            modifier = Modifier.verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(Modifier.height(16.dp))
@@ -109,11 +118,13 @@ private fun MatchDetailsScreen(
                 )
             }
             Spacer(Modifier.height(24.dp))
+
             MatchDetailsTabRow(
                 selectedTabIndex = selectedTabIndex,
                 onTabSelected = { selectedTabIndex = it },
                 modifier = Modifier.onGloballyPositioned {
                     tabPosition = it.positionInRoot()
+                    tabAbsolutePosition = it.positionInParent()
                 }
             )
 
@@ -158,7 +169,7 @@ private fun MatchDetailsScreen(
                 onTabSelected = {
                     selectedTabIndex = it
                     onTabSelected(tabs[it])
-                },
+                }
             )
         }
     }
