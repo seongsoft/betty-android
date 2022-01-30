@@ -57,7 +57,14 @@ private fun MatchDetailsScreen(
             )
         }
         is Result.Error -> {}
-        Result.Loading -> CircularProgressIndicator()
+        Result.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+        }
     }
 }
 
