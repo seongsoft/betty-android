@@ -11,7 +11,7 @@ class EventModule {
 
     @AmplitudeApiKey
     @Provides
-    fun provideAmplitudeApiKey() = "077dc204072ce090b33e07bb3a3e3422"
+    fun provideAmplitudeApiKey() = "dbe7bbf79508b33bd56ef8f526179bc4"
 
     @HackleApiKey
     @Provides

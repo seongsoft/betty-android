@@ -12,11 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
+import com.skydoves.landscapist.glide.GlideImage
+import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.data.league.leagues
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
@@ -64,21 +67,34 @@ private fun LeagueFilterChip(
             }
         ),
     ) {
-        Text(
-            text = leagueFilter.name,
+        Row(
             modifier = Modifier
                 .clickable { onClick(index) }
                 .padding(
                     horizontal = 16.dp,
                     vertical = 8.dp
                 ),
-            color = if (selected) {
-                MacaoTheme.colors.primary
-            } else {
-                Color.Unspecified
-            },
-            style = MacaoTheme.typography.caption
-        )
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (leagueFilter is LeagueFilterModel.League) {
+                GlideImage(
+                    imageModel = leagueFilter.imageUrl,
+                    modifier = Modifier.size(24.dp),
+                    contentScale = ContentScale.Fit,
+                    previewPlaceholder = R.drawable.premier_league
+                )
+                Spacer(Modifier.width(4.dp))
+            }
+            Text(
+                text = leagueFilter.name,
+                color = if (selected) {
+                    MacaoTheme.colors.primary
+                } else {
+                    Color.Unspecified
+                },
+                style = MacaoTheme.typography.caption
+            )
+        }
     }
 }
 

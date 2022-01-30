@@ -1,12 +1,10 @@
 package io.github.cbinarycastle.macao.data.match.details
 
-import org.threeten.bp.LocalDate
-
 data class TeamMatchHistoryDto(
     /**
      * YYYY-MM-dd
      */
-    val date: LocalDate,
+    val date: String,
     val homeTeamName: String,
     val awayTeamName: String,
 

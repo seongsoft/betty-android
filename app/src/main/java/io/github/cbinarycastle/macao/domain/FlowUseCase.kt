@@ -5,13 +5,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 
 abstract class FlowUseCase<P, R>(
     private val dispatcher: CoroutineDispatcher
 ) {
     operator fun invoke(params: P): Flow<Result<R>> {
         return execute(params)
-            .catch { Result.Error(it as Exception) }
+            .catch {
+                Timber.e(it)
+                Result.Error(it as Exception)
+            }
             .flowOn(dispatcher)
     }
 

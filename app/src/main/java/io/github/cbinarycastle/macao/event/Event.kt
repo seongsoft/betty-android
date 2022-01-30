@@ -22,13 +22,13 @@ sealed class Event(
         properties = mapOf(
             "matchId" to matchId,
             "matchAt" to matchAt.format(DateTimeFormatter.ISO_DATE_TIME),
-            "homeTeamName" to homeTeamName,
-            "awayTeamName" to awayTeamName,
+            "homeTeam" to homeTeamName,
+            "awayTeam" to awayTeamName,
         )
     )
 
     class MatchDetailsTabClick(tabName: String) : Event(
-        type = "matchDetails_place_tab_click",
-        properties = mapOf("tabName" to tabName)
+        type = "matchDetails_tab_click",
+        properties = mapOf("tab" to tabName)
     )
 }

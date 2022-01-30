@@ -8,7 +8,7 @@ data class GetMatchDetailsResponse(
     /**
      * UTC Timezone
      */
-    val matchDateTime: LocalDateTime,
+    val matchDateTime: String,
 
     val league: LeagueDto,
 

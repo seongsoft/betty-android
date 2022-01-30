@@ -165,8 +165,14 @@ private fun PlaceRow(
         Row {
             Surface(
                 modifier = Modifier
-                    .weight(homeTeamValue.toFloat())
-                    .height(4.dp),
+                    .height(4.dp)
+                    .then(
+                        if (homeTeamValue == 0) {
+                            Modifier.width(4.dp)
+                        } else {
+                            Modifier.weight(homeTeamValue.toFloat())
+                        }
+                    ),
                 color = MacaoTheme.colors.primary,
                 shape = CircleShape,
                 content = {}
@@ -174,8 +180,14 @@ private fun PlaceRow(
             Spacer(Modifier.width(4.dp))
             Surface(
                 modifier = Modifier
-                    .weight(awayTeamValue.toFloat())
-                    .height(4.dp),
+                    .height(4.dp)
+                    .then(
+                        if (awayTeamValue == 0) {
+                            Modifier.width(4.dp)
+                        } else {
+                            Modifier.weight(awayTeamValue.toFloat())
+                        }
+                    ),
                 color = MacaoTheme.colors.secondary,
                 shape = CircleShape,
                 content = {}
