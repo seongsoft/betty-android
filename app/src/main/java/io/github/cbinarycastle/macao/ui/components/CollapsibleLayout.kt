@@ -1,7 +1,9 @@
 package io.github.cbinarycastle.macao.ui.components
 
 import androidx.compose.foundation.MutatePriority
+import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollScope
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -11,6 +13,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.Velocity
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -40,6 +43,16 @@ class CollapsibleState(initialHeight: Int) : ScrollableState {
         if (changed) consumed else it
     }
 
+    suspend fun fling(flingBehavior: FlingBehavior, velocity: Float): Float {
+        var left = velocity
+        scroll {
+            with(flingBehavior) {
+                left = performFling(velocity)
+            }
+        }
+        return left
+    }
+
     override val isScrollInProgress: Boolean
         get() = scrollableState.isScrollInProgress
 
@@ -57,7 +70,8 @@ fun rememberCollapsibleState(): CollapsibleState = remember {
 }
 
 class CollapsibleNestedScrollConnection(
-    val state: CollapsibleState
+    val state: CollapsibleState,
+    val flingBehavior: FlingBehavior,
 ) : NestedScrollConnection {
 
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
@@ -83,6 +97,26 @@ class CollapsibleNestedScrollConnection(
         val weConsumed = state.dispatchRawDelta(delta)
         return Offset(0f, weConsumed)
     }
+
+    override suspend fun onPreFling(available: Velocity): Velocity {
+        val velocity = available.y
+        if (velocity >= 0) {
+            return Velocity.Zero
+        }
+
+        val left = state.fling(flingBehavior = flingBehavior, velocity = available.y)
+        return Velocity(0f, velocity - left)
+    }
+
+    override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+        val velocity = available.y
+        if (velocity <= 0) {
+            return Velocity.Zero
+        }
+
+        val left = state.fling(flingBehavior = flingBehavior, velocity = available.y)
+        return Velocity(0f, velocity - left)
+    }
 }
 
 @Composable
@@ -91,7 +125,10 @@ fun CollapsibleLayout(
     collapsible: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    val nestedScrollConnection = remember { CollapsibleNestedScrollConnection(state) }
+    val flingBehavior = ScrollableDefaults.flingBehavior()
+    val nestedScrollConnection = remember {
+        CollapsibleNestedScrollConnection(state, flingBehavior)
+    }
 
     Layout(
         content = {
