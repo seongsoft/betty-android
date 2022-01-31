@@ -136,6 +136,9 @@ private fun MatchOverallList(
                 }
             }
         }
+        item {
+            Spacer(Modifier.height(16.dp))
+        }
     }
 }
 
