@@ -1,8 +1,8 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Surface
@@ -25,8 +25,10 @@ fun MatchHistoryList(
     histories: List<MatchHistory>,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier) {
-        histories.forEach { MatchHistoryItem(teamName, it) }
+    LazyColumn(modifier) {
+        items(histories) {
+            MatchHistoryItem(teamName, it)
+        }
     }
 }
 

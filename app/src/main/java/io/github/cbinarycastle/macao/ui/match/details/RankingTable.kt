@@ -2,6 +2,8 @@ package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import io.github.cbinarycastle.macao.data.match.details.matchDetails
 import io.github.cbinarycastle.macao.entity.Ranking
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RankingTable(
     ranking: Ranking,
@@ -25,25 +28,33 @@ fun RankingTable(
 ) {
     val sharedHorizontalScrollState = rememberScrollState()
 
-    Column(modifier) {
-        RankingHeader(horizontalScrollState = sharedHorizontalScrollState)
-        Divider()
-        RankingItems(
-            rows = ranking.rows,
-            homeTeamName = homeTeamName,
-            awayTeamName = awayTeamName,
-            horizontalScrollState = sharedHorizontalScrollState,
-            modifier = Modifier.fillMaxWidth()
-        )
+    LazyColumn(modifier) {
+        stickyHeader {
+            RankingHeader(horizontalScrollState = sharedHorizontalScrollState)
+            Divider()
+        }
+        items(ranking.rows) {
+            RankingItem(
+                row = it,
+                scrollState = sharedHorizontalScrollState,
+                modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                    modifier
+                        .border(
+                            width = 1.dp,
+                            color = MacaoTheme.colors.primary
+                        )
+                        .background(color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha))
+                } else {
+                    modifier
+                }
+            )
+        }
     }
 }
 
 @Composable
-private fun RankingHeader(
-    horizontalScrollState: ScrollState,
-    modifier: Modifier = Modifier
-) {
-    Row(modifier) {
+private fun RankingHeader(horizontalScrollState: ScrollState) {
+    Row(Modifier.background(MacaoTheme.colors.background)) {
         Spacer(Modifier.width(NumberCellWidth))
         RankingCell(
             text = stringResource(R.string.ranking_team),
@@ -80,32 +91,6 @@ private fun RankingHeader(
                 modifier = Modifier.width(DefaultCellWidth)
             )
         }
-    }
-}
-
-@Composable
-private fun RankingItems(
-    rows: List<Ranking.Row>,
-    homeTeamName: String,
-    awayTeamName: String,
-    horizontalScrollState: ScrollState,
-    modifier: Modifier = Modifier,
-) {
-    rows.forEach {
-        RankingItem(
-            row = it,
-            scrollState = horizontalScrollState,
-            modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                modifier
-                    .border(
-                        width = 1.dp,
-                        color = MacaoTheme.colors.primary
-                    )
-                    .background(color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha))
-            } else {
-                modifier
-            }
-        )
     }
 }
 

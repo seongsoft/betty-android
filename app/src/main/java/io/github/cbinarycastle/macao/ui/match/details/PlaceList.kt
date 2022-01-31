@@ -27,7 +27,9 @@ fun PlaceList(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(vertical = 24.dp),
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(vertical = 24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         PlaceItem(

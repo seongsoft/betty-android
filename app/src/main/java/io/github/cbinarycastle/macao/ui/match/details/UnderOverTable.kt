@@ -1,10 +1,11 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ import io.github.cbinarycastle.macao.data.match.details.matchDetails
 import io.github.cbinarycastle.macao.entity.UnderOver
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UnderOverTable(
     underOvers: List<UnderOver>,
@@ -26,20 +28,32 @@ fun UnderOverTable(
     awayTeamName: String,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier) {
-        UnderOverHeader()
-        Divider()
-        UnderOverItems(
-            underOvers = underOvers,
-            homeTeamName = homeTeamName,
-            awayTeamName = awayTeamName,
-        )
+    LazyColumn(modifier) {
+        stickyHeader {
+            UnderOverHeader()
+            Divider()
+        }
+        items(underOvers) {
+            UnderOverItem(
+                underOver = it,
+                modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                    modifier
+                        .border(
+                            width = 1.dp,
+                            color = MacaoTheme.colors.primary
+                        )
+                        .background(color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha))
+                } else {
+                    modifier
+                }
+            )
+        }
     }
 }
 
 @Composable
 private fun UnderOverHeader() {
-    Row {
+    Row(Modifier.background(MacaoTheme.colors.background)) {
         Spacer(Modifier.width(NumberCellWidth))
         UnderOverCell(
             text = stringResource(R.string.under_over_team),
@@ -53,30 +67,6 @@ private fun UnderOverHeader() {
         UnderOverCell(
             text = stringResource(R.string.under_over_over),
             modifier = Modifier.weight(1f)
-        )
-    }
-}
-
-@Composable
-private fun UnderOverItems(
-    underOvers: List<UnderOver>,
-    homeTeamName: String,
-    awayTeamName: String,
-    modifier: Modifier = Modifier,
-) {
-    underOvers.forEach {
-        UnderOverItem(
-            underOver = it,
-            modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                modifier
-                    .border(
-                        width = 1.dp,
-                        color = MacaoTheme.colors.primary
-                    )
-                    .background(color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha))
-            } else {
-                modifier
-            }
         )
     }
 }

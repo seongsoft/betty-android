@@ -2,6 +2,8 @@ package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import io.github.cbinarycastle.macao.data.match.details.matchDetails
 import io.github.cbinarycastle.macao.entity.GoalsPerMatch
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GoalsPerMatchTable(
     goalsPerMatches: List<GoalsPerMatch>,
@@ -25,25 +28,33 @@ fun GoalsPerMatchTable(
 ) {
     val sharedHorizontalScrollState = rememberScrollState()
 
-    Column(modifier) {
-        GoalsPerMatchHeader(horizontalScrollState = sharedHorizontalScrollState)
-        Divider()
-        GoalsPerMatchItems(
-            goalsPerMatches = goalsPerMatches,
-            homeTeamName = homeTeamName,
-            awayTeamName = awayTeamName,
-            horizontalScrollState = sharedHorizontalScrollState,
-            modifier = Modifier.fillMaxWidth()
-        )
+    LazyColumn(modifier) {
+        stickyHeader {
+            GoalsPerMatchHeader(horizontalScrollState = sharedHorizontalScrollState)
+            Divider()
+        }
+        items(goalsPerMatches) {
+            GoalsPerMatchItem(
+                goalsPerMatch = it,
+                scrollState = sharedHorizontalScrollState,
+                modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
+                    modifier
+                        .border(
+                            width = 1.dp,
+                            color = MacaoTheme.colors.primary
+                        )
+                        .background(color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha))
+                } else {
+                    modifier
+                }
+            )
+        }
     }
 }
 
 @Composable
-private fun GoalsPerMatchHeader(
-    horizontalScrollState: ScrollState,
-    modifier: Modifier = Modifier
-) {
-    Row(modifier) {
+private fun GoalsPerMatchHeader(horizontalScrollState: ScrollState) {
+    Row(Modifier.background(MacaoTheme.colors.background)) {
         Spacer(Modifier.width(DefaultCellWidth))
         GoalsPerMatchCell(
             text = stringResource(R.string.goals_per_match_team),
@@ -92,32 +103,6 @@ private fun GoalsPerMatchHeader(
                 modifier = Modifier.width(DefaultCellWidth)
             )
         }
-    }
-}
-
-@Composable
-private fun GoalsPerMatchItems(
-    goalsPerMatches: List<GoalsPerMatch>,
-    homeTeamName: String,
-    awayTeamName: String,
-    horizontalScrollState: ScrollState,
-    modifier: Modifier = Modifier,
-) {
-    goalsPerMatches.forEach {
-        GoalsPerMatchItem(
-            goalsPerMatch = it,
-            scrollState = horizontalScrollState,
-            modifier = if (it.teamName == homeTeamName || it.teamName == awayTeamName) {
-                modifier
-                    .border(
-                        width = 1.dp,
-                        color = MacaoTheme.colors.primary
-                    )
-                    .background(color = MacaoTheme.colors.primary.copy(alpha = HighlightAlpha))
-            } else {
-                modifier
-            }
-        )
     }
 }
 
