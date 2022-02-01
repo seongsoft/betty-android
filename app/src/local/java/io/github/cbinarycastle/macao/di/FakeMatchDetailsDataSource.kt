@@ -1,5 +1,7 @@
-package io.github.cbinarycastle.macao.data.match.details
+package io.github.cbinarycastle.macao.di
 
+import io.github.cbinarycastle.macao.data.match.details.MatchDetailsDataSource
+import io.github.cbinarycastle.macao.data.match.details.matchDetails
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import javax.inject.Inject
 import javax.inject.Singleton

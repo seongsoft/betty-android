@@ -9,7 +9,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,10 +42,11 @@ import io.github.cbinarycastle.macao.ui.match.LastOutcomes
 import io.github.cbinarycastle.macao.ui.match.ScorePrediction
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
-private val matchTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+private val matchTimeFormatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneOffset.UTC)
 
 @Composable
 fun MatchesScreen(

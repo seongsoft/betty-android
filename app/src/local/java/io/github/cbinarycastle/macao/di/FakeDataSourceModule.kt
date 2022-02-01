@@ -6,7 +6,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.cbinarycastle.macao.data.league.FakeLeagueDataSource
 import io.github.cbinarycastle.macao.data.league.LeagueDataSource
-import io.github.cbinarycastle.macao.data.match.details.FakeMatchDetailsDataSource
 import io.github.cbinarycastle.macao.data.match.details.MatchDetailsDataSource
 
 @InstallIn(SingletonComponent::class)

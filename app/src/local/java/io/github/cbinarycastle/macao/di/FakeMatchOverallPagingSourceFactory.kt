@@ -1,7 +1,9 @@
-package io.github.cbinarycastle.macao.data.match.overall
+package io.github.cbinarycastle.macao.di
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import io.github.cbinarycastle.macao.data.match.overall.MatchOverallPagingSourceFactory
+import io.github.cbinarycastle.macao.data.match.overall.matchOveralls
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import kotlinx.coroutines.delay
 import org.threeten.bp.LocalDateTime
