@@ -378,7 +378,7 @@ private fun Team(
     ) {
         GlideImage(
             imageModel = team.imageUrl,
-            modifier = Modifier.size(36.dp),
+            modifier = Modifier.size(48.dp),
             previewPlaceholder = R.drawable.manchester_united,
         )
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
