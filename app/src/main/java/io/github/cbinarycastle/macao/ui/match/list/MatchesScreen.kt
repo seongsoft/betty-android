@@ -98,7 +98,8 @@ private fun MatchOverallList(
     when (items.loadState.refresh) {
         is LoadState.NotLoading -> {
             LazyColumn(
-                modifier = modifier.padding(horizontal = 16.dp),
+                modifier = modifier,
+                contentPadding = PaddingValues(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(items) { item ->
