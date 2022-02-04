@@ -9,10 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -74,14 +71,53 @@ fun MatchesScreen(
         }
         Divider()
 
-        if (matchOverallItems.loadState.refresh is LoadState.Loading) {
-            MatchOverallListPlaceholder()
-        } else {
-            MatchOverallList(
-                items = matchOverallItems,
-                onSelectMatch = onSelectMatch,
-                modifier = Modifier.fillMaxHeight()
-            )
+        MatchOverallList(
+            items = matchOverallItems,
+            onSelectMatch = onSelectMatch
+        )
+    }
+}
+
+@Composable
+private fun MatchOverallList(
+    items: LazyPagingItems<MatchOverallModel>,
+    onSelectMatch: (matchOverall: MatchOverall) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (items.loadState.refresh is LoadState.Loading) {
+        MatchOverallListPlaceholder()
+    } else {
+        LazyColumn(
+            modifier = modifier.padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(items) { item ->
+                if (item != null) {
+                    when (item) {
+                        is MatchOverallModel.Separator -> MatchOverallSeparator(item.matchAt)
+                        is MatchOverallModel.Item -> {
+                            MatchOverallItem(
+                                matchOverall = item.matchOverall,
+                                onSelectMatch = onSelectMatch,
+                            )
+                        }
+                    }
+                }
+            }
+            if (items.loadState.append is LoadState.Loading) {
+                item {
+                    Spacer(Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
+            item {
+                Spacer(Modifier.height(16.dp))
+            }
         }
     }
 }
@@ -113,35 +149,6 @@ private fun MatchOverallListPlaceholder() {
                         highlight = PlaceholderHighlight.shimmer(highlightColor = Color.White),
                     )
             )
-        }
-    }
-}
-
-@Composable
-private fun MatchOverallList(
-    items: LazyPagingItems<MatchOverallModel>,
-    onSelectMatch: (matchOverall: MatchOverall) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    LazyColumn(
-        modifier = modifier.padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(items) { item ->
-            if (item != null) {
-                when (item) {
-                    is MatchOverallModel.Separator -> MatchOverallSeparator(item.matchAt)
-                    is MatchOverallModel.Item -> {
-                        MatchOverallItem(
-                            matchOverall = item.matchOverall,
-                            onSelectMatch = onSelectMatch,
-                        )
-                    }
-                }
-            }
-        }
-        item {
-            Spacer(Modifier.height(16.dp))
         }
     }
 }
