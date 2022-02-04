@@ -118,6 +118,7 @@ dependencies {
 
     // Hackle
     implementation "io.hackle:hackle-android-sdk:$hackleVersion"
+    implementation "io.hackle:hackle-sdk-core:$hackleVersion"
 
     // JUnit
     testImplementation "junit:junit:$jUnitVersion"
