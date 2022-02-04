@@ -59,16 +59,17 @@ fun MatchesScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(Modifier.height(16.dp))
         when (val result = leagues) {
             is Result.Success -> LeagueFilter(
                 leagueFilters = result.data,
                 selectedIndex = selectedLeagueIndex,
                 onSelect = { viewModel.selectLeague(it) },
-                modifier = Modifier.padding(vertical = 16.dp),
             )
             is Result.Error -> Text(stringResource(R.string.league_filter_error))
-            Result.Loading -> LeagueFilterPlaceholder(Modifier.padding(vertical = 16.dp))
+            Result.Loading -> LeagueFilterPlaceholder()
         }
+        Spacer(Modifier.height(16.dp))
         Divider()
 
         MatchOverallList(
@@ -84,41 +85,55 @@ private fun MatchOverallList(
     onSelectMatch: (matchOverall: MatchOverall) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (items.loadState.refresh is LoadState.Loading) {
-        MatchOverallListPlaceholder()
-    } else {
-        LazyColumn(
-            modifier = modifier.padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(items) { item ->
-                if (item != null) {
-                    when (item) {
-                        is MatchOverallModel.Separator -> MatchOverallSeparator(item.matchAt)
-                        is MatchOverallModel.Item -> {
-                            MatchOverallItem(
-                                matchOverall = item.matchOverall,
-                                onSelectMatch = onSelectMatch,
-                            )
+    when (items.loadState.refresh) {
+        is LoadState.NotLoading -> {
+            LazyColumn(
+                modifier = modifier.padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                items(items) { item ->
+                    if (item != null) {
+                        when (item) {
+                            is MatchOverallModel.Separator -> MatchOverallSeparator(item.matchAt)
+                            is MatchOverallModel.Item -> {
+                                MatchOverallItem(
+                                    matchOverall = item.matchOverall,
+                                    onSelectMatch = onSelectMatch,
+                                )
+                            }
                         }
                     }
                 }
-            }
-            if (items.loadState.append is LoadState.Loading) {
-                item {
-                    Spacer(Modifier.height(8.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        CircularProgressIndicator()
+                if (items.loadState.append is LoadState.Loading) {
+                    item {
+                        Spacer(Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
                 }
-            }
-            item {
-                Spacer(Modifier.height(16.dp))
+                item {
+                    Spacer(Modifier.height(16.dp))
+                }
             }
         }
+        is LoadState.Error -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(stringResource(R.string.matches_error))
+                Spacer(Modifier.height(8.dp))
+                Button(onClick = { items.retry() }) {
+                    Text(stringResource(R.string.retry))
+                }
+            }
+        }
+        LoadState.Loading -> MatchOverallListPlaceholder()
     }
 }
 

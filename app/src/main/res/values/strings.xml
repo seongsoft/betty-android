@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Macao</string>
 
+    <string name="retry">재시도</string>
+
     <!-- Outcome -->
     <string name="win">승</string>
     <string name="draw">무</string>
@@ -8,6 +10,9 @@
 
     <!-- League filter -->
     <string name="league_filter_error">리그 필터를 불러오지 못했습니다.</string>
+
+    <!-- Matches -->
+    <string name="matches_error">경기 목록을 불러오지 못했습니다.</string>
 
     <!-- Place -->
     <string name="place_total_title">Total</string>
