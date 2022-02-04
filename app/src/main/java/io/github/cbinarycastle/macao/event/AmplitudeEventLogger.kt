@@ -24,6 +24,10 @@ class AmplitudeEventLogger @Inject constructor(
         client = Amplitude.getInstance()
             .initialize(context, apiKey)
             .enableForegroundTracking(application)
+
+        if (client != null) {
+            Timber.i("Amplitude client is initialized.")
+        }
     }
 
     override fun logEvent(event: Event) {
@@ -33,7 +37,7 @@ class AmplitudeEventLogger @Inject constructor(
         }
 
         if (client == null) {
-            Timber.d("Amplitude client is not initialized. Call initialize() before logging event.")
+            Timber.w("Amplitude client is not initialized. Call initialize() before logging event.")
         } else {
             client?.logEvent(event.type, properties)
         }

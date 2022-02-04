@@ -21,11 +21,15 @@ class HackleEventLogger @Inject constructor(
 
     override fun initialize() {
         hackleApp = Hackle.initialize(context, sdkKey)
+
+        if (hackleApp != null) {
+            Timber.i("Hackle app is initialized.")
+        }
     }
 
     override fun logEvent(event: Event) {
         if (hackleApp == null) {
-            Timber.d("Hackle client is not initialized. Call initialize() before logging event.")
+            Timber.w("Hackle app is not initialized. Call initialize() before logging event.")
         } else {
             hackleApp?.track(Hackle.event(event.type) {
                 event.properties.forEach {
