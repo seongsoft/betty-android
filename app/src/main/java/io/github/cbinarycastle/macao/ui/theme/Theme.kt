@@ -1,6 +1,5 @@
 package io.github.cbinarycastle.macao.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -41,15 +40,12 @@ private val DarkExtendedColors = ExtendedColors(
 val LocalExtendedColors = compositionLocalOf { LightExtendedColors }
 
 @Composable
-fun MacaoTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
+fun MacaoTheme(content: @Composable () -> Unit) {
     CompositionLocalProvider(
-        LocalExtendedColors provides if (darkTheme) DarkExtendedColors else LightExtendedColors
+        LocalExtendedColors provides LightExtendedColors
     ) {
         MaterialTheme(
-            colors = if (darkTheme) DarkColors else LightColors,
+            colors = LightColors,
             typography = typography,
             content = content
         )
