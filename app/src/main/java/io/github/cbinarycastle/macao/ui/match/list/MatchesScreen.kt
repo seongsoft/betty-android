@@ -107,9 +107,9 @@ private fun MatchOverallList(
                 if (items.loadState.append is LoadState.Loading) {
                     item {
                         Spacer(Modifier.height(8.dp))
-                        Row(
+                        Box(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
+                            contentAlignment = Alignment.Center,
                         ) {
                             CircularProgressIndicator()
                         }

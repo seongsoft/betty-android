@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,7 +52,14 @@ private fun MatchDetailsScreen(
                 onTabSelected = onTabSelected,
             )
         }
-        is Result.Error -> {}
+        is Result.Error -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(stringResource(R.string.match_details_error))
+            }
+        }
         Result.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -102,7 +110,6 @@ private fun MatchDetailsScreen(
                     )
                 }
                 Spacer(Modifier.height(24.dp))
-
             }
         }
     ) {
