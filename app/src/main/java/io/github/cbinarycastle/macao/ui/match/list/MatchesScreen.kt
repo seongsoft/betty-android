@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +26,8 @@ import androidx.paging.compose.items
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.data.match.overall.matchOveralls
@@ -38,6 +37,7 @@ import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.match.LastOutcomes
 import io.github.cbinarycastle.macao.ui.match.ScorePrediction
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
+import kotlinx.coroutines.flow.collect
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
@@ -53,7 +53,12 @@ fun MatchesScreen(
 ) {
     val leagues by viewModel.leagues.collectAsState()
     val matchOverallItems = viewModel.matchOveralls.collectAsLazyPagingItems()
+    val isRefreshing by viewModel.isRefreshing.collectAsState(false)
     val selectedLeagueIndex by viewModel.selectedLeagueIndex.collectAsState()
+
+    LaunchedEffect(matchOverallItems.loadState.refresh) {
+        viewModel.updateMatchOverallsLoading(matchOverallItems.loadState.refresh)
+    }
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -72,10 +77,15 @@ fun MatchesScreen(
         Spacer(Modifier.height(16.dp))
         Divider()
 
-        MatchOverallList(
-            items = matchOverallItems,
-            onSelectMatch = onSelectMatch
-        )
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing),
+            onRefresh = { viewModel.refresh() }
+        ) {
+            MatchOverallList(
+                items = matchOverallItems,
+                onSelectMatch = onSelectMatch
+            )
+        }
     }
 }
 

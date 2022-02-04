@@ -103,6 +103,7 @@ dependencies {
 
     // Accompanist
     implementation "com.google.accompanist:accompanist-placeholder:$accompanistVersion"
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanistVersion"
 
     // Landscapist
     implementation "com.github.skydoves:landscapist-glide:$landscapistVersion"
