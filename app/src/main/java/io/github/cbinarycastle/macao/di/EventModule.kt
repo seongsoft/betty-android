@@ -4,6 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.github.cbinarycastle.macao.event.AmplitudeEventLogger
+import io.github.cbinarycastle.macao.event.CompositeEventLogger
+import io.github.cbinarycastle.macao.event.EventLogger
+import io.github.cbinarycastle.macao.event.HackleEventLogger
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -13,7 +17,18 @@ class EventModule {
     @Provides
     fun provideAmplitudeApiKey() = "dbe7bbf79508b33bd56ef8f526179bc4"
 
-    @HackleApiKey
+    @HackleSdkKey
     @Provides
-    fun provideHackleApiKey() = "kLSiTrOcSypVj9LvBMA4m47RxugIe5iq"
+    fun provideHackleSdkKey() = "kLSiTrOcSypVj9LvBMA4m47RxugIe5iq"
+
+    @Provides
+    fun provideEventLogger(
+        amplitudeEventLogger: AmplitudeEventLogger,
+        hackleEventLogger: HackleEventLogger,
+    ): EventLogger = CompositeEventLogger(
+        listOf(
+            amplitudeEventLogger,
+            hackleEventLogger,
+        )
+    )
 }

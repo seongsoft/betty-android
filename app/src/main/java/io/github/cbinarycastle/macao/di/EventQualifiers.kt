@@ -6,4 +6,4 @@ import javax.inject.Qualifier
 annotation class AmplitudeApiKey
 
 @Qualifier
-annotation class HackleApiKey
+annotation class HackleSdkKey

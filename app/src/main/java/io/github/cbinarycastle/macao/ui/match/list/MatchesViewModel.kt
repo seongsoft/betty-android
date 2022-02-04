@@ -10,6 +10,7 @@ import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.domain.data
 import io.github.cbinarycastle.macao.entity.MatchOverall
 import io.github.cbinarycastle.macao.event.Event
+import io.github.cbinarycastle.macao.event.CompositeEventLogger
 import io.github.cbinarycastle.macao.event.EventLogger
 import io.github.cbinarycastle.macao.util.WhileViewSubscribed
 import kotlinx.coroutines.flow.*

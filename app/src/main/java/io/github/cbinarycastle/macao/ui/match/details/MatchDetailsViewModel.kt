@@ -1,11 +1,10 @@
 package io.github.cbinarycastle.macao.ui.match.details
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.cbinarycastle.macao.domain.GetMatchDetailsUseCase
-import io.github.cbinarycastle.macao.domain.Result
 import io.github.cbinarycastle.macao.event.Event
+import io.github.cbinarycastle.macao.event.CompositeEventLogger
 import io.github.cbinarycastle.macao.event.EventLogger
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
