@@ -69,6 +69,7 @@ private fun LeagueFilterChip(
     ) {
         Row(
             modifier = Modifier
+                .height(LeagueFilterChipHeight)
                 .clickable { onClick(index) }
                 .padding(
                     horizontal = 16.dp,
@@ -152,4 +153,5 @@ private fun LeagueFilterPreview() {
 }
 
 private const val BorderAlpha = 0.12f
+private val LeagueFilterChipHeight = 40.dp
 private val HorizontalSpace = 8.dp
