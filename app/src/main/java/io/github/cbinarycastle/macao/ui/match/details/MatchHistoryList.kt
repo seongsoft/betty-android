@@ -159,7 +159,7 @@ private fun MatchHistoryTeam(
 private fun MatchHistoryListPreview() {
     MacaoTheme {
         MatchHistoryList(
-            teamName = matchDetails.homeTeam.name,
+            teamName = matchDetails.homeTeam.displayName,
             histories = matchDetails.homeMatchHistories
         )
     }

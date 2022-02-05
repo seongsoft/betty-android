@@ -139,27 +139,27 @@ private fun MatchDetailsScreen(
                     awayPlace = matchDetails.awayPlace
                 )
                 MatchDetailsTab.HOME_TEAM_MATCH_HISTORY -> MatchHistoryList(
-                    teamName = matchDetails.homeTeam.name,
+                    teamName = matchDetails.homeTeam.originalName,
                     histories = matchDetails.homeMatchHistories
                 )
                 MatchDetailsTab.AWAY_TEAM_MATCH_HISTORY -> MatchHistoryList(
-                    teamName = matchDetails.awayTeam.name,
+                    teamName = matchDetails.awayTeam.originalName,
                     histories = matchDetails.awayMatchHistories
                 )
                 MatchDetailsTab.RANKING -> RankingTable(
                     ranking = matchDetails.ranking,
-                    homeTeamName = matchDetails.homeTeam.name,
-                    awayTeamName = matchDetails.awayTeam.name,
+                    homeTeamName = matchDetails.homeTeam.displayName,
+                    awayTeamName = matchDetails.awayTeam.displayName,
                 )
                 MatchDetailsTab.UNDER_OVER -> UnderOverTable(
                     underOvers = matchDetails.underOvers,
-                    homeTeamName = matchDetails.homeTeam.name,
-                    awayTeamName = matchDetails.awayTeam.name,
+                    homeTeamName = matchDetails.homeTeam.displayName,
+                    awayTeamName = matchDetails.awayTeam.displayName,
                 )
                 MatchDetailsTab.GOALS_PER_MATCH -> GoalsPerMatchTable(
                     goalsPerMatches = matchDetails.goalsPerMatches,
-                    homeTeamName = matchDetails.homeTeam.name,
-                    awayTeamName = matchDetails.awayTeam.name,
+                    homeTeamName = matchDetails.homeTeam.displayName,
+                    awayTeamName = matchDetails.awayTeam.displayName,
                 )
             }
         }
@@ -209,7 +209,7 @@ private fun Team(
         )
         Spacer(Modifier.height(4.dp))
         Text(
-            text = team.name,
+            text = team.displayName,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MacaoTheme.typography.subtitle2

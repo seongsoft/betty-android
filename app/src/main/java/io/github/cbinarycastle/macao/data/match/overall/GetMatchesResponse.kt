@@ -2,8 +2,6 @@ package io.github.cbinarycastle.macao.data.match.overall
 
 import io.github.cbinarycastle.macao.data.PageDto
 import io.github.cbinarycastle.macao.data.match.SuggestionDto
-import io.github.cbinarycastle.macao.data.match.TeamDto
-import org.threeten.bp.LocalDateTime
 
 data class GetMatchesResponse(
     val content: List<MatchDto>,
@@ -24,5 +22,11 @@ data class GetMatchesResponse(
     data class LeagueDto(
         val leagueName: String,
         val leagueImageUrl: String,
+    )
+
+    data class TeamDto(
+        val teamName: String,
+        val teamImageUrl: String,
+        val lastOutcomes: List<String>
     )
 }

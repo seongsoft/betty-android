@@ -409,7 +409,7 @@ private fun Team(
         )
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = team.name,
+                text = team.displayName,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = MacaoTheme.typography.subtitle2,

@@ -105,8 +105,8 @@ class MatchesViewModel @Inject constructor(
             Event.MatchesMatchItemClick(
                 matchId = matchOverall.id,
                 matchAt = matchOverall.matchAt,
-                homeTeamName = matchOverall.homeTeam.name,
-                awayTeamName = matchOverall.awayTeam.name,
+                homeTeamName = matchOverall.homeTeam.displayName,
+                awayTeamName = matchOverall.awayTeam.displayName,
             )
         )
     }

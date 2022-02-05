@@ -10,7 +10,8 @@ private val premierLeague = MatchOverall.League(
 )
 
 internal val manchesterUnited = Team(
-    name = "Manchester United",
+    originalName = "Manchester United",
+    displayName = "Manchester United",
     imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
     lastOutcomes = listOf(
         Outcome.WIN,
@@ -22,7 +23,8 @@ internal val manchesterUnited = Team(
 )
 
 internal val manchesterCity = Team(
-    name = "Manchester City",
+    originalName = "Manchester City",
+    displayName = "Manchester City",
     imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/z44l-a0W1v5FmgPnemV6Xw_96x96.png",
     lastOutcomes = listOf(
         Outcome.LOSE,
@@ -64,7 +66,8 @@ val matchOveralls = listOf(
             .atTime(9, 0)
             .atZone(ZoneOffset.UTC),
         homeTeam = Team(
-            name = "Tottenham",
+            originalName = "Tottenham",
+            displayName = "Tottenham",
             imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/k3Q_mKE98Dnohrcea0JFgQ_96x96.png",
             lastOutcomes = listOf(
                 Outcome.LOSE,
@@ -75,7 +78,8 @@ val matchOveralls = listOf(
             )
         ),
         awayTeam = Team(
-            name = "Arsenal",
+            originalName = "Arsenal",
+            displayName = "Arsenal",
             imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/4us2nCgl6kgZc0t3hpW75Q_96x96.png",
             lastOutcomes = listOf(
                 Outcome.WIN,
@@ -104,7 +108,8 @@ val matchOveralls = listOf(
             .atTime(20, 30)
             .atZone(ZoneOffset.UTC),
         homeTeam = Team(
-            name = "Chelsea",
+            originalName = "Chelsea",
+            displayName = "Chelsea",
             imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/fhBITrIlbQxhVB6IjxUO6Q_96x96.png",
             lastOutcomes = listOf(
                 Outcome.WIN,
@@ -115,7 +120,8 @@ val matchOveralls = listOf(
             )
         ),
         awayTeam = Team(
-            name = "Liverpool",
+            originalName = "Liverpool",
+            displayName = "Liverpool",
             imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/0iShHhASp5q1SL4JhtwJiw_96x96.png",
             lastOutcomes = listOf(
                 Outcome.WIN,

@@ -36,4 +36,11 @@ data class GetMatchDetailsResponse(
         val leagueName: String,
         val leagueImageUrl: String,
     )
+
+    data class TeamDto(
+        val teamKey: String,
+        val teamName: String,
+        val teamImageUrl: String,
+        val lastOutcomes: List<String>,
+    )
 }
