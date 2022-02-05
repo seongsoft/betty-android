@@ -6,6 +6,7 @@ import io.github.cbinarycastle.betty.entity.GoalsPerMatch
 fun GoalPerMatchDto.toEntity() = GoalsPerMatch(
     number = number,
     teamName = teamName,
+    teamImageUrl = teamImageUrl,
     matchCount = matchCount,
     gameCount0 = gameCount0,
     gameCount1 = gameCount1,

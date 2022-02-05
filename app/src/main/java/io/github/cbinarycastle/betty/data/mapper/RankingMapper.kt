@@ -6,6 +6,7 @@ import io.github.cbinarycastle.betty.entity.Ranking
 fun RankingDto.toEntity() = Ranking.Row(
     number = number,
     teamName = teamName,
+    teamImageUrl = teamImageUrl,
     matchCount = matchCount,
     winCount = winCount,
     drawCount = drawCount,

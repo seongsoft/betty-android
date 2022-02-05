@@ -6,6 +6,7 @@ import io.github.cbinarycastle.betty.entity.UnderOver
 fun UnderOverDto.toEntity() = UnderOver(
     number = number,
     teamName = teamName,
+    teamImageUrl = teamImageUrl,
     matchCount = matchCount,
     underCount = underCount,
     underPercent = underPercent,

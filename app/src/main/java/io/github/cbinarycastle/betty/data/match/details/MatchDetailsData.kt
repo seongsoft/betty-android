@@ -102,6 +102,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 1,
                 teamName = "Manchester City",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 21,
                 winCount = 17,
                 drawCount = 2,
@@ -113,6 +114,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 2,
                 teamName = "Chelsea London",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 21,
                 winCount = 12,
                 drawCount = 7,
@@ -124,6 +126,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 3,
                 teamName = "FC Liverpool",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 20,
                 winCount = 12,
                 drawCount = 6,
@@ -135,6 +138,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 4,
                 teamName = "West Ham United",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 21,
                 winCount = 11,
                 drawCount = 4,
@@ -146,6 +150,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 5,
                 teamName = "Arsenal London",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 20,
                 winCount = 11,
                 drawCount = 2,
@@ -157,6 +162,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 6,
                 teamName = "Tottenham Hotspur",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 18,
                 winCount = 10,
                 drawCount = 3,
@@ -168,6 +174,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 7,
                 teamName = "Manchester United",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 19,
                 winCount = 9,
                 drawCount = 4,
@@ -179,6 +186,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 8,
                 teamName = "Wolverhampton Wanderers",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 19,
                 winCount = 8,
                 drawCount = 4,
@@ -190,6 +198,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 9,
                 teamName = "Brighton Hove Albion",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 20,
                 winCount = 6,
                 drawCount = 10,
@@ -201,6 +210,7 @@ val matchDetails = MatchDetails(
             Ranking.Row(
                 number = 10,
                 teamName = "Leicester City",
+                teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
                 matchCount = 18,
                 winCount = 7,
                 drawCount = 4,
@@ -283,6 +293,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 1,
             teamName = "FC Liverpool",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 20,
             underCount = 5,
             underPercent = 25,
@@ -292,6 +303,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 2,
             teamName = "Leicester City",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 18,
             underCount = 5,
             underPercent = 28,
@@ -301,6 +313,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 3,
             teamName = "Aston Villa Birmingham",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 19,
             underCount = 7,
             underPercent = 37,
@@ -310,6 +323,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 4,
             teamName = "Crystal Palace",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 21,
             underCount = 8,
             underPercent = 38,
@@ -319,6 +333,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 5,
             teamName = "West Ham United",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 21,
             underCount = 8,
             underPercent = 38,
@@ -328,6 +343,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 6,
             teamName = "Everton Liverpool",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 18,
             underCount = 7,
             underPercent = 39,
@@ -337,6 +353,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 7,
             teamName = "Leeds United",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 19,
             underCount = 8,
             underPercent = 42,
@@ -346,6 +363,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 8,
             teamName = "Manchester City",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 21,
             underCount = 9,
             underPercent = 43,
@@ -355,6 +373,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 9,
             teamName = "Chelsea London",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 21,
             underCount = 9,
             underPercent = 43,
@@ -364,6 +383,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 10,
             teamName = "FC Watford",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 18,
             underCount = 8,
             underPercent = 44,
@@ -373,6 +393,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 11,
             teamName = "Tottenham Hotspur",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 18,
             underCount = 8,
             underPercent = 44,
@@ -382,6 +403,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 12,
             teamName = "Norwich City",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 20,
             underCount = 9,
             underPercent = 45,
@@ -391,6 +413,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 13,
             teamName = "Arsenal London",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 20,
             underCount = 9,
             underPercent = 45,
@@ -400,6 +423,7 @@ val matchDetails = MatchDetails(
         UnderOver(
             number = 14,
             teamName = "Southampton FC",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 20,
             underCount = 9,
             underPercent = 45,
@@ -411,6 +435,7 @@ val matchDetails = MatchDetails(
         GoalsPerMatch(
             number = 1,
             teamName = "Manchester City",
+            teamImageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_96x96.png",
             matchCount = 21,
             gameCount0 = 2,
             gameCount1 = 3,

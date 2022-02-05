@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.betty.R
 import io.github.cbinarycastle.betty.data.match.details.matchDetails
 import io.github.cbinarycastle.betty.entity.Ranking
@@ -115,6 +116,12 @@ private fun RankingItem(
             text = row.number.toString(),
             modifier = Modifier.width(NumberCellWidth)
         )
+        GlideImage(
+            imageModel = row.teamImageUrl,
+            modifier = Modifier.size(24.dp),
+            previewPlaceholder = R.drawable.manchester_united
+        )
+        Spacer(Modifier.width(4.dp))
         RankingCell(
             text = row.teamName,
             modifier = Modifier.width(TeamCellWidth),

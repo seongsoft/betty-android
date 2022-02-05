@@ -3,6 +3,7 @@ package io.github.cbinarycastle.betty.data.match.details
 data class GoalPerMatchDto(
     val number: Int,
     val teamName: String,
+    val teamImageUrl: String,
     val matchCount: Int,
     val gameCount0: Int,
     val gameCount1: Int,
