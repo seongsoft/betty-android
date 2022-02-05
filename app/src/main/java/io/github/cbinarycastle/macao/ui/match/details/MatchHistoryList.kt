@@ -73,7 +73,7 @@ private fun MatchHistoryItem(teamName: String, history: MatchHistory) {
                     }
                 }
                 Box(contentAlignment = Alignment.CenterEnd) {
-                    Box(Modifier.padding(end = 16.dp)) {
+                    Box(Modifier.padding(end = 24.dp)) {
                         Surface(
                             modifier = Modifier.size(24.dp),
                             shape = CircleShape,
