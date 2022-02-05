@@ -8,7 +8,9 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -97,37 +99,48 @@ private fun MatchOverallList(
 ) {
     when (items.loadState.refresh) {
         is LoadState.NotLoading -> {
-            LazyColumn(
-                modifier = modifier,
-                contentPadding = PaddingValues(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(items) { item ->
-                    if (item != null) {
-                        when (item) {
-                            is MatchOverallModel.Separator -> MatchOverallSeparator(item.matchAt)
-                            is MatchOverallModel.Item -> {
-                                MatchOverallItem(
-                                    matchOverall = item.matchOverall,
-                                    onSelectMatch = onSelectMatch,
-                                )
+            if (items.itemCount > 0) {
+                LazyColumn(
+                    modifier = modifier,
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    items(items) { item ->
+                        if (item != null) {
+                            when (item) {
+                                is MatchOverallModel.Separator -> MatchOverallSeparator(item.matchAt)
+                                is MatchOverallModel.Item -> {
+                                    MatchOverallItem(
+                                        matchOverall = item.matchOverall,
+                                        onSelectMatch = onSelectMatch,
+                                    )
+                                }
                             }
                         }
                     }
-                }
-                if (items.loadState.append is LoadState.Loading) {
-                    item {
-                        Spacer(Modifier.height(8.dp))
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            CircularProgressIndicator()
+                    if (items.loadState.append is LoadState.Loading) {
+                        item {
+                            Spacer(Modifier.height(8.dp))
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                CircularProgressIndicator()
+                            }
                         }
                     }
+                    item {
+                        Spacer(Modifier.height(16.dp))
+                    }
                 }
-                item {
-                    Spacer(Modifier.height(16.dp))
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(stringResource(R.string.matches_no_result))
                 }
             }
         }

@@ -13,6 +13,7 @@
 
     <!-- Matches -->
     <string name="matches_error">경기 목록을 불러오지 못했습니다.</string>
+    <string name="matches_no_result">예정된 경기가 없습니다.</string>
 
     <!-- Match details -->
     <string name="match_details_error">경기 정보를 불러오지 못했습니다.</string>
