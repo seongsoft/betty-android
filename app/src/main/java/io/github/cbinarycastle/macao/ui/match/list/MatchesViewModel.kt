@@ -30,25 +30,22 @@ class MatchesViewModel @Inject constructor(
         emitAll(refreshSignal)
     }
 
-    val leagues = loadDataSignal.transform {
-        emit(Result.Loading)
+    val leagues = loadDataSignal.map {
         when (val result = getLeaguesUseCase(Unit)) {
-            is Result.Success -> emit(
-                Result.Success(
-                    listOf(LeagueFilterModel.All) + result.data.map {
-                        LeagueFilterModel.League(
-                            id = it.id,
-                            name = it.name,
-                            imageUrl = it.imageUrl,
-                        )
-                    }
-                )
+            is Result.Success -> Result.Success(
+                listOf(LeagueFilterModel.All) + result.data.map {
+                    LeagueFilterModel.League(
+                        id = it.id,
+                        name = it.name,
+                        imageUrl = it.imageUrl,
+                    )
+                }
             )
             is Result.Error -> {
-                emit(Result.Error(result.exception))
                 eventLogger.logEvent(Event.MatchesLeaguesLoadFailed())
+                Result.Error(result.exception)
             }
-            Result.Loading -> emit(Result.Loading)
+            Result.Loading -> Result.Loading
         }
     }.stateIn(viewModelScope, WhileViewSubscribed, Result.Loading)
 
