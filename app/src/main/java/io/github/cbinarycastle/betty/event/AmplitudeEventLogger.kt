@@ -5,7 +5,7 @@ import android.content.Context
 import com.amplitude.api.Amplitude
 import com.amplitude.api.AmplitudeClient
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.github.cbinarycastle.betty.di.AmplitudeApiKey
+import io.github.cbinarycastle.betty.BuildConfig
 import org.json.JSONObject
 import timber.log.Timber
 import javax.inject.Inject
@@ -15,14 +15,13 @@ import javax.inject.Singleton
 class AmplitudeEventLogger @Inject constructor(
     private val application: Application,
     @ApplicationContext private val context: Context,
-    @AmplitudeApiKey private val apiKey: String,
 ) : EventLogger {
 
     private var client: AmplitudeClient? = null
 
     override fun initialize() {
         client = Amplitude.getInstance()
-            .initialize(context, apiKey)
+            .initialize(context, BuildConfig.AMPLITUDE_API_KEY)
             .enableForegroundTracking(application)
 
         if (client != null) {

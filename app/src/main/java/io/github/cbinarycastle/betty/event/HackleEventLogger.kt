@@ -2,7 +2,7 @@ package io.github.cbinarycastle.betty.event
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.github.cbinarycastle.betty.di.HackleSdkKey
+import io.github.cbinarycastle.betty.BuildConfig
 import io.hackle.android.Hackle
 import io.hackle.android.HackleApp
 import io.hackle.android.event
@@ -14,13 +14,12 @@ import javax.inject.Singleton
 @Singleton
 class HackleEventLogger @Inject constructor(
     @ApplicationContext private val context: Context,
-    @HackleSdkKey private val sdkKey: String,
 ) : EventLogger {
 
     private var hackleApp: HackleApp? = null
 
     override fun initialize() {
-        hackleApp = Hackle.initialize(context, sdkKey)
+        hackleApp = Hackle.initialize(context, BuildConfig.HACKLE_SDK_KEY)
 
         if (hackleApp != null) {
             Timber.i("Hackle app is initialized.")

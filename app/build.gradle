@@ -24,9 +24,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-1258768914276560/5408579081"'
+            buildConfigField "String", "AMPLITUDE_API_KEY", '"5a919f0ba1939e63407d6bf970a3200f"'
+            buildConfigField "String", "HACKLE_SDK_KEY", '"oeTjS34w9B2gohu2C3y2tJqZz3rKcj6n"'
         }
         debug {
             buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-3940256099942544/6300978111"'
+            buildConfigField "String", "AMPLITUDE_API_KEY", '"dbe7bbf79508b33bd56ef8f526179bc4"'
+            buildConfigField "String", "HACKLE_SDK_KEY", '"kLSiTrOcSypVj9LvBMA4m47RxugIe5iq"'
         }
         local {
             initWith debug
