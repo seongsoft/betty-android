@@ -42,16 +42,6 @@ fun BettyApp() {
                     modifier = Modifier.weight(1f),
                     navController = navController
                 )
-                AndroidView(
-                    factory = { context ->
-                        AdView(context).apply {
-                            adSize = AdSize.BANNER
-                            adUnitId = BuildConfig.ADMOB_AD_UNIT_ID
-                            loadAd(AdRequest.Builder().build())
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                )
             }
         }
     }
