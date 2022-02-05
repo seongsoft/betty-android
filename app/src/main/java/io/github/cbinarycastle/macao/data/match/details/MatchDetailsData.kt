@@ -4,7 +4,8 @@ import io.github.cbinarycastle.macao.data.match.overall.manchesterCity
 import io.github.cbinarycastle.macao.data.match.overall.manchesterUnited
 import io.github.cbinarycastle.macao.entity.*
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.Year
+import org.threeten.bp.ZoneOffset
 
 private val premierLeague = MatchDetails.League(
     name = "Premier League",
@@ -12,7 +13,11 @@ private val premierLeague = MatchDetails.League(
 )
 
 val matchDetails = MatchDetails(
-    matchAt = LocalDateTime.of(2022, 1, 17, 6, 0, 0),
+    matchAt = Year.of(2022)
+        .atMonth(1)
+        .atDay(17)
+        .atTime(6, 0)
+        .atZone(ZoneOffset.UTC),
     league = premierLeague,
     homeTeam = manchesterUnited,
     awayTeam = manchesterCity,

@@ -9,14 +9,14 @@
     <string name="outcome_lose">L</string>
 
     <!-- League filter -->
-    <string name="league_filter_error">Failed to load league filter.</string>
+    <string name="league_filter_error">Failed to load league filter</string>
 
     <!-- Matches -->
-    <string name="matches_error">Failed to load matches.</string>
+    <string name="matches_error">Failed to load matches</string>
     <string name="matches_no_result">No scheduled matches</string>
 
     <!-- Match details -->
-    <string name="match_details_error">Failed to load match details.</string>
+    <string name="match_details_error">Failed to load match details</string>
     <string name="match_details_tab_place">PLACE</string>
     <string name="match_details_tab_home_team_match_history">HOME</string>
     <string name="match_details_tab_away_team_match_history">AWAY</string>

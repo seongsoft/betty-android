@@ -1,6 +1,7 @@
 package io.github.cbinarycastle.macao.event
 
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 sealed class Event(
@@ -31,7 +32,7 @@ sealed class Event(
 
     class MatchesMatchItemClick(
         matchId: Long,
-        matchAt: LocalDateTime,
+        matchAt: ZonedDateTime,
         homeTeamName: String,
         awayTeamName: String,
     ) : Event(

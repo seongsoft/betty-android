@@ -23,12 +23,9 @@ import io.github.cbinarycastle.macao.ui.components.rememberCollapsibleState
 import io.github.cbinarycastle.macao.ui.match.LastOutcomes
 import io.github.cbinarycastle.macao.ui.match.ScorePrediction
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
+import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
-
-private val matchDateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(
-    FormatStyle.MEDIUM, FormatStyle.SHORT
-)
 
 @Composable
 fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
@@ -96,7 +93,13 @@ private fun MatchDetailsScreen(
                     )
                 }
                 Text(
-                    text = matchDetails.matchAt.format(matchDateTimeFormatter),
+                    text = matchDetails.matchAt
+                        .withZoneSameInstant(ZoneOffset.systemDefault())
+                        .format(
+                            DateTimeFormatter.ofLocalizedDateTime(
+                                FormatStyle.MEDIUM, FormatStyle.SHORT
+                            )
+                        ),
                     style = MacaoTheme.typography.subtitle1
                 )
                 Spacer(Modifier.height(8.dp))

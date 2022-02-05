@@ -4,10 +4,14 @@ import io.github.cbinarycastle.macao.data.match.details.GetMatchDetailsResponse
 import io.github.cbinarycastle.macao.entity.MatchDetails
 import io.github.cbinarycastle.macao.entity.Ranking
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 fun GetMatchDetailsResponse.toEntity() = MatchDetails(
-    matchAt = LocalDateTime.parse(matchDateTime, DateTimeFormatter.ISO_DATE_TIME),
+    matchAt = LocalDateTime
+        .parse(matchDateTime, DateTimeFormatter.ISO_DATE_TIME)
+        .atZone(ZoneOffset.UTC),
     league = league.toEntity(),
     homeTeam = homeTeam.toEntity(),
     awayTeam = awayTeam.toEntity(),

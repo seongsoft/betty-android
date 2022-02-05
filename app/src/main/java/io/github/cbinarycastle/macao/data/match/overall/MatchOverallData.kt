@@ -1,7 +1,8 @@
 package io.github.cbinarycastle.macao.data.match.overall
 
 import io.github.cbinarycastle.macao.entity.*
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.Year
+import org.threeten.bp.ZoneOffset
 
 private val premierLeague = MatchOverall.League(
     name = "Premier League",
@@ -36,7 +37,12 @@ val matchOveralls = listOf(
     MatchOverall(
         id = 1,
         league = premierLeague,
-        matchAt = LocalDateTime.of(2021, 12, 25, 6, 0, 0),
+        matchAt = Year
+            .of(2021)
+            .atMonth(12)
+            .atDay(25)
+            .atTime(6, 0)
+            .atZone(ZoneOffset.UTC),
         homeTeam = manchesterUnited,
         awayTeam = manchesterCity,
         suggestionInfo = SuggestionInfo(
@@ -51,7 +57,12 @@ val matchOveralls = listOf(
     MatchOverall(
         id = 2,
         league = premierLeague,
-        matchAt = LocalDateTime.of(2021, 12, 25, 9, 0, 0),
+        matchAt = Year
+            .of(2021)
+            .atMonth(12)
+            .atDay(25)
+            .atTime(9, 0)
+            .atZone(ZoneOffset.UTC),
         homeTeam = Team(
             name = "Tottenham",
             imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/k3Q_mKE98Dnohrcea0JFgQ_96x96.png",
@@ -86,7 +97,12 @@ val matchOveralls = listOf(
     MatchOverall(
         id = 3,
         league = premierLeague,
-        matchAt = LocalDateTime.of(2021, 12, 26, 20, 30, 0),
+        matchAt = Year
+            .of(2021)
+            .atMonth(12)
+            .atDay(26)
+            .atTime(20, 30)
+            .atZone(ZoneOffset.UTC),
         homeTeam = Team(
             name = "Chelsea",
             imageUrl = "https://ssl.gstatic.com/onebox/media/sports/logos/fhBITrIlbQxhVB6IjxUO6Q_96x96.png",

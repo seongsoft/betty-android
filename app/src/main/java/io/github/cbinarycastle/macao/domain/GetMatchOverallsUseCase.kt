@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset
 import javax.inject.Inject
 
 class GetMatchOverallsUseCase @Inject constructor(
@@ -23,6 +24,6 @@ class GetMatchOverallsUseCase @Inject constructor(
 
     data class Params(
         val leagueId: Long?,
-        val baseDateTime: LocalDateTime = LocalDateTime.now(),
+        val baseDateTime: LocalDateTime = LocalDateTime.now(ZoneOffset.UTC),
     )
 }

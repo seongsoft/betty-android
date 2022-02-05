@@ -7,14 +7,14 @@
     <string name="outcome_lose">패</string>
 
     <!-- League filter -->
-    <string name="league_filter_error">리그 필터를 불러오지 못했습니다.</string>
+    <string name="league_filter_error">리그 필터를 불러오지 못했습니다</string>
 
     <!-- Matches -->
-    <string name="matches_error">경기 목록을 불러오지 못했습니다.</string>
+    <string name="matches_error">경기 목록을 불러오지 못했습니다</string>
     <string name="matches_no_result">예정된 경기가 없습니다</string>
 
     <!-- Match details -->
-    <string name="match_details_error">경기 정보를 불러오지 못했습니다.</string>
+    <string name="match_details_error">경기 정보를 불러오지 못했습니다</string>
     <string name="match_details_tab_place">요약</string>
     <string name="match_details_tab_home_team_match_history">홈팀 전적</string>
     <string name="match_details_tab_away_team_match_history">원정팀 전적</string>

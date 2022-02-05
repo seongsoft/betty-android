@@ -39,12 +39,11 @@ import io.github.cbinarycastle.macao.entity.Team
 import io.github.cbinarycastle.macao.ui.match.LastOutcomes
 import io.github.cbinarycastle.macao.ui.match.ScorePrediction
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.Year
 import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
-
-private val matchTimeFormatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneOffset.UTC)
 
 @Composable
 fun MatchesScreen(
@@ -164,7 +163,7 @@ private fun MatchOverallList(
 private fun MatchOverallListPlaceholder() {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         MatchOverallSeparator(
-            matchAt = LocalDateTime.now(),
+            matchAt = ZonedDateTime.now(),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .placeholder(
@@ -193,12 +192,14 @@ private fun MatchOverallListPlaceholder() {
 
 @Composable
 private fun MatchOverallSeparator(
-    matchAt: LocalDateTime,
+    matchAt: ZonedDateTime,
     modifier: Modifier = Modifier,
 ) {
     Spacer(Modifier.height(16.dp))
     Text(
-        text = matchAt.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
+        text = matchAt
+            .withZoneSameInstant(ZoneOffset.systemDefault())
+            .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
         modifier = modifier,
         style = MacaoTheme.typography.subtitle2
     )
@@ -226,7 +227,9 @@ private fun MatchOverallItem(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = matchOverall.matchAt.format(matchTimeFormatter),
+                    text = matchOverall.matchAt
+                        .withZoneSameInstant(ZoneOffset.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MacaoTheme.typography.body2
                 )
                 League(matchOverall.league)
@@ -426,7 +429,13 @@ private fun Team(
 @Composable
 private fun MatchOverallSeparatorPreview() {
     MacaoTheme {
-        MatchOverallSeparator(LocalDateTime.of(2022, 1, 1, 21, 0))
+        MatchOverallSeparator(
+            Year.of(2022)
+                .atMonth(1)
+                .atDay(1)
+                .atTime(21, 0)
+                .atZone(ZoneOffset.UTC)
+        )
     }
 }
 

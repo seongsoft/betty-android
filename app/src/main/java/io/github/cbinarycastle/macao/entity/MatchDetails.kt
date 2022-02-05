@@ -1,9 +1,9 @@
 package io.github.cbinarycastle.macao.entity
 
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZonedDateTime
 
 data class MatchDetails(
-    val matchAt: LocalDateTime,
+    val matchAt: ZonedDateTime,
     val league: League,
     val homeTeam: Team,
     val awayTeam: Team,
