@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.Macao" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Betty" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/statusBar</item>
         <item name="android:windowLightStatusBar">@bool/use_light_status</item>
     </style>

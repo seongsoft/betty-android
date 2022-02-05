@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Macao</string>
+    <string name="app_name" translatable="false">Betty</string>
 
     <string name="retry">retry</string>
 
