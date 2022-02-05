@@ -148,18 +148,18 @@ private fun MatchDetailsScreen(
                 )
                 MatchDetailsTab.RANKING -> RankingTable(
                     ranking = matchDetails.ranking,
-                    homeTeamName = matchDetails.homeTeam.displayName,
-                    awayTeamName = matchDetails.awayTeam.displayName,
+                    homeTeamName = matchDetails.homeTeam.originalName,
+                    awayTeamName = matchDetails.awayTeam.originalName,
                 )
                 MatchDetailsTab.UNDER_OVER -> UnderOverTable(
                     underOvers = matchDetails.underOvers,
-                    homeTeamName = matchDetails.homeTeam.displayName,
-                    awayTeamName = matchDetails.awayTeam.displayName,
+                    homeTeamName = matchDetails.homeTeam.originalName,
+                    awayTeamName = matchDetails.awayTeam.originalName,
                 )
                 MatchDetailsTab.GOALS_PER_MATCH -> GoalsPerMatchTable(
                     goalsPerMatches = matchDetails.goalsPerMatches,
-                    homeTeamName = matchDetails.homeTeam.displayName,
-                    awayTeamName = matchDetails.awayTeam.displayName,
+                    homeTeamName = matchDetails.homeTeam.originalName,
+                    awayTeamName = matchDetails.awayTeam.originalName,
                 )
             }
         }
