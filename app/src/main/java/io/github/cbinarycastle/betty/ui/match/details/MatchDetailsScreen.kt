@@ -1,17 +1,18 @@
 package io.github.cbinarycastle.betty.ui.match.details
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Tab
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.pager.*
 import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.betty.R
 import io.github.cbinarycastle.betty.data.match.details.matchDetails
@@ -23,6 +24,7 @@ import io.github.cbinarycastle.betty.ui.components.rememberCollapsibleState
 import io.github.cbinarycastle.betty.ui.match.LastOutcomes
 import io.github.cbinarycastle.betty.ui.match.ScorePrediction
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
+import kotlinx.coroutines.launch
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
@@ -68,12 +70,14 @@ private fun MatchDetailsScreen(
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MatchDetailsScreen(
     matchDetails: MatchDetails,
     onTabSelected: (MatchDetailsTab) -> Unit,
 ) {
-    var selectedTabIndex by remember { mutableStateOf(0) }
+    val coroutineScope = rememberCoroutineScope()
+    val pagerState = rememberPagerState()
 
     CollapsibleLayout(
         state = rememberCollapsibleState(),
@@ -126,49 +130,59 @@ private fun MatchDetailsScreen(
     ) {
         Column {
             MatchDetailsTabRow(
-                selectedTabIndex = selectedTabIndex,
-                onTabSelected = {
-                    selectedTabIndex = it
-                    onTabSelected(tabs[it])
+                selectedTabIndex = pagerState.currentPage,
+                pagerState = pagerState,
+                onTabSelected = { index ->
+                    onTabSelected(tabs[index])
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
                 },
             )
-            when (tabs[selectedTabIndex]) {
-                MatchDetailsTab.PLACE -> PlaceList(
-                    totalPlace = matchDetails.totalPlace,
-                    homePlace = matchDetails.homePlace,
-                    awayPlace = matchDetails.awayPlace
-                )
-                MatchDetailsTab.HOME_TEAM_MATCH_HISTORY -> MatchHistoryList(
-                    teamName = matchDetails.homeTeam.originalName,
-                    histories = matchDetails.homeMatchHistories
-                )
-                MatchDetailsTab.AWAY_TEAM_MATCH_HISTORY -> MatchHistoryList(
-                    teamName = matchDetails.awayTeam.originalName,
-                    histories = matchDetails.awayMatchHistories
-                )
-                MatchDetailsTab.RANKING -> RankingTable(
-                    ranking = matchDetails.ranking,
-                    homeTeamName = matchDetails.homeTeam.originalName,
-                    awayTeamName = matchDetails.awayTeam.originalName,
-                )
-                MatchDetailsTab.UNDER_OVER -> UnderOverTable(
-                    underOvers = matchDetails.underOvers,
-                    homeTeamName = matchDetails.homeTeam.originalName,
-                    awayTeamName = matchDetails.awayTeam.originalName,
-                )
-                MatchDetailsTab.GOALS_PER_MATCH -> GoalsPerMatchTable(
-                    goalsPerMatches = matchDetails.goalsPerMatches,
-                    homeTeamName = matchDetails.homeTeam.originalName,
-                    awayTeamName = matchDetails.awayTeam.originalName,
-                )
+            HorizontalPager(
+                count = tabs.size,
+                state = pagerState,
+            ) { page ->
+                when (tabs[page]) {
+                    MatchDetailsTab.PLACE -> PlaceList(
+                        totalPlace = matchDetails.totalPlace,
+                        homePlace = matchDetails.homePlace,
+                        awayPlace = matchDetails.awayPlace
+                    )
+                    MatchDetailsTab.HOME_TEAM_MATCH_HISTORY -> MatchHistoryList(
+                        teamName = matchDetails.homeTeam.originalName,
+                        histories = matchDetails.homeMatchHistories
+                    )
+                    MatchDetailsTab.AWAY_TEAM_MATCH_HISTORY -> MatchHistoryList(
+                        teamName = matchDetails.awayTeam.originalName,
+                        histories = matchDetails.awayMatchHistories
+                    )
+                    MatchDetailsTab.RANKING -> RankingTable(
+                        ranking = matchDetails.ranking,
+                        homeTeamName = matchDetails.homeTeam.originalName,
+                        awayTeamName = matchDetails.awayTeam.originalName,
+                    )
+                    MatchDetailsTab.UNDER_OVER -> UnderOverTable(
+                        underOvers = matchDetails.underOvers,
+                        homeTeamName = matchDetails.homeTeam.originalName,
+                        awayTeamName = matchDetails.awayTeam.originalName,
+                    )
+                    MatchDetailsTab.GOALS_PER_MATCH -> GoalsPerMatchTable(
+                        goalsPerMatches = matchDetails.goalsPerMatches,
+                        homeTeamName = matchDetails.homeTeam.originalName,
+                        awayTeamName = matchDetails.awayTeam.originalName,
+                    )
+                }
             }
         }
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MatchDetailsTabRow(
     selectedTabIndex: Int,
+    pagerState: PagerState,
     onTabSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -177,6 +191,14 @@ private fun MatchDetailsTabRow(
         modifier = modifier,
         backgroundColor = BettyTheme.colors.surface,
         edgePadding = 0.dp,
+        indicator = { tabPositions ->
+            TabRowDefaults.Indicator(
+                Modifier.pagerTabIndicatorOffset(
+                    pagerState = pagerState,
+                    tabPositions = tabPositions
+                )
+            )
+        }
     ) {
         tabs.forEachIndexed { index, tab ->
             Tab(
