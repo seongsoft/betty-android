@@ -1,5 +1,8 @@
 package io.github.cbinarycastle.macao.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -10,8 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import io.github.cbinarycastle.macao.BuildConfig
 import io.github.cbinarycastle.macao.R
 import io.github.cbinarycastle.macao.ui.theme.MacaoTheme
 
@@ -30,7 +38,22 @@ fun MacaoApp() {
                 )
             }
         ) {
-            MacaoNavGraph(navController)
+            Column {
+                MacaoNavGraph(
+                    modifier = Modifier.weight(1f),
+                    navController = navController
+                )
+                AndroidView(
+                    factory = { context ->
+                        AdView(context).apply {
+                            adSize = AdSize.BANNER
+                            adUnitId = BuildConfig.ADMOB_AD_UNIT_ID
+                            loadAd(AdRequest.Builder().build())
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }

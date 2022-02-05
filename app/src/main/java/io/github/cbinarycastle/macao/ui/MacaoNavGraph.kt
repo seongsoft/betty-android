@@ -2,6 +2,7 @@ package io.github.cbinarycastle.macao.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -24,6 +25,7 @@ object MainDestinations {
 
 @Composable
 fun MacaoNavGraph(
+    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
     val actions = remember(navController) { MainActions(navController) }
@@ -31,6 +33,7 @@ fun MacaoNavGraph(
     NavHost(
         navController = navController,
         startDestination = MainDestinations.START_DESTINATION,
+        modifier = modifier,
     ) {
         composable(MainDestinations.MATCHES) {
             val viewModel = hiltViewModel<MatchesViewModel>()

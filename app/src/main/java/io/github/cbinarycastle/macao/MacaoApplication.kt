@@ -1,6 +1,7 @@
 package io.github.cbinarycastle.macao
 
 import android.app.Application
+import com.google.android.gms.ads.MobileAds
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
 import io.github.cbinarycastle.macao.event.CompositeEventLogger
@@ -16,6 +17,7 @@ class MacaoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        MobileAds.initialize(this)
         AndroidThreeTen.init(this)
         Timber.plant(Timber.DebugTree())
         eventLogger.initialize()

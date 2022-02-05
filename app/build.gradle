@@ -23,6 +23,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-1258768914276560/5408579081"'
+        }
+        debug {
+            buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-3940256099942544/6300978111"'
         }
         local {
             initWith debug
@@ -113,6 +117,9 @@ dependencies {
 
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenVersion"
+
+    // AdMob
+    implementation "com.google.android.gms:play-services-ads:$adMobVersion"
 
     // Amplitude
     implementation "com.amplitude:android-sdk:$amplitudeVersion"
