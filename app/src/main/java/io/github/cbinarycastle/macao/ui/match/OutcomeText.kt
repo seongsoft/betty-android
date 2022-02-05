@@ -7,7 +7,7 @@ import io.github.cbinarycastle.macao.entity.Outcome
 
 @Composable
 fun Outcome.text() = when (this) {
-    Outcome.WIN -> stringResource(R.string.win)
-    Outcome.DRAW -> stringResource(R.string.draw)
-    Outcome.LOSE -> stringResource(R.string.lose)
+    Outcome.WIN -> stringResource(R.string.outcome_win)
+    Outcome.DRAW -> stringResource(R.string.outcome_draw)
+    Outcome.LOSE -> stringResource(R.string.outcome_lose)
 }

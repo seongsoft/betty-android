@@ -35,14 +35,14 @@ fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
     val result by viewModel.matchDetails.collectAsState(Result.Loading)
     MatchDetailsScreen(
         matchDetailsResult = result,
-        onTabSelected = { viewModel.onTabSelected(it) }
+        onTabSelected = { viewModel.onTabSelected(it.name) }
     )
 }
 
 @Composable
 private fun MatchDetailsScreen(
     matchDetailsResult: Result<MatchDetails>,
-    onTabSelected: (String) -> Unit,
+    onTabSelected: (MatchDetailsTab) -> Unit,
 ) {
     when (matchDetailsResult) {
         is Result.Success -> {
@@ -74,7 +74,7 @@ private fun MatchDetailsScreen(
 @Composable
 private fun MatchDetailsScreen(
     matchDetails: MatchDetails,
-    onTabSelected: (String) -> Unit,
+    onTabSelected: (MatchDetailsTab) -> Unit,
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
 
@@ -83,10 +83,18 @@ private fun MatchDetailsScreen(
         collapsible = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(Modifier.height(16.dp))
-                Text(
-                    text = matchDetails.league.name,
-                    style = MacaoTheme.typography.h6
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    GlideImage(
+                        imageModel = matchDetails.league.imageUrl,
+                        modifier = Modifier.size(24.dp),
+                        previewPlaceholder = R.drawable.premier_league,
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = matchDetails.league.name,
+                        style = MacaoTheme.typography.h6
+                    )
+                }
                 Text(
                     text = matchDetails.matchAt.format(matchDateTimeFormatter),
                     style = MacaoTheme.typography.subtitle1
@@ -122,30 +130,30 @@ private fun MatchDetailsScreen(
                 },
             )
             when (tabs[selectedTabIndex]) {
-                PLACE_TAB -> PlaceList(
+                MatchDetailsTab.PLACE -> PlaceList(
                     totalPlace = matchDetails.totalPlace,
                     homePlace = matchDetails.homePlace,
                     awayPlace = matchDetails.awayPlace
                 )
-                HOME_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(
+                MatchDetailsTab.HOME_TEAM_MATCH_HISTORY -> MatchHistoryList(
                     teamName = matchDetails.homeTeam.name,
                     histories = matchDetails.homeMatchHistories
                 )
-                AWAY_TEAM_MATCH_HISTORY_TAB -> MatchHistoryList(
+                MatchDetailsTab.AWAY_TEAM_MATCH_HISTORY -> MatchHistoryList(
                     teamName = matchDetails.awayTeam.name,
                     histories = matchDetails.awayMatchHistories
                 )
-                RANKING_TAB -> RankingTable(
+                MatchDetailsTab.RANKING -> RankingTable(
                     ranking = matchDetails.ranking,
                     homeTeamName = matchDetails.homeTeam.name,
                     awayTeamName = matchDetails.awayTeam.name,
                 )
-                UNDER_OVER_TAB -> UnderOverTable(
+                MatchDetailsTab.UNDER_OVER -> UnderOverTable(
                     underOvers = matchDetails.underOvers,
                     homeTeamName = matchDetails.homeTeam.name,
                     awayTeamName = matchDetails.awayTeam.name,
                 )
-                GOALS_PER_MATCH_TAB -> GoalsPerMatchTable(
+                MatchDetailsTab.GOALS_PER_MATCH -> GoalsPerMatchTable(
                     goalsPerMatches = matchDetails.goalsPerMatches,
                     homeTeamName = matchDetails.homeTeam.name,
                     awayTeamName = matchDetails.awayTeam.name,
@@ -171,9 +179,12 @@ private fun MatchDetailsTabRow(
             Tab(
                 selected = selectedTabIndex == index,
                 onClick = { onTabSelected(index) },
-                modifier = Modifier.size(56.dp)
+                modifier = Modifier.height(56.dp)
             ) {
-                Text(tab)
+                Text(
+                    text = stringResource(tab.titleResId),
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
             }
         }
     }
@@ -222,18 +233,4 @@ private fun MatchDetailsScreenPreview() {
     }
 }
 
-private const val PLACE_TAB = "요약"
-private const val HOME_TEAM_MATCH_HISTORY_TAB = "홈팀 전적"
-private const val AWAY_TEAM_MATCH_HISTORY_TAB = "원정팀 전적"
-private const val RANKING_TAB = "순위"
-private const val UNDER_OVER_TAB = "언더/오버"
-private const val GOALS_PER_MATCH_TAB = "경기당 골"
-
-private val tabs = listOf(
-    PLACE_TAB,
-    HOME_TEAM_MATCH_HISTORY_TAB,
-    AWAY_TEAM_MATCH_HISTORY_TAB,
-    RANKING_TAB,
-    UNDER_OVER_TAB,
-    GOALS_PER_MATCH_TAB,
-)
+private val tabs = MatchDetailsTab.values()

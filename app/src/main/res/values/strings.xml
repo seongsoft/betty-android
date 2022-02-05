@@ -1,53 +1,66 @@
 <resources>
     <string name="app_name">Macao</string>
 
-    <string name="retry">재시도</string>
+    <string name="retry">retry</string>
 
     <!-- Outcome -->
-    <string name="win">승</string>
-    <string name="draw">무</string>
-    <string name="lose">패</string>
+    <string name="outcome_win">W</string>
+    <string name="outcome_draw">D</string>
+    <string name="outcome_lose">L</string>
 
     <!-- League filter -->
-    <string name="league_filter_error">리그 필터를 불러오지 못했습니다.</string>
+    <string name="league_filter_error">Failed to load league filter.</string>
 
     <!-- Matches -->
-    <string name="matches_error">경기 목록을 불러오지 못했습니다.</string>
-    <string name="matches_no_result">예정된 경기가 없습니다.</string>
+    <string name="matches_error">Failed to load matches.</string>
+    <string name="matches_no_result">No scheduled matches</string>
 
     <!-- Match details -->
-    <string name="match_details_error">경기 정보를 불러오지 못했습니다.</string>
+    <string name="match_details_error">Failed to load match details.</string>
+    <string name="match_details_tab_place">PLACE</string>
+    <string name="match_details_tab_home_team_match_history">HOME</string>
+    <string name="match_details_tab_away_team_match_history">AWAY</string>
+    <string name="match_details_tab_ranking">RANKING</string>
+    <string name="match_details_tab_under_over">UNDER/OVER</string>
+    <string name="match_details_tab_goals_per_match">GOALS PER MATCH</string>
 
     <!-- Place -->
-    <string name="place_total_title">Total</string>
-    <string name="place_home_title">Home</string>
-    <string name="place_away_title">Away</string>
+    <string name="place_total_title" translatable="false">TOTAL</string>
+    <string name="place_home_title" translatable="false">HOME</string>
+    <string name="place_away_title" translatable="false">AWAY</string>
+    <string name="place_matches">MATCHES</string>
+    <string name="place_win">WIN</string>
+    <string name="place_draw">DRAW</string>
+    <string name="place_lose">LOSE</string>
+    <string name="place_goal_for">GOAL FOR</string>
+    <string name="place_goal_against">GOAL AGAINST</string>
+    <string name="place_points">POINTS</string>
 
     <!-- Ranking -->
-    <string name="ranking_team">팀</string>
-    <string name="ranking_matches">경기</string>
-    <string name="ranking_game_point">승점</string>
-    <string name="ranking_win">승</string>
-    <string name="ranking_draw">무</string>
-    <string name="ranking_lose">패</string>
-    <string name="ranking_score">득점</string>
-    <string name="ranking_lose_point">실점</string>
+    <string name="ranking_team">TEAM</string>
+    <string name="ranking_matches">M</string>
+    <string name="ranking_game_point">PTS</string>
+    <string name="ranking_win">W</string>
+    <string name="ranking_draw">D</string>
+    <string name="ranking_lose">L</string>
+    <string name="ranking_score">GF</string>
+    <string name="ranking_lose_point">GA</string>
 
     <!-- Under Over -->
-    <string name="under_over_team">팀</string>
-    <string name="under_over_under">언더</string>
-    <string name="under_over_over">오버</string>
+    <string name="under_over_team">TEAM</string>
+    <string name="under_over_under">UNDER</string>
+    <string name="under_over_over">OVER</string>
 
     <!-- Goals per match -->
-    <string name="goals_per_match_team">팀</string>
-    <string name="goals_per_match_matches">경기</string>
-    <string name="goals_per_match_zero_goal">0</string>
-    <string name="goals_per_match_one_goal">1</string>
-    <string name="goals_per_match_two_goals">2</string>
-    <string name="goals_per_match_three_goals">3</string>
-    <string name="goals_per_match_four_goals">4</string>
-    <string name="goals_per_match_five_goals">5</string>
-    <string name="goals_per_match_six_goals">6</string>
-    <string name="goals_per_match_etc_goals">7+</string>
-    <string name="goals_per_match_average">평균</string>
+    <string name="goals_per_match_team">TEAM</string>
+    <string name="goals_per_match_matches">M</string>
+    <string name="goals_per_match_zero_goal" translatable="false">0</string>
+    <string name="goals_per_match_one_goal" translatable="false">1</string>
+    <string name="goals_per_match_two_goals" translatable="false">2</string>
+    <string name="goals_per_match_three_goals" translatable="false">3</string>
+    <string name="goals_per_match_four_goals" translatable="false">4</string>
+    <string name="goals_per_match_five_goals" translatable="false">5</string>
+    <string name="goals_per_match_six_goals" translatable="false">6</string>
+    <string name="goals_per_match_etc_goals" translatable="false">7+</string>
+    <string name="goals_per_match_average">AVG</string>
 </resources>

@@ -79,41 +79,41 @@ private fun PlaceSurface(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 PlaceRow(
-                    label = "경기",
+                    label = stringResource(R.string.place_matches),
                     homeTeamValue = place.home.totalMatchCount,
                     awayTeamValue = place.away.totalMatchCount
                 )
                 PlaceRow(
-                    label = "승",
+                    label = stringResource(R.string.place_win),
                     homeTeamValue = place.home.winMatchCount,
                     awayTeamValue = place.away.winMatchCount,
                     comparator = Comparator.naturalOrder()
                 )
                 PlaceRow(
-                    label = "무",
+                    label = stringResource(R.string.place_draw),
                     homeTeamValue = place.home.drawMatchCount,
                     awayTeamValue = place.away.drawMatchCount
                 )
                 PlaceRow(
-                    label = "패",
+                    label = stringResource(R.string.place_lose),
                     homeTeamValue = place.home.loseMatchCount,
                     awayTeamValue = place.away.loseMatchCount,
                     comparator = Comparator.reverseOrder()
                 )
                 PlaceRow(
-                    label = "득점",
+                    label = stringResource(R.string.place_goal_for),
                     homeTeamValue = place.home.goalFor,
                     awayTeamValue = place.away.goalFor,
                     comparator = Comparator.naturalOrder()
                 )
                 PlaceRow(
-                    label = "실점",
+                    label = stringResource(R.string.place_goal_against),
                     homeTeamValue = place.home.goalAgainst,
                     awayTeamValue = place.away.goalAgainst,
                     comparator = Comparator.reverseOrder()
                 )
                 PlaceRow(
-                    label = "승점",
+                    label = stringResource(R.string.place_points),
                     homeTeamValue = place.home.points,
                     awayTeamValue = place.away.points,
                     comparator = Comparator.naturalOrder()

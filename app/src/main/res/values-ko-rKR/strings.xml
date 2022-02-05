@@ -1,0 +1,53 @@
+<resources>
+    <string name="retry">재시도</string>
+
+    <!-- Outcome -->
+    <string name="outcome_win">승</string>
+    <string name="outcome_draw">무</string>
+    <string name="outcome_lose">패</string>
+
+    <!-- League filter -->
+    <string name="league_filter_error">리그 필터를 불러오지 못했습니다.</string>
+
+    <!-- Matches -->
+    <string name="matches_error">경기 목록을 불러오지 못했습니다.</string>
+    <string name="matches_no_result">예정된 경기가 없습니다</string>
+
+    <!-- Match details -->
+    <string name="match_details_error">경기 정보를 불러오지 못했습니다.</string>
+    <string name="match_details_tab_place">요약</string>
+    <string name="match_details_tab_home_team_match_history">홈팀 전적</string>
+    <string name="match_details_tab_away_team_match_history">원정팀 전적</string>
+    <string name="match_details_tab_ranking">순위</string>
+    <string name="match_details_tab_under_over">언더/오버</string>
+    <string name="match_details_tab_goals_per_match">경기당 골</string>
+
+    <!-- Place -->
+    <string name="place_matches">경기</string>
+    <string name="place_win">승</string>
+    <string name="place_draw">무</string>
+    <string name="place_lose">패</string>
+    <string name="place_goal_for">득점</string>
+    <string name="place_goal_against">실점</string>
+    <string name="place_points">승점</string>
+
+    <!-- Ranking -->
+    <string name="ranking_team">팀</string>
+    <string name="ranking_matches">경기</string>
+    <string name="ranking_game_point">승점</string>
+    <string name="ranking_win">승</string>
+    <string name="ranking_draw">무</string>
+    <string name="ranking_lose">패</string>
+    <string name="ranking_score">득점</string>
+    <string name="ranking_lose_point">실점</string>
+
+    <!-- Under Over -->
+    <string name="under_over_team">팀</string>
+    <string name="under_over_under">언더</string>
+    <string name="under_over_over">오버</string>
+
+    <!-- Goals per match -->
+    <string name="goals_per_match_team">팀</string>
+    <string name="goals_per_match_matches">경기</string>
+    <string name="goals_per_match_average">평균</string>
+</resources>
