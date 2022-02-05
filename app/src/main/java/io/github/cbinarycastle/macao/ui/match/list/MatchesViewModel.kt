@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
 import androidx.paging.cachedIn
-import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.cbinarycastle.macao.domain.GetLeaguesUseCase
 import io.github.cbinarycastle.macao.domain.GetMatchOverallsUseCase
@@ -31,19 +30,22 @@ class MatchesViewModel @Inject constructor(
         emitAll(refreshSignal)
     }
 
-    val leagues = loadDataSignal.map {
+    val leagues = loadDataSignal.transform {
+        emit(Result.Loading)
         when (val result = getLeaguesUseCase(Unit)) {
-            is Result.Success -> Result.Success(
-                listOf(LeagueFilterModel.All) + result.data.map {
-                    LeagueFilterModel.League(
-                        id = it.id,
-                        name = it.name,
-                        imageUrl = it.imageUrl,
-                    )
-                }
+            is Result.Success -> emit(
+                Result.Success(
+                    listOf(LeagueFilterModel.All) + result.data.map {
+                        LeagueFilterModel.League(
+                            id = it.id,
+                            name = it.name,
+                            imageUrl = it.imageUrl,
+                        )
+                    }
+                )
             )
-            is Result.Error -> Result.Error(result.exception)
-            Result.Loading -> Result.Loading
+            is Result.Error -> emit(Result.Error(result.exception))
+            Result.Loading -> emit(Result.Loading)
         }
     }.stateIn(viewModelScope, WhileViewSubscribed, Result.Loading)
 
