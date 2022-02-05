@@ -44,7 +44,10 @@ class MatchesViewModel @Inject constructor(
                     }
                 )
             )
-            is Result.Error -> emit(Result.Error(result.exception))
+            is Result.Error -> {
+                emit(Result.Error(result.exception))
+                eventLogger.logEvent(Event.MatchesLeaguesLoadFailed())
+            }
             Result.Loading -> emit(Result.Loading)
         }
     }.stateIn(viewModelScope, WhileViewSubscribed, Result.Loading)
@@ -59,6 +62,13 @@ class MatchesViewModel @Inject constructor(
             getMatchOverallsUseCase(
                 GetMatchOverallsUseCase.Params(leagueId = leagueFilter?.id)
             )
+                .onEach {
+                    if (it is Result.Error) {
+                        eventLogger.logEvent(
+                            Event.MatchesMatchesLoadFailed(leagueName = leagueFilter?.name)
+                        )
+                    }
+                }
                 .filter { it is Result.Success }
                 .map { (it as Result.Success).data }
                 .mapLatest { it.insertSeparators() }
