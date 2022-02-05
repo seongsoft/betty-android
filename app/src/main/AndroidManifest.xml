@@ -20,7 +20,8 @@
             android:value="ca-app-pub-1258768914276560~5404532041" />
 
         <activity
-            android:name="io.github.cbinarycastle.betty.ui.MainActivity"
+            android:name=".ui.SplashActivity"
+            android:theme="@style/Theme.Betty.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

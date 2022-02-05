@@ -18,9 +18,9 @@ import io.github.cbinarycastle.betty.ui.match.list.MatchesViewModel
 private const val MATCH_DETAILS_ID_KEY = "matchId"
 
 object MainDestinations {
-    const val MATCHES = "matches"
-    const val MATCH_DETAILS = "match"
-    const val START_DESTINATION = MATCHES
+    const val Matches = "matches"
+    const val MatchDetails = "match"
+    const val StartDestination = Matches
 }
 
 @Composable
@@ -32,10 +32,10 @@ fun BettyNavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = MainDestinations.START_DESTINATION,
+        startDestination = MainDestinations.StartDestination,
         modifier = modifier,
     ) {
-        composable(MainDestinations.MATCHES) {
+        composable(MainDestinations.Matches) {
             val viewModel = hiltViewModel<MatchesViewModel>()
             MatchesScreen(
                 viewModel = viewModel,
@@ -46,7 +46,7 @@ fun BettyNavGraph(
             )
         }
         composable(
-            "${MainDestinations.MATCH_DETAILS}/{$MATCH_DETAILS_ID_KEY}",
+            "${MainDestinations.MatchDetails}/{$MATCH_DETAILS_ID_KEY}",
             arguments = listOf(
                 navArgument(MATCH_DETAILS_ID_KEY) { type = NavType.LongType }
             )
@@ -62,6 +62,6 @@ fun BettyNavGraph(
 
 class MainActions(navController: NavHostController) {
     val openMatch = { matchId: Long ->
-        navController.navigate("${MainDestinations.MATCH_DETAILS}/$matchId")
+        navController.navigate("${MainDestinations.MatchDetails}/$matchId")
     }
 }

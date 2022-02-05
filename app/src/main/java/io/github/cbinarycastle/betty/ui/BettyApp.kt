@@ -26,7 +26,7 @@ import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 fun BettyApp() {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val topLevel = backStackEntry?.destination?.route == MainDestinations.START_DESTINATION
+    val topLevel = backStackEntry?.destination?.route == MainDestinations.StartDestination
 
     BettyTheme {
         Scaffold(
