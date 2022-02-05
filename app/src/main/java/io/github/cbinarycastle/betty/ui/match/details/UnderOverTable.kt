@@ -92,18 +92,23 @@ private fun UnderOverItem(
             text = underOver.number.toString(),
             modifier = Modifier.width(NumberCellWidth)
         )
-        GlideImage(
-            imageModel = underOver.teamImageUrl,
-            modifier = Modifier.size(24.dp),
-            previewPlaceholder = R.drawable.manchester_united
-        )
-        Spacer(Modifier.width(4.dp))
-        UnderOverCell(
-            text = underOver.teamName,
+        Row(
             modifier = Modifier.width(TeamCellWidth),
-            horizontalArrangement = Arrangement.Start,
-            textStyle = BettyTheme.typography.subtitle2,
-        )
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            GlideImage(
+                imageModel = underOver.teamImageUrl,
+                modifier = Modifier.size(24.dp),
+                previewPlaceholder = R.drawable.manchester_united
+            )
+            Spacer(Modifier.width(4.dp))
+            UnderOverCell(
+                text = underOver.teamName,
+                modifier = Modifier.width(TeamCellWidth),
+                horizontalArrangement = Arrangement.Start,
+                textStyle = BettyTheme.typography.subtitle2,
+            )
+        }
         UnderOverCell(
             text = "${underOver.underCount}/${underOver.matchCount} (${underOver.underPercent}%)",
             modifier = Modifier.weight(1f)
@@ -147,4 +152,4 @@ private fun UnderOverTablePreview() {
 
 private const val HighlightAlpha = 0.15f
 private val NumberCellWidth = 36.dp
-private val TeamCellWidth = 136.dp
+private val TeamCellWidth = 164.dp

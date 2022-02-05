@@ -116,18 +116,22 @@ private fun RankingItem(
             text = row.number.toString(),
             modifier = Modifier.width(NumberCellWidth)
         )
-        GlideImage(
-            imageModel = row.teamImageUrl,
-            modifier = Modifier.size(24.dp),
-            previewPlaceholder = R.drawable.manchester_united
-        )
-        Spacer(Modifier.width(4.dp))
-        RankingCell(
-            text = row.teamName,
+        Row(
             modifier = Modifier.width(TeamCellWidth),
-            horizontalArrangement = Arrangement.Start,
-            textStyle = BettyTheme.typography.subtitle2,
-        )
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            GlideImage(
+                imageModel = row.teamImageUrl,
+                modifier = Modifier.size(24.dp),
+                previewPlaceholder = R.drawable.manchester_united
+            )
+            Spacer(Modifier.width(4.dp))
+            RankingCell(
+                text = row.teamName,
+                horizontalArrangement = Arrangement.Start,
+                textStyle = BettyTheme.typography.subtitle2,
+            )
+        }
         Row(Modifier.horizontalScroll(scrollState)) {
             RankingCell(
                 text = row.matchCount.toString(),
@@ -194,4 +198,4 @@ private fun RankingTablePreview() {
 private const val HighlightAlpha = 0.15f
 private val DefaultCellWidth = 50.dp
 private val NumberCellWidth = 36.dp
-private val TeamCellWidth = 136.dp
+private val TeamCellWidth = 164.dp

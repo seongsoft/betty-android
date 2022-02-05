@@ -128,18 +128,23 @@ private fun GoalsPerMatchItem(
             text = goalsPerMatch.number.toString(),
             modifier = Modifier.width(DefaultCellWidth)
         )
-        GlideImage(
-            imageModel = goalsPerMatch.teamImageUrl,
-            modifier = Modifier.size(24.dp),
-            previewPlaceholder = R.drawable.manchester_united
-        )
-        Spacer(Modifier.width(4.dp))
-        GoalsPerMatchCell(
-            text = goalsPerMatch.teamName,
+        Row(
             modifier = Modifier.width(TeamCellWidth),
-            horizontalArrangement = Arrangement.Start,
-            textStyle = BettyTheme.typography.subtitle2,
-        )
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            GlideImage(
+                imageModel = goalsPerMatch.teamImageUrl,
+                modifier = Modifier.size(24.dp),
+                previewPlaceholder = R.drawable.manchester_united
+            )
+            Spacer(Modifier.width(4.dp))
+            GoalsPerMatchCell(
+                text = goalsPerMatch.teamName,
+                modifier = Modifier.width(TeamCellWidth),
+                horizontalArrangement = Arrangement.Start,
+                textStyle = BettyTheme.typography.subtitle2,
+            )
+        }
         Row(Modifier.horizontalScroll(scrollState)) {
             GoalsPerMatchCell(
                 text = goalsPerMatch.matchCount.toString(),
@@ -217,4 +222,4 @@ private fun GoalsPerMatchTablePreview() {
 
 private const val HighlightAlpha = 0.15f
 private val DefaultCellWidth = 36.dp
-private val TeamCellWidth = 136.dp
+private val TeamCellWidth = 164.dp
