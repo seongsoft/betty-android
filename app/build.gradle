@@ -6,15 +6,36 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
+
 android {
+    sourceSets {
+        def productionSrcDir = 'src/production/java'
+        debug {
+            java.srcDirs = [productionSrcDir]
+        }
+        release {
+            java.srcDirs = [productionSrcDir]
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     compileSdk 31
 
     defaultConfig {
         applicationId "io.github.cbinarycastle.betty"
         minSdk 24
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +47,7 @@ android {
             buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-1258768914276560/5408579081"'
             buildConfigField "String", "AMPLITUDE_API_KEY", '"5a919f0ba1939e63407d6bf970a3200f"'
             buildConfigField "String", "HACKLE_SDK_KEY", '"oeTjS34w9B2gohu2C3y2tJqZz3rKcj6n"'
+            signingConfig signingConfigs.release
         }
         debug {
             buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-3940256099942544/6300978111"'
