@@ -40,6 +40,7 @@ import io.github.cbinarycastle.betty.ui.match.LastOutcomes
 import io.github.cbinarycastle.betty.ui.match.ScorePrediction
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 import org.threeten.bp.Year
+import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -194,11 +195,12 @@ private fun MatchOverallListPlaceholder() {
 private fun MatchOverallSeparator(
     matchAt: ZonedDateTime,
     modifier: Modifier = Modifier,
+    timeZoneId: ZoneId = ZoneId.systemDefault(),
 ) {
     Spacer(Modifier.height(16.dp))
     Text(
         text = matchAt
-            .withZoneSameInstant(ZoneOffset.systemDefault())
+            .withZoneSameInstant(timeZoneId)
             .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
         modifier = modifier,
         style = BettyTheme.typography.subtitle2
@@ -210,6 +212,7 @@ private fun MatchOverallItem(
     matchOverall: MatchOverall,
     onSelectMatch: (matchOverall: MatchOverall) -> Unit,
     modifier: Modifier = Modifier,
+    timeZoneId: ZoneId = ZoneId.systemDefault(),
 ) {
     Card(
         modifier = modifier.clickable { onSelectMatch(matchOverall) },
@@ -228,7 +231,7 @@ private fun MatchOverallItem(
             ) {
                 Text(
                     text = matchOverall.matchAt
-                        .withZoneSameInstant(ZoneOffset.systemDefault())
+                        .withZoneSameInstant(timeZoneId)
                         .format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = BettyTheme.typography.body2
                 )
@@ -430,11 +433,12 @@ private fun Team(
 private fun MatchOverallSeparatorPreview() {
     BettyTheme {
         MatchOverallSeparator(
-            Year.of(2022)
+            matchAt = Year.of(2022)
                 .atMonth(1)
                 .atDay(1)
                 .atTime(21, 0)
-                .atZone(ZoneOffset.UTC)
+                .atZone(ZoneOffset.UTC),
+            timeZoneId = ZoneOffset.UTC,
         )
     }
 }
@@ -445,7 +449,8 @@ private fun MatchOverallItemPreview() {
     BettyTheme {
         MatchOverallItem(
             matchOverall = matchOveralls[0],
-            onSelectMatch = {}
+            onSelectMatch = {},
+            timeZoneId = ZoneOffset.UTC,
         )
     }
 }

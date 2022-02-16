@@ -23,6 +23,7 @@ import io.github.cbinarycastle.betty.ui.components.rememberCollapsibleState
 import io.github.cbinarycastle.betty.ui.match.LastOutcomes
 import io.github.cbinarycastle.betty.ui.match.ScorePrediction
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
+import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
@@ -72,6 +73,7 @@ private fun MatchDetailsScreen(
 private fun MatchDetailsScreen(
     matchDetails: MatchDetails,
     onTabSelected: (MatchDetailsTab) -> Unit,
+    timeZoneId: ZoneId = ZoneId.systemDefault(),
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
 
@@ -94,7 +96,7 @@ private fun MatchDetailsScreen(
                 }
                 Text(
                     text = matchDetails.matchAt
-                        .withZoneSameInstant(ZoneOffset.systemDefault())
+                        .withZoneSameInstant(timeZoneId)
                         .format(
                             DateTimeFormatter.ofLocalizedDateTime(
                                 FormatStyle.MEDIUM, FormatStyle.SHORT
@@ -231,7 +233,8 @@ private fun MatchDetailsScreenPreview() {
     BettyTheme {
         MatchDetailsScreen(
             matchDetails = matchDetails,
-            onTabSelected = {}
+            onTabSelected = {},
+            timeZoneId = ZoneOffset.UTC,
         )
     }
 }

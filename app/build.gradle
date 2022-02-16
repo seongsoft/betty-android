@@ -11,12 +11,16 @@ keystoreProperties.load(new FileInputStream(rootProject.file("keystore.propertie
 
 android {
     sourceSets {
-        def productionSrcDir = 'src/production/java'
+        def debugReleaseSrcDir = 'src/debugRelease/java'
+        def localDebugSrcDir = 'src/localDebug/java'
+        local {
+            java.srcDirs = [localDebugSrcDir]
+        }
         debug {
-            java.srcDirs = [productionSrcDir]
+            java.srcDirs = [localDebugSrcDir, debugReleaseSrcDir]
         }
         release {
-            java.srcDirs = [productionSrcDir]
+            java.srcDirs = [debugReleaseSrcDir]
         }
     }
 
