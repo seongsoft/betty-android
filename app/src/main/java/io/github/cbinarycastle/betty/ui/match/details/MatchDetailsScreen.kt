@@ -1,10 +1,8 @@
 package io.github.cbinarycastle.betty.ui.match.details
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Tab
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -111,6 +109,7 @@ private fun MatchDetailsScreen(
                 ) {
                     Team(
                         team = matchDetails.homeTeam,
+                        isHome = true,
                         modifier = Modifier.weight(1f),
                     )
                     ScorePrediction(
@@ -119,6 +118,7 @@ private fun MatchDetailsScreen(
                     )
                     Team(
                         team = matchDetails.awayTeam,
+                        isHome = false,
                         modifier = Modifier.weight(1f),
                     )
                 }
@@ -198,12 +198,33 @@ private fun MatchDetailsTabRow(
 @Composable
 private fun Team(
     team: Team,
+    isHome: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Surface(
+            shape = RoundedCornerShape(8.dp),
+            color = if (isHome) {
+                BettyTheme.colors.primary
+            } else {
+                BettyTheme.colors.secondary
+            },
+        ) {
+            Box(Modifier.padding(horizontal = 8.dp)) {
+                Text(
+                    text = if (isHome) {
+                        stringResource(R.string.match_details_home_chip)
+                    } else {
+                        stringResource(R.string.match_details_away_chip)
+                    },
+                    style = BettyTheme.typography.subtitle2
+                )
+            }
+        }
+        Spacer(Modifier.height(8.dp))
         GlideImage(
             imageModel = team.imageUrl,
             modifier = Modifier.size(60.dp),

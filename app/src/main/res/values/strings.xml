@@ -17,6 +17,8 @@
 
     <!-- Match details -->
     <string name="match_details_error">Failed to load match details</string>
+    <string name="match_details_home_chip" translatable="false">HOME</string>
+    <string name="match_details_away_chip" translatable="false">AWAY</string>
     <string name="match_details_tab_place">PLACE</string>
     <string name="match_details_tab_home_team_match_history">HOME</string>
     <string name="match_details_tab_away_team_match_history">AWAY</string>
