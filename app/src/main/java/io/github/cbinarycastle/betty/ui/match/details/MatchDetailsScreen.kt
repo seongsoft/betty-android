@@ -20,7 +20,7 @@ import io.github.cbinarycastle.betty.entity.MatchDetails
 import io.github.cbinarycastle.betty.entity.Team
 import io.github.cbinarycastle.betty.ui.components.CollapsibleLayout
 import io.github.cbinarycastle.betty.ui.components.rememberCollapsibleState
-import io.github.cbinarycastle.betty.ui.match.LastOutcomes
+import io.github.cbinarycastle.betty.ui.match.LastOutcome
 import io.github.cbinarycastle.betty.ui.match.ScorePrediction
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 import org.threeten.bp.ZoneId
@@ -220,7 +220,7 @@ private fun Team(
         Row {
             team.lastOutcomes.forEach {
                 Spacer(Modifier.width(2.dp))
-                LastOutcomes(it)
+                LastOutcome(it)
                 Spacer(Modifier.width(2.dp))
             }
         }
