@@ -43,8 +43,8 @@
 
     <!-- Under Over -->
     <string name="under_over_team">팀</string>
-    <string name="under_over_under">언더</string>
-    <string name="under_over_over">오버</string>
+    <string name="under_over_under">언더 2.5</string>
+    <string name="under_over_over">오버 2.5</string>
 
     <!-- Goals per match -->
     <string name="goals_per_match_team">팀</string>
