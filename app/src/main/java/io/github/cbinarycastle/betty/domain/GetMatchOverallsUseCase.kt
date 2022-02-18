@@ -24,6 +24,6 @@ class GetMatchOverallsUseCase @Inject constructor(
 
     data class Params(
         val leagueId: Long?,
-        val baseDateTime: LocalDateTime = LocalDateTime.now(ZoneOffset.UTC),
+        val baseDateTime: LocalDateTime = LocalDateTime.now(ZoneOffset.UTC).minusHours(2),
     )
 }
