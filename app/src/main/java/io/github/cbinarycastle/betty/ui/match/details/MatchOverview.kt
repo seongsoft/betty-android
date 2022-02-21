@@ -19,7 +19,7 @@ import io.github.cbinarycastle.betty.entity.Place
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 
 @Composable
-fun PlaceList(
+fun MatchOverview(
     totalPlace: Place,
     homePlace: Place,
     awayPlace: Place,
@@ -77,41 +77,41 @@ private fun PlaceSurface(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                PlaceRow(
+                MatchOverviewRow(
                     label = stringResource(R.string.place_matches),
                     homeTeamValue = place.home.totalMatchCount,
                     awayTeamValue = place.away.totalMatchCount
                 )
-                PlaceRow(
+                MatchOverviewRow(
                     label = stringResource(R.string.place_win),
                     homeTeamValue = place.home.winMatchCount,
                     awayTeamValue = place.away.winMatchCount,
                     comparator = Comparator.naturalOrder()
                 )
-                PlaceRow(
+                MatchOverviewRow(
                     label = stringResource(R.string.place_draw),
                     homeTeamValue = place.home.drawMatchCount,
                     awayTeamValue = place.away.drawMatchCount
                 )
-                PlaceRow(
+                MatchOverviewRow(
                     label = stringResource(R.string.place_lose),
                     homeTeamValue = place.home.loseMatchCount,
                     awayTeamValue = place.away.loseMatchCount,
                     comparator = Comparator.reverseOrder()
                 )
-                PlaceRow(
+                MatchOverviewRow(
                     label = stringResource(R.string.place_goal_for),
                     homeTeamValue = place.home.goalFor,
                     awayTeamValue = place.away.goalFor,
                     comparator = Comparator.naturalOrder()
                 )
-                PlaceRow(
+                MatchOverviewRow(
                     label = stringResource(R.string.place_goal_against),
                     homeTeamValue = place.home.goalAgainst,
                     awayTeamValue = place.away.goalAgainst,
                     comparator = Comparator.reverseOrder()
                 )
-                PlaceRow(
+                MatchOverviewRow(
                     label = stringResource(R.string.place_points),
                     homeTeamValue = place.home.points,
                     awayTeamValue = place.away.points,
@@ -123,7 +123,7 @@ private fun PlaceSurface(
 }
 
 @Composable
-private fun PlaceRow(
+private fun MatchOverviewRow(
     label: String,
     homeTeamValue: Int,
     awayTeamValue: Int,
@@ -199,9 +199,9 @@ private fun PlaceRow(
 
 @Preview
 @Composable
-private fun PlaceListPreview() {
+private fun MatchOverviewPreview() {
     BettyTheme {
-        PlaceList(
+        MatchOverview(
             totalPlace = matchDetails.totalPlace,
             homePlace = matchDetails.homePlace,
             awayPlace = matchDetails.awayPlace

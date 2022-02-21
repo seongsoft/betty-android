@@ -15,7 +15,7 @@
 
     <!-- Match details -->
     <string name="match_details_error">경기 정보를 불러오지 못했습니다</string>
-    <string name="match_details_tab_place">요약</string>
+    <string name="match_details_tab_overview">개요</string>
     <string name="match_details_tab_home_team_match_history">홈팀 전적</string>
     <string name="match_details_tab_away_team_match_history">원정팀 전적</string>
     <string name="match_details_tab_ranking">순위</string>

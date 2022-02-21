@@ -135,7 +135,7 @@ private fun MatchDetailsScreen(
                 },
             )
             when (tabs[selectedTabIndex]) {
-                MatchDetailsTab.PLACE -> PlaceList(
+                MatchDetailsTab.OVERVIEW -> MatchOverview(
                     totalPlace = matchDetails.totalPlace,
                     homePlace = matchDetails.homePlace,
                     awayPlace = matchDetails.awayPlace
