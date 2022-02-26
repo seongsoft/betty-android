@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 
 abstract class FlowUseCase<P, R>(
@@ -11,6 +12,7 @@ abstract class FlowUseCase<P, R>(
 ) {
     operator fun invoke(params: P): Flow<Result<R>> {
         return execute(params)
+            .onStart { emit(Result.Loading) }
             .catch {
                 Timber.e(it)
                 Result.Error(it as Exception)

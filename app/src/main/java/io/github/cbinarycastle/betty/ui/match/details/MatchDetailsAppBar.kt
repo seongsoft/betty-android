@@ -20,12 +20,12 @@ import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 
 @Composable
 fun MatchDetailsAppBar(
-    upPress: () -> Unit,
+    onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     BettyAppBar(modifier) {
         Box(Modifier.fillMaxWidth()) {
-            IconButton(onClick = upPress) {
+            IconButton(onClick = onNavigateUp) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Up"
@@ -47,6 +47,6 @@ fun MatchDetailsAppBar(
 @Composable
 fun MatchDetailsAppBarPreview() {
     BettyTheme {
-        MatchDetailsAppBar(upPress = {})
+        MatchDetailsAppBar(onNavigateUp = {})
     }
 }

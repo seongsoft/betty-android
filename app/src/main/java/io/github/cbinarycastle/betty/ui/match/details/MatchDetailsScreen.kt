@@ -29,12 +29,12 @@ import org.threeten.bp.format.FormatStyle
 @Composable
 fun MatchDetailsScreen(
     viewModel: MatchDetailsViewModel,
-    upPress: () -> Unit,
+    onNavigateUp: () -> Unit,
 ) {
     val result by viewModel.matchDetails.collectAsState(Result.Loading)
     MatchDetailsScreen(
         matchDetailsResult = result,
-        upPress = upPress,
+        onNavigateUp = onNavigateUp,
         onTabSelected = { viewModel.onTabSelected(it.name) }
     )
 }
@@ -42,11 +42,11 @@ fun MatchDetailsScreen(
 @Composable
 private fun MatchDetailsScreen(
     matchDetailsResult: Result<MatchDetails>,
-    upPress: () -> Unit,
+    onNavigateUp: () -> Unit,
     onTabSelected: (MatchDetailsTab) -> Unit,
 ) {
     Column {
-        MatchDetailsAppBar(upPress = upPress)
+        MatchDetailsAppBar(onNavigateUp = onNavigateUp)
         when (matchDetailsResult) {
             is Result.Success -> {
                 val matchDetails = matchDetailsResult.data

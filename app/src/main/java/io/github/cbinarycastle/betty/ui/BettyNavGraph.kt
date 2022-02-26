@@ -14,6 +14,8 @@ import io.github.cbinarycastle.betty.ui.match.details.MatchDetailsScreen
 import io.github.cbinarycastle.betty.ui.match.details.MatchDetailsViewModel
 import io.github.cbinarycastle.betty.ui.match.list.MatchesScreen
 import io.github.cbinarycastle.betty.ui.match.list.MatchesViewModel
+import io.github.cbinarycastle.betty.ui.search.SearchScreen
+import io.github.cbinarycastle.betty.ui.search.SearchViewModel
 
 private const val MATCH_DETAILS_ID_KEY = "matchId"
 
@@ -40,11 +42,18 @@ fun BettyNavGraph(
             val viewModel = hiltViewModel<MatchesViewModel>()
             MatchesScreen(
                 viewModel = viewModel,
-                openSearch = { actions.openSearch },
+                openSearch = actions.openSearch,
                 onMatchSelected = { matchOverall ->
                     viewModel.selectMatch(matchOverall)
                     actions.openMatch(matchOverall.id)
                 },
+            )
+        }
+        composable(MainDestinations.Search) {
+            val viewModel = hiltViewModel<SearchViewModel>()
+            SearchScreen(
+                viewModel = viewModel,
+                onNavigateUp = actions.navigateUp
             )
         }
         composable(
@@ -59,7 +68,7 @@ fun BettyNavGraph(
 
             MatchDetailsScreen(
                 viewModel = viewModel,
-                upPress = actions.upPress
+                onNavigateUp = actions.navigateUp
             )
         }
     }
@@ -75,7 +84,7 @@ class MainActions(navController: NavHostController) {
         navController.navigate("${MainDestinations.MatchDetails}/$matchId")
     }
 
-    val upPress: () -> Unit = {
+    val navigateUp: () -> Unit = {
         navController.navigateUp()
     }
 }
