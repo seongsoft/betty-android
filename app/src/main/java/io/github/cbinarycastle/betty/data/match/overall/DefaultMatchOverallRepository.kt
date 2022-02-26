@@ -18,6 +18,8 @@ class DefaultMatchOverallRepository @Inject constructor(
     override fun getMatchOveralls(
         baseDateTime: LocalDateTime,
         leagueId: Long?,
+        leagueName: String?,
+        keyword: String?,
     ): Flow<PagingData<MatchOverall>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
@@ -25,6 +27,8 @@ class DefaultMatchOverallRepository @Inject constructor(
                 pagingSourceFactory.create(
                     baseDateTime = baseDateTime,
                     leagueId = leagueId,
+                    leagueName = leagueName,
+                    keyword = keyword,
                 )
             }
         ).flow

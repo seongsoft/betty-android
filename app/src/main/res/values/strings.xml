@@ -12,8 +12,12 @@
     <string name="league_filter_error">Failed to load league filter</string>
 
     <!-- Matches -->
-    <string name="matches_error">Failed to load matches</string>
     <string name="matches_no_result">No scheduled matches</string>
+    <string name="matches_error">Failed to load matches</string>
+
+    <!-- Search -->
+    <string name="search_no_result">No matched result</string>
+    <string name="search_error">Failed to load result</string>
 
     <!-- Match details -->
     <string name="match_details_error">Failed to load match details</string>

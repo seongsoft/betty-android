@@ -19,6 +19,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
+import io.github.cbinarycastle.betty.R
 import io.github.cbinarycastle.betty.domain.Result
 import io.github.cbinarycastle.betty.ui.BettyAppBar
 
@@ -26,6 +28,7 @@ import io.github.cbinarycastle.betty.ui.BettyAppBar
 fun SearchScreen(
     viewModel: SearchViewModel,
     onNavigateUp: () -> Unit,
+    onSearch: (String) -> Unit,
 ) {
     val keyword by viewModel.keyword.collectAsState()
     val matchedTeamsResult by viewModel.matchedTeams.collectAsState(Result.Success(emptyList()))
@@ -33,9 +36,10 @@ fun SearchScreen(
     SearchScreen(
         keyword = keyword,
         matchedTeamsResult = matchedTeamsResult,
+        onNavigateUp = onNavigateUp,
         onInputChange = { viewModel.updateKeyword(it) },
         onClearInput = { viewModel.clearKeyword() },
-        onNavigateUp = onNavigateUp,
+        onSearch = onSearch,
     )
 }
 
@@ -44,9 +48,10 @@ fun SearchScreen(
 private fun SearchScreen(
     keyword: String,
     matchedTeamsResult: Result<List<String>>,
+    onNavigateUp: () -> Unit,
     onInputChange: (String) -> Unit,
     onClearInput: () -> Unit,
-    onNavigateUp: () -> Unit,
+    onSearch: (String) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -95,21 +100,34 @@ private fun SearchScreen(
             }
         )
 
-        when (matchedTeamsResult) {
-            is Result.Success -> {
-                val items = matchedTeamsResult.data
-                LazyColumn {
-                    items(items) {
+        Box(Modifier.fillMaxSize()) {
+            when (matchedTeamsResult) {
+                is Result.Success -> {
+                    val items = matchedTeamsResult.data
+                    if (items.isEmpty()) {
                         Text(
-                            text = it,
-                            modifier = Modifier.fillMaxWidth()
+                            text = stringResource(R.string.search_no_result),
+                            modifier = Modifier.align(Alignment.Center)
                         )
+                    } else {
+                        LazyColumn {
+                            items(items) { teamName ->
+                                SearchResultListItem(
+                                    teamName = teamName,
+                                    onClick = onSearch,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
+                        }
                     }
                 }
-            }
-            is Result.Error -> Text("error")
-            Result.Loading -> {
-                Box(Modifier.fillMaxSize()) {
+                is Result.Error -> {
+                    Text(
+                        text = stringResource(R.string.search_error),
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                Result.Loading -> {
                     CircularProgressIndicator(Modifier.align(Alignment.Center))
                 }
             }

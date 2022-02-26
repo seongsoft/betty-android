@@ -7,7 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import io.github.cbinarycastle.betty.data.league.DefaultLeagueRepository
 import io.github.cbinarycastle.betty.data.match.details.DefaultMatchDetailsRepository
 import io.github.cbinarycastle.betty.data.match.overall.DefaultMatchOverallRepository
-import io.github.cbinarycastle.betty.data.search.FakeSearchRepository
+import io.github.cbinarycastle.betty.data.search.DefaultSearchRepository
 import io.github.cbinarycastle.betty.domain.LeagueRepository
 import io.github.cbinarycastle.betty.domain.MatchDetailsRepository
 import io.github.cbinarycastle.betty.domain.MatchOverallRepository
@@ -23,7 +23,7 @@ interface RepositoryModule {
     ): MatchOverallRepository
 
     @Binds
-    fun bindSearchRepository(repository: FakeSearchRepository): SearchRepository
+    fun bindSearchRepository(repository: DefaultSearchRepository): SearchRepository
 
     @Binds
     fun bindMatchDetailsRepository(

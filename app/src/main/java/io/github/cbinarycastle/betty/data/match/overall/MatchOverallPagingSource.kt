@@ -5,6 +5,8 @@ import androidx.paging.PagingState
 import io.github.cbinarycastle.betty.data.BackendService
 import io.github.cbinarycastle.betty.data.mapper.toEntity
 import io.github.cbinarycastle.betty.entity.MatchOverall
+import io.github.cbinarycastle.betty.event.Event
+import io.github.cbinarycastle.betty.event.EventLogger
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
@@ -13,8 +15,11 @@ private const val INITIAL_PAGE = 0
 
 class MatchOverallPagingSource(
     private val backendService: BackendService,
+    private val eventLogger: EventLogger,
     private val baseDateTime: LocalDateTime,
     private val leagueId: Long?,
+    private val leagueName: String?,
+    private val keyword: String?,
 ) : PagingSource<Int, MatchOverall>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MatchOverall> {
@@ -23,6 +28,7 @@ class MatchOverallPagingSource(
             val response = backendService.fetchMatches(
                 baseDateTime = baseDateTime.format(DateTimeFormatter.ISO_DATE_TIME),
                 leagueId = leagueId,
+                keyword = keyword,
                 page = page,
                 size = params.loadSize,
             )
@@ -34,6 +40,9 @@ class MatchOverallPagingSource(
             )
         } catch (e: Exception) {
             Timber.e(e)
+            eventLogger.logEvent(
+                Event.MatchesMatchesLoadFailed(leagueName = leagueName)
+            )
             return LoadResult.Error(e)
         }
     }

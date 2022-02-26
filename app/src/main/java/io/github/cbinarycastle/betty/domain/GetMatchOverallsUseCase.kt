@@ -19,11 +19,15 @@ class GetMatchOverallsUseCase @Inject constructor(
         return repository.getMatchOveralls(
             baseDateTime = params.baseDateTime,
             leagueId = params.leagueId,
+            leagueName = params.leagueName,
+            keyword = params.keyword,
         ).map { Result.Success(it) }
     }
 
     data class Params(
         val leagueId: Long?,
+        val leagueName: String?,
+        val keyword: String?,
         val baseDateTime: LocalDateTime = LocalDateTime.now(ZoneOffset.UTC).minusHours(2),
     )
 }

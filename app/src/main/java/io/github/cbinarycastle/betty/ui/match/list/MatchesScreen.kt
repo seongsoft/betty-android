@@ -29,6 +29,7 @@ fun MatchesScreen(
     onMatchSelected: (matchOverall: MatchOverall) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val keyword by viewModel.keyword.collectAsState()
     val leagues by viewModel.leagues.collectAsState()
     val matchOverallItems = viewModel.matchOveralls.collectAsLazyPagingItems()
     val isRefreshing by viewModel.isRefreshing.collectAsState(false)
@@ -43,7 +44,10 @@ fun MatchesScreen(
             modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            MatchesAppBar(onSearchButtonClick = openSearch)
+            MatchesAppBar(
+                title = keyword,
+                onSearchButtonClick = openSearch
+            )
             Spacer(Modifier.height(16.dp))
             when (val result = leagues) {
                 is Result.Success -> LeagueFilter(

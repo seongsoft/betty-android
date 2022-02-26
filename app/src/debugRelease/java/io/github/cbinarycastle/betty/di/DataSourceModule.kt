@@ -8,14 +8,19 @@ import io.github.cbinarycastle.betty.data.league.LeagueDataSource
 import io.github.cbinarycastle.betty.data.league.RemoteLeagueDataSource
 import io.github.cbinarycastle.betty.data.match.details.MatchDetailsDataSource
 import io.github.cbinarycastle.betty.data.match.details.RemoteMatchDetailsSource
+import io.github.cbinarycastle.betty.data.search.RemoteSearchDataSource
+import io.github.cbinarycastle.betty.data.search.SearchDataSource
 
 @InstallIn(SingletonComponent::class)
 @Module
 interface DataSourceModule {
 
     @Binds
-    fun bindMatchDetailsDataSource(dataSource: RemoteMatchDetailsSource): MatchDetailsDataSource
+    fun bindLeagueDataSource(dataSource: RemoteLeagueDataSource): LeagueDataSource
 
     @Binds
-    fun bindLeagueDataSource(dataSource: RemoteLeagueDataSource): LeagueDataSource
+    fun bindSearchDataSource(dataSource: RemoteSearchDataSource): SearchDataSource
+
+    @Binds
+    fun bindMatchDetailsDataSource(dataSource: RemoteMatchDetailsSource): MatchDetailsDataSource
 }

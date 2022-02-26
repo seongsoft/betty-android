@@ -9,5 +9,7 @@ interface MatchOverallPagingSourceFactory {
     fun create(
         baseDateTime: LocalDateTime,
         leagueId: Long?,
+        leagueName: String?,
+        keyword: String?,
     ): PagingSource<Int, MatchOverall>
 }

@@ -3,6 +3,7 @@ package io.github.cbinarycastle.betty.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -26,6 +27,10 @@ object MainDestinations {
     const val StartDestination = Matches
 }
 
+object SavedStateHandleData {
+    const val SearchKeyword = "searchKeyword"
+}
+
 @Composable
 fun BettyNavGraph(
     modifier: Modifier = Modifier,
@@ -38,8 +43,15 @@ fun BettyNavGraph(
         startDestination = MainDestinations.StartDestination,
         modifier = modifier,
     ) {
-        composable(MainDestinations.Matches) {
+        composable(MainDestinations.Matches) { backStackEntry ->
             val viewModel = hiltViewModel<MatchesViewModel>()
+
+            backStackEntry.savedStateHandle
+                .getLiveData<String>(SavedStateHandleData.SearchKeyword)
+                .observe(LocalLifecycleOwner.current) { keyword ->
+                    viewModel.search(keyword)
+                }
+
             MatchesScreen(
                 viewModel = viewModel,
                 openSearch = actions.openSearch,
@@ -53,7 +65,8 @@ fun BettyNavGraph(
             val viewModel = hiltViewModel<SearchViewModel>()
             SearchScreen(
                 viewModel = viewModel,
-                onNavigateUp = actions.navigateUp
+                onNavigateUp = actions.navigateUp,
+                onSearch = actions.search
             )
         }
         composable(
@@ -85,6 +98,13 @@ class MainActions(navController: NavHostController) {
     }
 
     val navigateUp: () -> Unit = {
+        navController.navigateUp()
+    }
+
+    val search: (String) -> Unit = { keyword ->
+        navController.previousBackStackEntry
+            ?.savedStateHandle
+            ?.set(SavedStateHandleData.SearchKeyword, keyword)
         navController.navigateUp()
     }
 }

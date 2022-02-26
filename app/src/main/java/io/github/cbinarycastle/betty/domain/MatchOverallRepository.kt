@@ -10,5 +10,7 @@ interface MatchOverallRepository {
     fun getMatchOveralls(
         baseDateTime: LocalDateTime,
         leagueId: Long?,
+        leagueName: String?,
+        keyword: String?,
     ): Flow<PagingData<MatchOverall>>
 }

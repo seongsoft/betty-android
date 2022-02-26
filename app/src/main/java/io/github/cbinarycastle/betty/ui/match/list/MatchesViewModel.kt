@@ -31,41 +31,41 @@ class MatchesViewModel @Inject constructor(
     }
 
     val leagues = loadDataSignal.map {
-        when (val result = getLeaguesUseCase(Unit)) {
-            is Result.Success -> Result.Success(
-                listOf(LeagueFilterModel.All) + result.data.map {
-                    LeagueFilterModel.League(
-                        id = it.id,
-                        name = it.name,
-                        imageUrl = it.imageUrl,
-                    )
-                }
-            )
-            is Result.Error -> {
-                eventLogger.logEvent(Event.MatchesLeaguesLoadFailed())
-                Result.Error(result.exception)
+        getLeaguesUseCase(Unit).run {
+            when (this) {
+                is Result.Success -> Result.Success(
+                    listOf(LeagueFilterModel.All) + data.map { league ->
+                        LeagueFilterModel.League(
+                            id = league.id,
+                            name = league.name,
+                            imageUrl = league.imageUrl,
+                        )
+                    }
+                )
+                is Result.Error -> Result.Error(exception)
+                Result.Loading -> Result.Loading
             }
-            Result.Loading -> Result.Loading
         }
     }.stateIn(viewModelScope, WhileViewSubscribed, Result.Loading)
 
     private val _selectedLeagueIndex = MutableStateFlow(0)
     val selectedLeagueIndex = _selectedLeagueIndex.asStateFlow()
 
-    val matchOveralls = loadDataSignal
-        .combine(selectedLeagueIndex) { _, leagueIndex -> leagueIndex }
-        .map { leagues.value.data?.get(it) }
-        .flatMapLatest { leagueFilter ->
-            getMatchOverallsUseCase(
-                GetMatchOverallsUseCase.Params(leagueId = leagueFilter?.id)
-            )
-                .onEach {
-                    if (it is Result.Error) {
-                        eventLogger.logEvent(
-                            Event.MatchesMatchesLoadFailed(leagueName = leagueFilter?.name)
-                        )
-                    }
-                }
+    private val _keyword = MutableStateFlow<String?>(null)
+    val keyword = _keyword.asStateFlow()
+
+    val matchOveralls = combine(
+        loadDataSignal, selectedLeagueIndex, keyword
+    ) { _, leagueIndex, keyword ->
+        val leagueFilter = leagues.value.data?.get(leagueIndex)
+        GetMatchOverallsUseCase.Params(
+            leagueId = leagueFilter?.id,
+            leagueName = leagueFilter?.name,
+            keyword = keyword,
+        )
+    }
+        .flatMapLatest { params ->
+            getMatchOverallsUseCase(params)
                 .filter { it is Result.Success }
                 .map { (it as Result.Success).data }
                 .mapLatest { it.insertSeparators() }
@@ -95,6 +95,10 @@ class MatchesViewModel @Inject constructor(
                 Event.MatchesLeagueFilterClick(leagueName = it.name)
             )
         }
+    }
+
+    fun search(keyword: String) {
+        _keyword.value = keyword
     }
 
     fun selectMatch(matchOverall: MatchOverall) {

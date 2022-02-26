@@ -20,13 +20,14 @@ import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 
 @Composable
 fun MatchesAppBar(
+    title: String?,
     onSearchButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     BettyAppBar(modifier) {
         Box(Modifier.fillMaxWidth()) {
             Text(
-                text = stringResource(R.string.app_name),
+                text = title ?: stringResource(R.string.app_name),
                 modifier = Modifier.align(Alignment.Center),
                 color = Color.Black,
                 overflow = TextOverflow.Ellipsis,
@@ -50,6 +51,9 @@ fun MatchesAppBar(
 @Composable
 fun MatchesAppBarPreview() {
     BettyTheme {
-        MatchesAppBar(onSearchButtonClick = {})
+        MatchesAppBar(
+            title = stringResource(R.string.app_name),
+            onSearchButtonClick = {}
+        )
     }
 }

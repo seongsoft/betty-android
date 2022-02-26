@@ -15,9 +15,12 @@ abstract class UseCase<P, R>(private val dispatcher: CoroutineDispatcher) {
             }
         } catch (e: Exception) {
             Timber.e(e)
+            onError()
             Result.Error(e)
         }
     }
+
+    protected open fun onError() {}
 
     protected abstract suspend fun execute(params: P): R
 }

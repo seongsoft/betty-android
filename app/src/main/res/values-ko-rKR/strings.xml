@@ -10,8 +10,12 @@
     <string name="league_filter_error">리그 필터를 불러오지 못했습니다</string>
 
     <!-- Matches -->
-    <string name="matches_error">경기 목록을 불러오지 못했습니다</string>
     <string name="matches_no_result">예정된 경기가 없습니다</string>
+    <string name="matches_error">경기 목록을 불러오지 못했습니다</string>
+
+    <!-- Search -->
+    <string name="search_no_result">검색 결과가 존재하지 않습니다</string>
+    <string name="search_error">검색 결과를 불러오지 못했습니다</string>
 
     <!-- Match details -->
     <string name="match_details_error">경기 정보를 불러오지 못했습니다</string>

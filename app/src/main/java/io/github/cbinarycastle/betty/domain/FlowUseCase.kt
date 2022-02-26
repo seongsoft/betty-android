@@ -15,7 +15,7 @@ abstract class FlowUseCase<P, R>(
             .onStart { emit(Result.Loading) }
             .catch {
                 Timber.e(it)
-                Result.Error(it as Exception)
+                emit(Result.Error(it as Exception))
             }
             .flowOn(dispatcher)
     }
