@@ -27,10 +27,14 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
 @Composable
-fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
+fun MatchDetailsScreen(
+    viewModel: MatchDetailsViewModel,
+    upPress: () -> Unit,
+) {
     val result by viewModel.matchDetails.collectAsState(Result.Loading)
     MatchDetailsScreen(
         matchDetailsResult = result,
+        upPress = upPress,
         onTabSelected = { viewModel.onTabSelected(it.name) }
     )
 }
@@ -38,37 +42,41 @@ fun MatchDetailsScreen(viewModel: MatchDetailsViewModel) {
 @Composable
 private fun MatchDetailsScreen(
     matchDetailsResult: Result<MatchDetails>,
+    upPress: () -> Unit,
     onTabSelected: (MatchDetailsTab) -> Unit,
 ) {
-    when (matchDetailsResult) {
-        is Result.Success -> {
-            val matchDetails = matchDetailsResult.data
-            MatchDetailsScreen(
-                matchDetails = matchDetails,
-                onTabSelected = onTabSelected,
-            )
-        }
-        is Result.Error -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(stringResource(R.string.match_details_error))
+    Column {
+        MatchDetailsAppBar(upPress = upPress)
+        when (matchDetailsResult) {
+            is Result.Success -> {
+                val matchDetails = matchDetailsResult.data
+                MatchDetails(
+                    matchDetails = matchDetails,
+                    onTabSelected = onTabSelected,
+                )
             }
-        }
-        Result.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                CircularProgressIndicator()
+            is Result.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(stringResource(R.string.match_details_error))
+                }
+            }
+            Result.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
             }
         }
     }
 }
 
 @Composable
-private fun MatchDetailsScreen(
+private fun MatchDetails(
     matchDetails: MatchDetails,
     onTabSelected: (MatchDetailsTab) -> Unit,
     timeZoneId: ZoneId = ZoneId.systemDefault(),
@@ -252,7 +260,7 @@ private fun Team(
 @Composable
 private fun MatchDetailsScreenPreview() {
     BettyTheme {
-        MatchDetailsScreen(
+        MatchDetails(
             matchDetails = matchDetails,
             onTabSelected = {},
             timeZoneId = ZoneOffset.UTC,

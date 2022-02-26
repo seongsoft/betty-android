@@ -19,6 +19,7 @@ private const val MATCH_DETAILS_ID_KEY = "matchId"
 
 object MainDestinations {
     const val Matches = "matches"
+    const val Search = "search"
     const val MatchDetails = "match"
     const val StartDestination = Matches
 }
@@ -39,7 +40,8 @@ fun BettyNavGraph(
             val viewModel = hiltViewModel<MatchesViewModel>()
             MatchesScreen(
                 viewModel = viewModel,
-                onSelectMatch = { matchOverall ->
+                openSearch = { actions.openSearch },
+                onMatchSelected = { matchOverall ->
                     viewModel.selectMatch(matchOverall)
                     actions.openMatch(matchOverall.id)
                 },
@@ -55,13 +57,25 @@ fun BettyNavGraph(
             val matchId = requireNotNull(it.arguments?.getLong(MATCH_DETAILS_ID_KEY))
             viewModel.setMatchId(matchId)
 
-            MatchDetailsScreen(viewModel)
+            MatchDetailsScreen(
+                viewModel = viewModel,
+                upPress = actions.upPress
+            )
         }
     }
 }
 
 class MainActions(navController: NavHostController) {
+
+    val openSearch = {
+        navController.navigate(MainDestinations.Search)
+    }
+
     val openMatch = { matchId: Long ->
         navController.navigate("${MainDestinations.MatchDetails}/$matchId")
+    }
+
+    val upPress: () -> Unit = {
+        navController.navigateUp()
     }
 }
