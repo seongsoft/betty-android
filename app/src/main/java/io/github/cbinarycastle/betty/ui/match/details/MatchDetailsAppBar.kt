@@ -1,43 +1,47 @@
 package io.github.cbinarycastle.betty.ui.match.details
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import io.github.cbinarycastle.betty.R
+import androidx.compose.ui.unit.dp
 import io.github.cbinarycastle.betty.ui.BettyAppBar
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
+import timber.log.Timber
 
 @Composable
 fun MatchDetailsAppBar(
+    title: String?,
+    titleAlpha: Float,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    BettyAppBar(modifier) {
-        Box(Modifier.fillMaxWidth()) {
-            IconButton(onClick = onNavigateUp) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Up"
-                )
-            }
+    BettyAppBar(
+        modifier = modifier,
+        backgroundColor = Color.Transparent,
+        elevation = 0.dp,
+    ) {
+        IconButton(onClick = onNavigateUp) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Up"
+            )
+        }
+        if (title != null) {
             Text(
-                text = stringResource(R.string.app_name),
-                modifier = Modifier.align(Alignment.Center),
-                color = Color.Black,
+                text = title,
+                modifier = Modifier.alpha(titleAlpha),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = BettyTheme.typography.h6
+                style = BettyTheme.extendedTypography.appBarTitle
             )
         }
     }
@@ -47,6 +51,10 @@ fun MatchDetailsAppBar(
 @Composable
 fun MatchDetailsAppBarPreview() {
     BettyTheme {
-        MatchDetailsAppBar(onNavigateUp = {})
+        MatchDetailsAppBar(
+            title = null,
+            titleAlpha = 0f,
+            onNavigateUp = {},
+        )
     }
 }

@@ -1,5 +1,6 @@
 package io.github.cbinarycastle.betty.ui.components
 
+import androidx.annotation.FloatRange
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollScope
@@ -27,6 +28,10 @@ class CollapsibleState(initialHeight: Int) : ScrollableState {
         internal set(value) {
             field = max(field, value)
         }
+
+    val progress: Float
+        @FloatRange(from = 0.0, to = 1.0)
+        get() = height.toFloat() / maxHeight.toFloat()
 
     private var accumulator: Float = 0f
 

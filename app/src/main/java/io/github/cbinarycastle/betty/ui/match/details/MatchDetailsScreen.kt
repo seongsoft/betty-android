@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,9 +15,11 @@ import com.skydoves.landscapist.glide.GlideImage
 import io.github.cbinarycastle.betty.R
 import io.github.cbinarycastle.betty.data.match.details.matchDetails
 import io.github.cbinarycastle.betty.domain.Result
+import io.github.cbinarycastle.betty.domain.data
 import io.github.cbinarycastle.betty.entity.MatchDetails
 import io.github.cbinarycastle.betty.entity.Team
 import io.github.cbinarycastle.betty.ui.components.CollapsibleLayout
+import io.github.cbinarycastle.betty.ui.components.CollapsibleState
 import io.github.cbinarycastle.betty.ui.components.rememberCollapsibleState
 import io.github.cbinarycastle.betty.ui.match.LastOutcome
 import io.github.cbinarycastle.betty.ui.match.ScorePrediction
@@ -45,13 +48,22 @@ private fun MatchDetailsScreen(
     onNavigateUp: () -> Unit,
     onTabSelected: (MatchDetailsTab) -> Unit,
 ) {
+    val collapsibleState = rememberCollapsibleState()
+
     Column {
-        MatchDetailsAppBar(onNavigateUp = onNavigateUp)
+        MatchDetailsAppBar(
+            title = matchDetailsResult.data?.let {
+                "${it.homeTeam.displayName} vs ${it.awayTeam.displayName}"
+            },
+            titleAlpha = 1f - collapsibleState.progress,
+            onNavigateUp = onNavigateUp
+        )
         when (matchDetailsResult) {
             is Result.Success -> {
                 val matchDetails = matchDetailsResult.data
                 MatchDetails(
                     matchDetails = matchDetails,
+                    collapsibleState = collapsibleState,
                     onTabSelected = onTabSelected,
                 )
             }
@@ -80,13 +92,17 @@ private fun MatchDetails(
     matchDetails: MatchDetails,
     onTabSelected: (MatchDetailsTab) -> Unit,
     timeZoneId: ZoneId = ZoneId.systemDefault(),
+    collapsibleState: CollapsibleState = rememberCollapsibleState(),
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
 
     CollapsibleLayout(
-        state = rememberCollapsibleState(),
+        state = collapsibleState,
         collapsible = {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.alpha(collapsibleState.progress),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     GlideImage(

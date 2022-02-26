@@ -29,10 +29,9 @@ fun MatchesAppBar(
             Text(
                 text = title ?: stringResource(R.string.app_name),
                 modifier = Modifier.align(Alignment.Center),
-                color = Color.Black,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = BettyTheme.typography.h6
+                style = BettyTheme.extendedTypography.appBarTitle
             )
             IconButton(
                 onClick = onSearchButtonClick,
