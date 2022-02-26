@@ -33,15 +33,15 @@ fun MatchOverview(
     ) {
         PlaceItem(
             place = totalPlace,
-            title = stringResource(R.string.place_total_title),
+            title = stringResource(R.string.overview_total_title),
         )
         PlaceItem(
             place = homePlace,
-            title = stringResource(R.string.place_home_title),
+            title = stringResource(R.string.overview_home_title),
         )
         PlaceItem(
             place = awayPlace,
-            title = stringResource(R.string.place_away_title),
+            title = stringResource(R.string.overview_away_title),
         )
     }
 }
@@ -78,41 +78,41 @@ private fun PlaceSurface(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 MatchOverviewRow(
-                    label = stringResource(R.string.place_matches),
+                    label = stringResource(R.string.overview_matches),
                     homeTeamValue = place.home.totalMatchCount,
                     awayTeamValue = place.away.totalMatchCount
                 )
                 MatchOverviewRow(
-                    label = stringResource(R.string.place_win),
+                    label = stringResource(R.string.overview_win),
                     homeTeamValue = place.home.winMatchCount,
                     awayTeamValue = place.away.winMatchCount,
                     comparator = Comparator.naturalOrder()
                 )
                 MatchOverviewRow(
-                    label = stringResource(R.string.place_draw),
+                    label = stringResource(R.string.overview_draw),
                     homeTeamValue = place.home.drawMatchCount,
                     awayTeamValue = place.away.drawMatchCount
                 )
                 MatchOverviewRow(
-                    label = stringResource(R.string.place_lose),
+                    label = stringResource(R.string.overview_lose),
                     homeTeamValue = place.home.loseMatchCount,
                     awayTeamValue = place.away.loseMatchCount,
                     comparator = Comparator.reverseOrder()
                 )
                 MatchOverviewRow(
-                    label = stringResource(R.string.place_goal_for),
+                    label = stringResource(R.string.overview_goal_for),
                     homeTeamValue = place.home.goalFor,
                     awayTeamValue = place.away.goalFor,
                     comparator = Comparator.naturalOrder()
                 )
                 MatchOverviewRow(
-                    label = stringResource(R.string.place_goal_against),
+                    label = stringResource(R.string.overview_goal_against),
                     homeTeamValue = place.home.goalAgainst,
                     awayTeamValue = place.away.goalAgainst,
                     comparator = Comparator.reverseOrder()
                 )
                 MatchOverviewRow(
-                    label = stringResource(R.string.place_points),
+                    label = stringResource(R.string.overview_points),
                     homeTeamValue = place.home.points,
                     awayTeamValue = place.away.points,
                     comparator = Comparator.naturalOrder()

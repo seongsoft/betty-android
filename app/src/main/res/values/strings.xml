@@ -30,17 +30,17 @@
     <string name="match_details_tab_under_over">UNDER/OVER</string>
     <string name="match_details_tab_goals_per_match">GOALS PER MATCH</string>
 
-    <!-- Place -->
-    <string name="place_total_title" translatable="false">TOTAL</string>
-    <string name="place_home_title" translatable="false">HOME</string>
-    <string name="place_away_title" translatable="false">AWAY</string>
-    <string name="place_matches">MATCHES</string>
-    <string name="place_win">WIN</string>
-    <string name="place_draw">DRAW</string>
-    <string name="place_lose">LOSE</string>
-    <string name="place_goal_for">GOAL FOR</string>
-    <string name="place_goal_against">GOAL AGAINST</string>
-    <string name="place_points">POINTS</string>
+    <!-- Overview -->
+    <string name="overview_total_title" translatable="false">TOTAL</string>
+    <string name="overview_home_title" translatable="false">HOME</string>
+    <string name="overview_away_title" translatable="false">AWAY</string>
+    <string name="overview_matches">MATCHES</string>
+    <string name="overview_win">WIN</string>
+    <string name="overview_draw">DRAW</string>
+    <string name="overview_lose">LOSE</string>
+    <string name="overview_goal_for">GOAL FOR</string>
+    <string name="overview_goal_against">GOAL AGAINST</string>
+    <string name="overview_points">POINTS</string>
 
     <!-- Ranking -->
     <string name="ranking_team">TEAM</string>

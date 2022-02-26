@@ -26,14 +26,14 @@
     <string name="match_details_tab_under_over">언더/오버</string>
     <string name="match_details_tab_goals_per_match">경기당 골</string>
 
-    <!-- Place -->
-    <string name="place_matches">경기</string>
-    <string name="place_win">승</string>
-    <string name="place_draw">무</string>
-    <string name="place_lose">패</string>
-    <string name="place_goal_for">득점</string>
-    <string name="place_goal_against">실점</string>
-    <string name="place_points">승점</string>
+    <!-- Overview -->
+    <string name="overview_matches">경기</string>
+    <string name="overview_win">승</string>
+    <string name="overview_draw">무</string>
+    <string name="overview_lose">패</string>
+    <string name="overview_goal_for">득점</string>
+    <string name="overview_goal_against">실점</string>
+    <string name="overview_points">승점</string>
 
     <!-- Ranking -->
     <string name="ranking_team">팀</string>
