@@ -1,6 +1,7 @@
 package io.github.cbinarycastle.betty.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -26,6 +27,16 @@ val typography = Typography(
     h6 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 18.sp,
+        letterSpacing = 0.15.sp
+    )
+)
+
+val extendedTypography = ExtendedTypography(
+    appBarTitle = TextStyle(
+        color = Color.Black,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+        fontFamily = poppinsFamily,
         letterSpacing = 0.15.sp
     )
 )

@@ -7,8 +7,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme.typography
 
 @Immutable
@@ -44,23 +42,14 @@ private val DarkExtendedColors = ExtendedColors(
     lose = redA700,
 )
 
-val DefaultExtendedTypography = ExtendedTypography(
-    appBarTitle = TextStyle(
-        color = Color.Black,
-        fontWeight = FontWeight.Medium,
-        fontSize = 18.sp,
-        letterSpacing = 0.15.sp
-    )
-)
-
 val LocalExtendedColors = compositionLocalOf { LightExtendedColors }
-val LocalExtendedTypography = compositionLocalOf { DefaultExtendedTypography }
+val LocalExtendedTypography = compositionLocalOf { extendedTypography }
 
 @Composable
 fun BettyTheme(content: @Composable () -> Unit) {
     CompositionLocalProvider(
         LocalExtendedColors provides LightExtendedColors,
-        LocalExtendedTypography provides DefaultExtendedTypography
+        LocalExtendedTypography provides extendedTypography
     ) {
         MaterialTheme(
             colors = LightColors,
