@@ -15,14 +15,19 @@ import io.github.cbinarycastle.betty.entity.Outcome
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 
 @Composable
-fun LastOutcome(outcome: Outcome) {
+fun LastOutcome(
+    outcome: Outcome,
+    modifier: Modifier = Modifier,
+    contentModifier: Modifier = Modifier,
+) {
     Surface(
         shape = CircleShape,
         color = outcome.color(),
         contentColor = Color.White,
+        modifier = modifier,
     ) {
         Box(
-            modifier = Modifier.size(16.dp),
+            modifier = contentModifier.size(16.dp),
             contentAlignment = Alignment.Center,
         ) {
             Text(

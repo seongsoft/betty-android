@@ -24,6 +24,7 @@ import io.github.cbinarycastle.betty.data.match.overall.matchOveralls
 import io.github.cbinarycastle.betty.entity.MatchOverall
 import io.github.cbinarycastle.betty.entity.Team
 import io.github.cbinarycastle.betty.ui.match.LastOutcome
+import io.github.cbinarycastle.betty.ui.match.LastOutcomes
 import io.github.cbinarycastle.betty.ui.match.ScorePrediction
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 import org.threeten.bp.Year
@@ -260,12 +261,7 @@ private fun Team(
                 style = BettyTheme.typography.subtitle2,
             )
             Spacer(Modifier.height(4.dp))
-            Row {
-                team.lastOutcomes.forEach {
-                    Spacer(Modifier.width(4.dp))
-                    LastOutcome(it)
-                }
-            }
+            LastOutcomes(team.lastOutcomes)
         }
     }
 }
