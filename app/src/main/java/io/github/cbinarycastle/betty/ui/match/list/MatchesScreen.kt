@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,7 +28,6 @@ fun MatchesScreen(
     onMatchSelected: (matchOverall: MatchOverall) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val keyword by viewModel.keyword.collectAsState()
     val leagues by viewModel.leagues.collectAsState()
     val matchOverallItems = viewModel.matchOveralls.collectAsLazyPagingItems()
     val isRefreshing by viewModel.isRefreshing.collectAsState(false)
@@ -39,15 +37,11 @@ fun MatchesScreen(
         viewModel.updateMatchOverallsLoading(matchOverallItems.loadState.refresh)
     }
 
-    Scaffold {
-        Column(
-            modifier = modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            MatchesAppBar(
-                title = keyword,
-                onSearchButtonClick = openSearch
-            )
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar = { MatchesAppBar(onSearchButtonClick = openSearch) }
+    ) {
+        Column {
             Spacer(Modifier.height(16.dp))
             when (val result = leagues) {
                 is Result.Success -> LeagueFilter(
@@ -67,7 +61,10 @@ fun MatchesScreen(
             ) {
                 MatchOverallList(
                     items = matchOverallItems,
-                    onSelectMatch = onMatchSelected
+                    onSelectMatch = {
+                        viewModel.selectMatch(it)
+                        onMatchSelected(it)
+                    }
                 )
             }
         }

@@ -1,9 +1,8 @@
-package io.github.cbinarycastle.betty.ui
+package io.github.cbinarycastle.betty.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -11,28 +10,29 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import io.github.cbinarycastle.betty.ui.match.details.MatchDetailsScreen
 import io.github.cbinarycastle.betty.ui.match.details.MatchDetailsViewModel
 import io.github.cbinarycastle.betty.ui.match.list.MatchesScreen
 import io.github.cbinarycastle.betty.ui.match.list.MatchesViewModel
+import io.github.cbinarycastle.betty.ui.navigation.SearchDestinations
+import io.github.cbinarycastle.betty.ui.navigation.searchGraph
+import io.github.cbinarycastle.betty.ui.search.SearchMatchesScreen
+import io.github.cbinarycastle.betty.ui.search.SearchMatchesViewModel
 import io.github.cbinarycastle.betty.ui.search.SearchScreen
 import io.github.cbinarycastle.betty.ui.search.SearchViewModel
 
-private const val MATCH_DETAILS_ID_KEY = "matchId"
+private const val MATCH_DETAILS_MATCH_ID_KEY = "matchId"
 
 object MainDestinations {
     const val Matches = "matches"
-    const val Search = "search"
     const val MatchDetails = "match"
+    const val Search = "search"
     const val StartDestination = Matches
 }
 
-object SavedStateHandleData {
-    const val SearchKeyword = "searchKeyword"
-}
-
 @Composable
-fun BettyNavGraph(
+fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -45,38 +45,27 @@ fun BettyNavGraph(
     ) {
         composable(MainDestinations.Matches) { backStackEntry ->
             val viewModel = hiltViewModel<MatchesViewModel>()
-
-            backStackEntry.savedStateHandle
-                .getLiveData<String>(SavedStateHandleData.SearchKeyword)
-                .observe(LocalLifecycleOwner.current) { keyword ->
-                    viewModel.search(keyword)
-                }
-
             MatchesScreen(
                 viewModel = viewModel,
                 openSearch = actions.openSearch,
-                onMatchSelected = { matchOverall ->
-                    viewModel.selectMatch(matchOverall)
-                    actions.openMatch(matchOverall.id)
+                onMatchSelected = {
+                    actions.openMatch(it.id)
                 },
             )
         }
-        composable(MainDestinations.Search) {
-            val viewModel = hiltViewModel<SearchViewModel>()
-            SearchScreen(
-                viewModel = viewModel,
-                onNavigateUp = actions.navigateUp,
-                onSearch = actions.search
-            )
-        }
+        searchGraph(
+            route = MainDestinations.Search,
+            navController = navController,
+            onMatchSelected = { actions.openMatch(it.id) }
+        )
         composable(
-            "${MainDestinations.MatchDetails}/{$MATCH_DETAILS_ID_KEY}",
+            route = "${MainDestinations.MatchDetails}/{$MATCH_DETAILS_MATCH_ID_KEY}",
             arguments = listOf(
-                navArgument(MATCH_DETAILS_ID_KEY) { type = NavType.LongType }
+                navArgument(MATCH_DETAILS_MATCH_ID_KEY) { type = NavType.LongType }
             )
         ) {
             val viewModel = hiltViewModel<MatchDetailsViewModel>()
-            val matchId = requireNotNull(it.arguments?.getLong(MATCH_DETAILS_ID_KEY))
+            val matchId = requireNotNull(it.arguments?.getLong(MATCH_DETAILS_MATCH_ID_KEY))
             viewModel.setMatchId(matchId)
 
             MatchDetailsScreen(
@@ -89,22 +78,22 @@ fun BettyNavGraph(
 
 class MainActions(navController: NavHostController) {
 
-    val openSearch = {
-        navController.navigate(MainDestinations.Search)
-    }
-
-    val openMatch = { matchId: Long ->
-        navController.navigate("${MainDestinations.MatchDetails}/$matchId")
-    }
-
     val navigateUp: () -> Unit = {
         navController.navigateUp()
     }
 
+    val openSearch = {
+        navController.navigate(MainDestinations.Search)
+    }
+
     val search: (String) -> Unit = { keyword ->
-        navController.previousBackStackEntry
-            ?.savedStateHandle
-            ?.set(SavedStateHandleData.SearchKeyword, keyword)
-        navController.navigateUp()
+        navController.popBackStack()
+        navController.navigate(
+            route = "${SearchDestinations.Matches}/$keyword"
+        )
+    }
+
+    val openMatch = { matchId: Long ->
+        navController.navigate("${MainDestinations.MatchDetails}/$matchId")
     }
 }

@@ -50,14 +50,17 @@ private fun MatchDetailsScreen(
 ) {
     val collapsibleState = rememberCollapsibleState()
 
-    Column {
-        MatchDetailsAppBar(
-            title = matchDetailsResult.data?.let {
-                "${it.homeTeam.displayName} vs ${it.awayTeam.displayName}"
-            },
-            titleAlpha = 1f - collapsibleState.progress,
-            onNavigateUp = onNavigateUp
-        )
+    Scaffold(
+        topBar = {
+            MatchDetailsAppBar(
+                title = matchDetailsResult.data?.let {
+                    "${it.homeTeam.displayName} vs ${it.awayTeam.displayName}"
+                },
+                titleAlpha = 1f - collapsibleState.progress,
+                onNavigateUp = onNavigateUp
+            )
+        }
+    ) {
         when (matchDetailsResult) {
             is Result.Success -> {
                 val matchDetails = matchDetailsResult.data

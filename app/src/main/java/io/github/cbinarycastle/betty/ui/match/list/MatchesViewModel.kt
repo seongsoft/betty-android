@@ -51,19 +51,14 @@ class MatchesViewModel @Inject constructor(
     private val _selectedLeagueIndex = MutableStateFlow(0)
     val selectedLeagueIndex = _selectedLeagueIndex.asStateFlow()
 
-    private val _keyword = MutableStateFlow<String?>(null)
-    val keyword = _keyword.asStateFlow()
-
-    val matchOveralls = combine(
-        loadDataSignal, selectedLeagueIndex, keyword
-    ) { _, leagueIndex, keyword ->
-        val leagueFilter = leagues.value.data?.get(leagueIndex)
-        GetMatchOverallsUseCase.Params(
-            leagueId = leagueFilter?.id,
-            leagueName = leagueFilter?.name,
-            keyword = keyword,
-        )
-    }
+    val matchOveralls = loadDataSignal
+        .combine(selectedLeagueIndex) { _, leagueIndex ->
+            val leagueFilter = leagues.value.data?.get(leagueIndex)
+            GetMatchOverallsUseCase.Params(
+                leagueId = leagueFilter?.id,
+                leagueName = leagueFilter?.name,
+            )
+        }
         .flatMapLatest { params ->
             getMatchOverallsUseCase(params)
                 .filter { it is Result.Success }
@@ -95,10 +90,6 @@ class MatchesViewModel @Inject constructor(
                 Event.MatchesLeagueFilterClick(leagueName = it.name)
             )
         }
-    }
-
-    fun search(keyword: String) {
-        _keyword.value = keyword
     }
 
     fun selectMatch(matchOverall: MatchOverall) {

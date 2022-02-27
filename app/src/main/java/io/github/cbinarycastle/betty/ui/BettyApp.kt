@@ -19,6 +19,8 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import io.github.cbinarycastle.betty.BuildConfig
+import io.github.cbinarycastle.betty.ui.navigation.MainNavGraph
+import io.github.cbinarycastle.betty.ui.navigation.MainDestinations
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 
 @Composable
@@ -62,7 +64,7 @@ fun BettyApp(viewModel: AppViewModel) {
     BettyTheme {
         Scaffold {
             Column {
-                BettyNavGraph(
+                MainNavGraph(
                     modifier = Modifier.weight(1f),
                     navController = navController
                 )
