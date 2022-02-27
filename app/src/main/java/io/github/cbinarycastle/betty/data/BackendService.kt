@@ -21,7 +21,7 @@ interface BackendService {
         @Query("size") size: Int,
     ): GetMatchesResponse
 
-    @GET("teams/search")
+    @GET("teams")
     suspend fun searchTeams(@Query("keyword") keyword: String): List<String>
 
     @GET("matches/{matchId}")
