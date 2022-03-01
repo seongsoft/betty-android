@@ -173,4 +173,7 @@ dependencies {
 
     // Robolectric
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    // Native ad template
+    implementation project(':nativetemplates')
 }

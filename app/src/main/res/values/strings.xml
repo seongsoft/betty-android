@@ -2,6 +2,11 @@
     <string name="app_name" translatable="false">Betty</string>
 
     <string name="retry">retry</string>
+    <string name="cancel">cancel</string>
+    <string name="exit">exit</string>
+
+    <!-- Exit dialog -->
+    <string name="exit_dialog_title">Are you sure you want to Exit?</string>
 
     <!-- Outcome -->
     <string name="outcome_win">W</string>

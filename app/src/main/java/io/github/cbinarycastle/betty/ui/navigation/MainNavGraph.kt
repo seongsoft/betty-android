@@ -10,17 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.navigation.navigation
 import io.github.cbinarycastle.betty.ui.match.details.MatchDetailsScreen
 import io.github.cbinarycastle.betty.ui.match.details.MatchDetailsViewModel
 import io.github.cbinarycastle.betty.ui.match.list.MatchesScreen
 import io.github.cbinarycastle.betty.ui.match.list.MatchesViewModel
-import io.github.cbinarycastle.betty.ui.navigation.SearchDestinations
-import io.github.cbinarycastle.betty.ui.navigation.searchGraph
-import io.github.cbinarycastle.betty.ui.search.SearchMatchesScreen
-import io.github.cbinarycastle.betty.ui.search.SearchMatchesViewModel
-import io.github.cbinarycastle.betty.ui.search.SearchScreen
-import io.github.cbinarycastle.betty.ui.search.SearchViewModel
 
 private const val MATCH_DETAILS_MATCH_ID_KEY = "matchId"
 
@@ -43,7 +36,7 @@ fun MainNavGraph(
         startDestination = MainDestinations.StartDestination,
         modifier = modifier,
     ) {
-        composable(MainDestinations.Matches) { backStackEntry ->
+        composable(MainDestinations.Matches) {
             val viewModel = hiltViewModel<MatchesViewModel>()
             MatchesScreen(
                 viewModel = viewModel,

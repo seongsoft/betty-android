@@ -11,12 +11,12 @@ import javax.inject.Inject
 @HiltViewModel
 class AppViewModel @Inject constructor() : ViewModel() {
 
-    private val _finishSignal = MutableSharedFlow<Unit>()
-    val finishSignal = _finishSignal.asSharedFlow()
+    private val _exitSignal = MutableSharedFlow<Unit>()
+    val exitSignal = _exitSignal.asSharedFlow()
 
-    fun finish() {
+    fun exit() {
         viewModelScope.launch {
-            _finishSignal.emit(Unit)
+            _exitSignal.emit(Unit)
         }
     }
 }

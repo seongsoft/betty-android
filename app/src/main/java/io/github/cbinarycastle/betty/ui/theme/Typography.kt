@@ -22,7 +22,7 @@ val poppinsFamily = FontFamily(
     Font(R.font.poppins_bold, FontWeight.Bold),
 )
 
-val typography = Typography(
+val defaultTypography = Typography(
     defaultFontFamily = poppinsFamily,
     h6 = TextStyle(
         fontWeight = FontWeight.Medium,
@@ -31,7 +31,7 @@ val typography = Typography(
     )
 )
 
-val extendedTypography = ExtendedTypography(
+val defaultExtendedTypography = ExtendedTypography(
     appBarTitle = TextStyle(
         color = Color.Black,
         fontWeight = FontWeight.Medium,

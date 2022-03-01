@@ -1,11 +1,19 @@
 <resources>
     <style name="Theme.Betty" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:statusBarColor">@color/statusBar</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="colorOnSurface">@color/textColor</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Betty.MaterialAlertDialog</item>
     </style>
 
     <style name="Theme.Betty.Splash">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <style name="ThemeOverlay.Betty.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="elevationOverlayEnabled">false</item>
     </style>
 </resources>
