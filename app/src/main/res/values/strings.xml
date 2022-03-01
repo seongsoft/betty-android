@@ -36,9 +36,9 @@
     <string name="match_details_tab_goals_per_match">GOALS PER MATCH</string>
 
     <!-- Overview -->
-    <string name="overview_total_title" translatable="false">TOTAL</string>
-    <string name="overview_home_title" translatable="false">HOME</string>
-    <string name="overview_away_title" translatable="false">AWAY</string>
+    <string name="overview_total_title">TOTAL</string>
+    <string name="overview_home_title">AT HOME</string>
+    <string name="overview_away_title">AT AWAY</string>
     <string name="overview_matches">MATCHES</string>
     <string name="overview_win">WIN</string>
     <string name="overview_draw">DRAW</string>

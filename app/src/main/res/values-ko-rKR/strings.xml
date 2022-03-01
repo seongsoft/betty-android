@@ -32,6 +32,9 @@
     <string name="match_details_tab_goals_per_match">경기당 골</string>
 
     <!-- Overview -->
+    <string name="overview_total_title">전체 경기 기준</string>
+    <string name="overview_home_title">홈 경기 기준</string>
+    <string name="overview_away_title">원정 경기 기준</string>
     <string name="overview_matches">경기</string>
     <string name="overview_win">승</string>
     <string name="overview_draw">무</string>
