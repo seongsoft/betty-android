@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
 
@@ -15,6 +16,7 @@ fun ScorePrediction(
     homeScore: Int,
     awayScore: Int,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = BettyTheme.typography.h6,
 ) {
     Row(
         modifier = modifier,
@@ -27,10 +29,13 @@ fun ScorePrediction(
             } else {
                 BettyTheme.colors.onSurface
             },
-            style = BettyTheme.typography.h6
+            style = textStyle
         )
         Spacer(Modifier.width(4.dp))
-        Text(":")
+        Text(
+            text = ":",
+            style = textStyle
+        )
         Spacer(Modifier.width(4.dp))
         Text(
             text = awayScore.toString(),
@@ -39,7 +44,7 @@ fun ScorePrediction(
             } else {
                 BettyTheme.colors.onSurface
             },
-            style = BettyTheme.typography.h6
+            style = textStyle
         )
     }
 }

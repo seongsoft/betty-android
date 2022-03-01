@@ -21,7 +21,6 @@ import io.github.cbinarycastle.betty.entity.Team
 import io.github.cbinarycastle.betty.ui.components.CollapsibleLayout
 import io.github.cbinarycastle.betty.ui.components.CollapsibleState
 import io.github.cbinarycastle.betty.ui.components.rememberCollapsibleState
-import io.github.cbinarycastle.betty.ui.match.LastOutcome
 import io.github.cbinarycastle.betty.ui.match.LastOutcomes
 import io.github.cbinarycastle.betty.ui.match.ScorePrediction
 import io.github.cbinarycastle.betty.ui.theme.BettyTheme
@@ -131,24 +130,34 @@ private fun MatchDetails(
                     style = BettyTheme.typography.subtitle1
                 )
                 Spacer(Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Team(
-                        team = matchDetails.homeTeam,
-                        isHome = true,
-                        modifier = Modifier.weight(1f),
-                    )
-                    ScorePrediction(
-                        homeScore = matchDetails.suggestionInfo.homeExpectedScore,
-                        awayScore = matchDetails.suggestionInfo.awayExpectedScore,
-                    )
-                    Team(
-                        team = matchDetails.awayTeam,
-                        isHome = false,
-                        modifier = Modifier.weight(1f),
-                    )
+                Box(contentAlignment = Alignment.TopCenter) {
+                    with(matchDetails.suggestionInfo) {
+                        MatchPredictionText(
+                            homePercentage = homeExpectedPercentage,
+                            drawPercentage = drawExpectedPercentage,
+                            awayPercentage = awayExpectedPercentage,
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Team(
+                            team = matchDetails.homeTeam,
+                            isHome = true,
+                            modifier = Modifier.weight(1f),
+                        )
+                        ScorePrediction(
+                            homeScore = matchDetails.suggestionInfo.homeExpectedScore,
+                            awayScore = matchDetails.suggestionInfo.awayExpectedScore,
+                            textStyle = BettyTheme.typography.h5,
+                        )
+                        Team(
+                            team = matchDetails.awayTeam,
+                            isHome = false,
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
                 }
                 Spacer(Modifier.height(24.dp))
             }
@@ -193,6 +202,45 @@ private fun MatchDetails(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun MatchPredictionText(
+    homePercentage: Int,
+    drawPercentage: Int,
+    awayPercentage: Int,
+    modifier: Modifier = Modifier,
+) {
+    val homeColor = when {
+        homePercentage > awayPercentage -> BettyTheme.extendedColors.win
+        homePercentage < awayPercentage -> BettyTheme.extendedColors.lose
+        else -> BettyTheme.extendedColors.draw
+    }
+    val awayColor = when {
+        awayPercentage > homePercentage -> BettyTheme.extendedColors.win
+        awayPercentage < homePercentage -> BettyTheme.extendedColors.lose
+        else -> BettyTheme.extendedColors.draw
+    }
+
+    Row(modifier) {
+        Text(
+            text = "$homePercentage%",
+            color = homeColor,
+            style = BettyTheme.typography.caption,
+        )
+        Spacer(Modifier.width(16.dp))
+        Text(
+            text = "$drawPercentage%",
+            color = BettyTheme.extendedColors.draw,
+            style = BettyTheme.typography.caption,
+        )
+        Spacer(Modifier.width(16.dp))
+        Text(
+            text = "$awayPercentage%",
+            color = awayColor,
+            style = BettyTheme.typography.caption,
+        )
     }
 }
 
