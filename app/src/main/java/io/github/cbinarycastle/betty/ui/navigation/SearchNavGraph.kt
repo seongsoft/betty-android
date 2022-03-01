@@ -52,7 +52,10 @@ fun NavGraphBuilder.searchGraph(
             SearchMatchesScreen(
                 viewModel = viewModel,
                 onNavigateUp = { navController.navigateUp() },
-                onMatchSelected = onMatchSelected
+                onMatchSelected = { matchOverall ->
+                    viewModel.logMatchSelected(matchOverall)
+                    onMatchSelected(matchOverall)
+                }
             )
         }
     }

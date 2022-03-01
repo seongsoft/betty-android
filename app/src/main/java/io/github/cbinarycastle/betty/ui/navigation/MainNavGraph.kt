@@ -42,6 +42,7 @@ fun MainNavGraph(
                 viewModel = viewModel,
                 openSearch = actions.openSearch,
                 onMatchSelected = {
+                    viewModel.logMatchSelected(it)
                     actions.openMatch(it.id)
                 },
             )

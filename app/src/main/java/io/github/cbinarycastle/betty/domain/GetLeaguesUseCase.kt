@@ -17,7 +17,7 @@ class GetLeaguesUseCase @Inject constructor(
         return repository.getLeagues()
     }
 
-    override fun onError() {
+    override fun onError(exception: Exception, params: Unit) {
         eventLogger.logEvent(Event.MatchesLeaguesLoadFailed())
     }
 }

@@ -41,10 +41,7 @@ fun SearchMatchesScreen(
         ) {
             MatchOverallList(
                 items = matchOverallItems,
-                onSelectMatch = {
-                    viewModel.selectMatch(it)
-                    onMatchSelected(it)
-                }
+                onSelectMatch = onMatchSelected
             )
         }
     }

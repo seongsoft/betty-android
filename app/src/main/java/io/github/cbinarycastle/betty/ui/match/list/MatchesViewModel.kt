@@ -85,14 +85,14 @@ class MatchesViewModel @Inject constructor(
 
     fun selectLeague(index: Int) {
         _selectedLeagueIndex.value = index
-        leagues.value.data?.get(index)?.let {
+        leagues.value.data?.get(index)?.let { leagueFilter ->
             eventLogger.logEvent(
-                Event.MatchesLeagueFilterClick(leagueName = it.name)
+                Event.MatchesLeagueFilterClick(leagueFilter.name)
             )
         }
     }
 
-    fun selectMatch(matchOverall: MatchOverall) {
+    fun logMatchSelected(matchOverall: MatchOverall) {
         eventLogger.logEvent(
             Event.MatchesMatchItemClick(
                 matchId = matchOverall.id,
