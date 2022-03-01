@@ -48,7 +48,7 @@ class SearchMatchesViewModel @Inject constructor(
         }
     }
 
-    fun logMatchSelected(matchOverall: MatchOverall) {
+    fun onMatchSelected(matchOverall: MatchOverall) {
         eventLogger.logEvent(
             Event.MatchesMatchItemClick(
                 matchId = matchOverall.id,

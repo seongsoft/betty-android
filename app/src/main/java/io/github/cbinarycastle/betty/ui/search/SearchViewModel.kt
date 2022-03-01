@@ -3,6 +3,8 @@ package io.github.cbinarycastle.betty.ui.search
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.cbinarycastle.betty.domain.SearchTeamNamesUseCase
+import io.github.cbinarycastle.betty.event.Event
+import io.github.cbinarycastle.betty.event.EventLogger
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -12,6 +14,7 @@ import kotlin.time.ExperimentalTime
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     searchTeamNamesUseCase: SearchTeamNamesUseCase,
+    private val eventLogger: EventLogger,
 ) : ViewModel() {
 
     private val _keyword = MutableStateFlow("")
@@ -30,6 +33,10 @@ class SearchViewModel @Inject constructor(
 
     fun clearKeyword() {
         _keyword.value = ""
+    }
+
+    fun onSearch(keyword: String) {
+        eventLogger.logEvent(Event.SearchComplete(keyword))
     }
 
     companion object {

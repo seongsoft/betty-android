@@ -20,6 +20,7 @@ object SearchDestinations {
 fun NavGraphBuilder.searchGraph(
     route: String,
     navController: NavHostController,
+    onSearch: (String) -> Unit,
     onMatchSelected: (MatchOverall) -> Unit,
 ) {
     navigation(
@@ -32,11 +33,9 @@ fun NavGraphBuilder.searchGraph(
                 viewModel = viewModel,
                 onNavigateUp = { navController.navigateUp() },
                 onSearch = { keyword ->
-                    navController.popBackStack()
-                    navController.navigate(
-                        route = "${SearchDestinations.Matches}/$keyword"
-                    )
-                }
+                    viewModel.onSearch(keyword)
+                    onSearch(keyword)
+                },
             )
         }
         composable(
@@ -53,7 +52,7 @@ fun NavGraphBuilder.searchGraph(
                 viewModel = viewModel,
                 onNavigateUp = { navController.navigateUp() },
                 onMatchSelected = { matchOverall ->
-                    viewModel.logMatchSelected(matchOverall)
+                    viewModel.onMatchSelected(matchOverall)
                     onMatchSelected(matchOverall)
                 }
             )

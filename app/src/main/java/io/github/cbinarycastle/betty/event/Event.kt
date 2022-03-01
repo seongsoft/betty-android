@@ -12,7 +12,7 @@ sealed class Event(
         properties = mapOf("league" to leagueName)
     )
 
-    class MatchesLeaguesLoadFailed : Event(
+    object MatchesLeaguesLoadFailed : Event(
         type = "matches_leagueFilter_loadFailed",
     )
 
@@ -42,6 +42,15 @@ sealed class Event(
             "homeTeam" to homeTeamName,
             "awayTeam" to awayTeamName,
         )
+    )
+
+    object MatchesSearchButtonClick : Event(
+        type = "matches_searchButton_click"
+    )
+
+    class SearchComplete(keyword: String) : Event(
+        type = "search_complete",
+        properties = mapOf("keyword" to keyword)
     )
 
     class MatchDetailsLoadFailed(matchId: Long) : Event(

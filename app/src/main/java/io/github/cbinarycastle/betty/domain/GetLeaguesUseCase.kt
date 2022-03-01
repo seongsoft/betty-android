@@ -18,6 +18,6 @@ class GetLeaguesUseCase @Inject constructor(
     }
 
     override fun onError(exception: Exception, params: Unit) {
-        eventLogger.logEvent(Event.MatchesLeaguesLoadFailed())
+        eventLogger.logEvent(Event.MatchesLeaguesLoadFailed)
     }
 }

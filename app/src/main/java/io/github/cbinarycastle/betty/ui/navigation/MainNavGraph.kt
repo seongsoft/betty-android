@@ -40,9 +40,12 @@ fun MainNavGraph(
             val viewModel = hiltViewModel<MatchesViewModel>()
             MatchesScreen(
                 viewModel = viewModel,
-                openSearch = actions.openSearch,
+                openSearch = {
+                    viewModel.onOpenSearch()
+                    actions.openSearch()
+                },
                 onMatchSelected = {
-                    viewModel.logMatchSelected(it)
+                    viewModel.onMatchSelected(it)
                     actions.openMatch(it.id)
                 },
             )
@@ -50,6 +53,7 @@ fun MainNavGraph(
         searchGraph(
             route = MainDestinations.Search,
             navController = navController,
+            onSearch = actions.search,
             onMatchSelected = { actions.openMatch(it.id) }
         )
         composable(
