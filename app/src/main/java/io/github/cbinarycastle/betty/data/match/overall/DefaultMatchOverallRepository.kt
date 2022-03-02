@@ -22,7 +22,10 @@ class DefaultMatchOverallRepository @Inject constructor(
         keyword: String?,
     ): Flow<PagingData<MatchOverall>> {
         return Pager(
-            config = PagingConfig(pageSize = 10),
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = PAGE_SIZE
+            ),
             pagingSourceFactory = {
                 pagingSourceFactory.create(
                     baseDateTime = baseDateTime,
@@ -32,5 +35,9 @@ class DefaultMatchOverallRepository @Inject constructor(
                 )
             }
         ).flow
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 10
     }
 }
