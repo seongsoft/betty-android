@@ -33,7 +33,7 @@ fun ScorePrediction(
         )
         Spacer(Modifier.width(4.dp))
         Text(
-            text = ":",
+            text = "-",
             style = textStyle
         )
         Spacer(Modifier.width(4.dp))
