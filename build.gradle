@@ -15,6 +15,7 @@ buildscript {
         retrofitVersion = "2.9.0"
         accompanistVersion = "0.22.0-rc"
         landscapistVersion = "1.4.4"
+        collapsingToolbarVersion = "2.3.2"
         timberVersion = "5.0.1"
         threeTenVersion = "1.3.1"
         adMobVersion = "20.5.0"

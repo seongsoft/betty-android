@@ -146,6 +146,9 @@ dependencies {
     // Landscapist
     implementation "com.github.skydoves:landscapist-glide:$landscapistVersion"
 
+    // Collapsing toolbar
+    implementation "me.onebone:toolbar-compose:$collapsingToolbarVersion"
+
     // Timber
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
