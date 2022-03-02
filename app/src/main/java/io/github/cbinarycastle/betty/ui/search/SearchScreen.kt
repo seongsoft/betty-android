@@ -93,7 +93,11 @@ private fun SearchScreen(
                         imeAction = ImeAction.Search
                     ),
                     keyboardActions = KeyboardActions(
-                        onSearch = { onSearch(keyword) }
+                        onSearch = {
+                            if (keyword.isNotBlank()) {
+                                onSearch(keyword)
+                            }
+                        }
                     ),
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color.Transparent,
